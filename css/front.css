@@ -1,0 +1,16 @@
+body{
+	background-color: #F8FABF;
+}
+
+#menu li{
+	
+	display: inline-block;
+	text-decoration: none;
+	margin: 5px;
+	padding: 10px;	
+}
+
+#logo{
+
+}
+

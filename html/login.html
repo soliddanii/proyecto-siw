@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang = "es-Es">
+<head>
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script language="JavaScript" type="text/javascript" src="../jscript/login.js"></script>
+	<script language="JavaScript" type="text/javascript" src="../jscript/macro.js"></script>
+	<meta http-equiv = "Content-Type" content = "text/html; charset = UTF-8">
+	<title>Iniciar Sesión</title>
+</head>
+<body>
+	##menu##
+
+	<form action = "../php/controller.php?cmd=userCmd&id=2" method="post" id = "login">
+		<div id = "logo" ><a href="">Logo</a></div>
+		<input type = "text" name = "name" placeholder = "Nombre de Usuario">	
+		<input type = "password" name = "passwd0" placeholder = "Contraseña">
+		<a href="" id = "passwdlost" >He olvidado mi contraseña</a>
+		<input type = "submit" id = "enter" value = "Entrar">
+		<a href="" id = "newacc" >Crear Cuenta</a>	
+	</form>
+	
+	<div id = "pie">Pie de Pagina</div>
+
+</body>
+</html>

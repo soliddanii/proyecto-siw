@@ -1,0 +1,22 @@
+// para acceder
+mysql -u root -p
+
+// ver que bbdd tenemos seleccionada
+SELECT DATABASE();
+
+// ver que bbdd tenemos
+SHOW databases;
+
+// seleccionar base de datos
+USE siw21;
+
+// crear bbdd
+CREATE DATABASE nameDB;
+
+// Ejecuar fichero
+source /home/joker/Documentos/...
+
+// Mostrar Tablas
+show tables
+
+ 
