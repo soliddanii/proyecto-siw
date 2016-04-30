@@ -5,7 +5,7 @@
 	require_once 'model.php';
 
 	// Llamamos a las clases que vamos a utilizar	
-	 // manejo de sesiones
+	// manejo de sesiones
 	//require 'class/'; //
 
 	// Iniciamos sesion

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang = "es-Es">
+<head>
+	<meta http-equiv = "Content-Type" content = "text/html; charset = UTF-8">
+	<link rel="stylesheet" type="text/css" href="../css/browser.css">
+	<title>Navegador</title>
+</head>
+<body>
+	##menu##
+	<div id = "background" >Background</div>
+
+    <div id = "filtros">
+        <h1>FILTRAR POR</h1>
+        <form action = "" id = "buscador">
+            <input type = "text" class = "buscar" placeholder = "Palabra Clave">
+            <input type = "text" class = "buscar" placeholder = "Localización">
+            <select name="Categorias">
+                ##corteCategoria##
+                <option value="##idCategoria##">##Categoria##</option>
+                ##corteCategoria##
+            </select>
+            <input type = "submit" value = "Buscar">		
+        </form>
+    </div>
+	
+	<div id = "listaArticulos">
+		##corteLista##
+		<span class = "listaItem"><a href="" id= "##idLista##">##Lista##</a></span>
+		##corteLista##
+	</div>
+	
+	<div id = "pie">Pie de Pagina</div>
+
+</body>
+</html>
