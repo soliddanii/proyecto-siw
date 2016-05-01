@@ -3,17 +3,22 @@ CREATE TABLE final_usuario(
 	user VARCHAR(30) NOT NULL,
 	name VARCHAR(30) NOT NULL,
 	password VARCHAR(50) NOT NULL,	
-	email VARCHAR(30) NOT NULL,	
-	qSec VARCHAR(30) NOT NULL,
-	aSec VARCHAR(30) NOT NULL,
+	email VARCHAR(30) NOT NULL,
 	CONSTRAINT PK_usuario PRIMARY KEY (idUser),
 	CONSTRAINT U_usuario UNIQUE (user)	
 );
 
+CREATE TABLE final_categoria(
+	categoria VARCHAR(30) NOT NULL,
+	CONSTRAINT PK_categoria PRIMARY KEY (categoria)
+);
+
 CREATE TABLE final_anuncio(
 	idAnuncio INT(10) UNSIGNED AUTO_INCREMENT,
-	idUser INT(10) UNSIGNED NOT NULL,	
+	idUser INT(10) UNSIGNED NOT NULL,
+	categoria VARCHAR(30) NOT NULL,	
 	CONSTRAINT PK_anuncio PRIMARY KEY (idAnuncio),
+	CONSTRAINT FK_anuncio_categoria FOREIGN KEY (categoria) references final_categoria(categoria),
 	CONSTRAINT FK_anuncio_usuario FOREIGN KEY (idUser) references final_usuario (idUser)
 );
 

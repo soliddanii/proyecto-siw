@@ -3,7 +3,7 @@ $(document).ready(function(){
 	$('#signup').submit(function(event){
 
 		var user  = $('input[name=nameuser]').val();
-		var name 	= $('input[name=name]').val();
+		var name  = $('input[name=name]').val();
 		var email = $('input[name=email]').val();
 		var pwd0  = $('input[name=passwd0]').val();
 		var pwd1  = $('input[name=passwd1]').val();
@@ -31,10 +31,8 @@ $(document).ready(function(){
 			}
 
 		}else{
-
 			console.log("Las contraseñas no coinciden");	
 			event.preventDefault();
-
 		}
 		
 	});

@@ -5,18 +5,20 @@
 	<script language="JavaScript" type="text/javascript" src="../jscript/login.js"></script>
 	<script language="JavaScript" type="text/javascript" src="../jscript/macro.js"></script>
 	<meta http-equiv = "Content-Type" content = "text/html; charset = UTF-8">
+	<link rel="stylesheet" type="text/css" href="../css/front.css">
 	<title>Iniciar Sesión</title>
 </head>
 <body>
 	##menu##
 
 	<form action = "../php/controller.php?cmd=userCmd&id=2" method="post" id = "login">
-		<div id = "logo" ><a href="">Logo</a></div>
+		<div id = "logoLO" ><a href="">Logo Login</a></div>
 		<input type = "text" name = "name" placeholder = "Nombre de Usuario">	
 		<input type = "password" name = "passwd0" placeholder = "Contraseña">
-		<a href="" id = "passwdlost" >He olvidado mi contraseña</a>
+		<a href="../php/controller.php?cmd=userView&id=3" id = "passwdlost" >He olvidado mi contraseña</a>
 		<input type = "submit" id = "enter" value = "Entrar">
-		<a href="" id = "newacc" >Crear Cuenta</a>	
+		<a href="../php/controller.php?cmd=userView&id=1" id = "newacc" >Crear Cuenta</a>
+		<span id = "error">##error##</span>
 	</form>
 	
 	<div id = "pie">Pie de Pagina</div>
