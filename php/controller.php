@@ -5,7 +5,7 @@
 	require_once 'model.php';
 
 	// Llamamos a las clases que vamos a utilizar	
-	// manejo de sesiones
+	 // manejo de sesiones
 	//require 'class/'; //
 
 	// Iniciamos sesion
@@ -37,8 +37,9 @@
 
 	// Switch de las opciones
 	switch ($cmd) {
-		case 'frontView':			
-			frontView();
+		case 'frontView':
+			$data = chargeCategories();	
+			frontView($data);
 			break;
 
 		case 'userView':
@@ -51,6 +52,10 @@
 					loginView();
 					break;
 
+				case '3':
+					recoverPassView();
+					break;
+
 				default:
 					# code...
 					break;
@@ -59,26 +64,49 @@
 
 		case 'userCmd':
 			switch ($id) {
-				case '1':
+				
+				case '1':				
 					$ret = signUp();
-					if($ret == -1){
-						echo "El usuario ya existe";
-					}elseif ($ret == 0) {
-						frontView();
-					}elseif ($ret == 1){
-						echo "Ocurrio un error al registrar";
-					}	
+					
+					if ($ret == 1)
+						signUpView("Nombre de usuario no disponible");
+					elseif ($ret == 0) {
+						header("Location:controller.php");
+ 						exit;
+ 					}
+					elseif ($ret == -1)
+						errorView("userCmd-signUp");
 					break;
 				
 				case '2':
-					loginUser();
+					$ret = loginUser();
+
+					if ($ret == 0){
+						header("Location:controller.php");
+ 						exit;
+ 					}
+					elseif ($ret == 1)
+						loginView("El usuario no existe, vuelva a intentarlo");
+					elseif ($ret == -1)
+						errorView("userCmd-loginUser");
 					break;
 
 				case '3':
 					logOut();
-					frontView();
+					header("Location:controller.php");
+ 					exit;
 					break;
-				
+
+				case '4':
+					$pass = recoverPass();
+					if ($pass == 1)
+						recoverPassView("","Los datos no son correctos");
+					elseif ($pass == -1)
+						errorView("userCmd-recoverPass");
+					else
+						recoverPassView($pass);
+					break;
+
 				default:
 					# code...
 					break;

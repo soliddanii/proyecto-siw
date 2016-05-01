@@ -2,24 +2,21 @@
 <html lang = "es-Es">
 <head>
 	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-	<script language="JavaScript" type="text/javascript" src="../jscript/signup.js"></script>
+	<script language="JavaScript" type="text/javascript" src="../jscript/recoverpass.js"></script>
 	<script language="JavaScript" type="text/javascript" src="../jscript/macro.js"></script>
 	<meta http-equiv = "Content-Type" content = "text/html; charset = UTF-8">
 	<link rel="stylesheet" type="text/css" href="../css/front.css">
-	<title>Registro</title>
+	<title>Recuperar Contraseña</title>
 </head>
 <body>
 	##menu##
 
-	<form action = "../php/controller.php?cmd=userCmd&id=1" method="post" id = "signup">
-		<div id = "logoSU" ><a href="">Logo signUp</a></div>
+	<form action = "../php/controller.php?cmd=userCmd&id=4" method="post" id = "recoverpass">		
 		<input type = "text" name = "nameuser" placeholder = "Nombre de Usuario">
-		<input type = "text" name = "name" placeholder = "Nombre">
 		<input type = "text" name = "email" placeholder = "Correo Electrónico">
-		<input type = "password" name = "passwd0" placeholder = "Contraseña">
-		<input type = "password" name = "passwd1" placeholder = "Repetir Contraseña">
-		<input type = "submit" id = "create" value = "Crear Cuenta">
-		<span id = "error">##error##</span>	
+		<input type = "submit" id = "enter" value = "Entrar">
+		<span id = "pass">##password##</span>	
+		<span id = "error">##error##</span>
 	</form>
 	
 	<div id = "pie">Pie de Pagina</div>
