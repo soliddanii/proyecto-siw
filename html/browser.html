@@ -3,31 +3,70 @@
 <head>
 	<meta http-equiv = "Content-Type" content = "text/html; charset = UTF-8">
 	<link rel="stylesheet" type="text/css" href="../css/browser.css">
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script language="JavaScript" type="text/javascript" src="../jscript/browser.js"></script>
 	<title>Navegador</title>
 </head>
 <body>
 	##menu##
 	<div id = "background" >Background</div>
 
+    <!-- PARAMETROS DE BUSQUEDA -->
     <div id = "filtros">
         <h1>FILTRAR POR</h1>
-        <form action = "" id = "buscador">
+        <form action = "" id = "filtro">
+        
+            <!-- CAMPOS DE TEXTO -->
             <input type = "text" class = "buscar" placeholder = "Palabra Clave">
-            <input type = "text" class = "buscar" placeholder = "Localizaci�n">
+            <input type = "text" class = "buscar" placeholder = "Localización">
+            
+            <!-- SELECTOR DE CATEGORIA -->
             <select name="Categorias">
                 ##corteCategoria##
                 <option value="##idCategoria##">##Categoria##</option>
                 ##corteCategoria##
             </select>
-            <input type = "submit" value = "Buscar">		
+            
+            <!-- RANGO DE PRECIOS -->
+            <!-- NOTA: Podriamos sustituir 10000 con ##precioMAX## que es el precio del articulo mas caro -->
+            <label for="priceMin">Precio Mínimo</label>
+            <input type="number" value="0" min="0" max="10000" step="1" id="priceMin" />
+            <label for="priceMax">Precio Máximo</label>
+            <input type="number" value="10000" min="0" max="10000" step="1" id="priceMax" />
+            
+            <!-- BUSCAR -->
+            <input type = "submit" value = "Buscar">
+            
         </form>
+    </div>
+    
+    <!-- PARAMETROS DE ORDENACION DE LOS ANUNCIOS -->
+    <div id = "ordenArticulos">
+        <!-- ORDENAR POR -->
+        <select name="Orden">
+            <option value="byPrice-minMax">Ordenar por precio: Más bajo primero</option>
+            <option value="byPrice-maxMin">Ordenar por precio: Más alto primero</option>
+            <option value="byDate-mostRecent">Ordenar por fecha: Más reciente primero</option>
+            <option value="byDate-leastRecent">Ordenar por fecha: Más antiguo primero</option>
+        </select>
+    
+        <!-- PAGINACION -->
+        <ul class="pager">
+            <li><a href="#">Anterior</a></li>
+            ##cortePaginacion##
+            <li><a href="#">##numPagina##</a></li>
+            ##cortePaginacion##
+            <li><a href="#">Siguiente</a></li>
+        </ul>
     </div>
 	
 	<div id = "listaArticulos">
-		##corteLista##
-		<span class = "listaItem"><a href="" id= "##idLista##">##Lista##</a></span>
-		##corteLista##
-	</div>
+        <ul>
+            ##corteListaArticulos##
+            <li class = "listaItem"><a href="" id= "##idListaItem##">##Lista##</a></li>
+            ##corteListaArticulos##
+        </ul>
+    </div>
 	
 	<div id = "pie">Pie de Pagina</div>
 

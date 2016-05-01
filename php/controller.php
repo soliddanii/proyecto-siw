@@ -12,7 +12,7 @@
 	initSession();
 
 	// Recogemos parametros del usuario {GET POST}
-	$cmd = "frontView";
+	$cmd = "userView";
 	$id = 0;
 
 	if(isset($_GET["cmd"])) {
@@ -37,13 +37,13 @@
 
 	// Switch de las opciones
 	switch ($cmd) {
-		case 'frontView':
-			$data = chargeCategories();	
-			frontView($data);
-			break;
-
 		case 'userView':
 			switch ($id) {
+                case '0':
+                    $data = chargeCategories();	
+                    frontView($data);
+                    break;
+                    
 				case '1':
 					signUpView();
 					break;
@@ -56,6 +56,10 @@
 					recoverPassView();
 					break;
 
+                case '4':
+                    browserView();
+                    break;
+                    
 				default:
 					# code...
 					break;

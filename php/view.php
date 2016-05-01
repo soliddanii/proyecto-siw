@@ -105,6 +105,20 @@
 		echo chargeMenu($text);
 
 	}
+    
+    /*
+    *   Carga la pagina para ver la lista de articulos /anuncios
+    *   Lanza error si no se puede obtener la direccion del html
+    */
+    function browserView() {
+        
+        $pathFront = "../html/browser.html";
+        
+        $text = file_get_contents($pathFront) or exit("Error browserView, [$pathFront]");
+        
+        echo chargeMenu($text);
+        
+    }
 
 	/*
 	*	Carga la pagina para recuperar la contraseña de un usuario
