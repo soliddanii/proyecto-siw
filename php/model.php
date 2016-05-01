@@ -16,10 +16,8 @@
 		$objSe->init();
 		
 	}
-
-	function setVarSession($varName,$varValue){
-		$_SESSION[$varName] = $varValue;
-	}
+	/////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////
 
 	/////////////////////////////////////////////////////////////////////////
 	// 							Gestión de Usuarios
@@ -27,9 +25,9 @@
 
 	/*
 	*	Return:
-	*		 1 : usuario ya existe
+	*		-1 : usuario ya existe
 	*		 0 : usuario registrado correctamente	
-	*   	-1 : error al registrar o no se encontraron variables POST
+	*    1 : error al registrar usuario
 	*/
 	function signUp(){
 
@@ -42,12 +40,14 @@
 			$pwd  = filter_var($_POST["passwd0"],FILTER_SANITIZE_STRING);
 
 			$con = new Connection();
+
 			$facade = new Facade($con);
 
 			if($facade->existNameUser($user)){
 
+				//El nombre de usuario ya existe
 				$con->close();
-				return "1";
+				return "-1";
 
 			}else{
 
@@ -55,36 +55,24 @@
 				
 				if($facade->insertUser($data)){
 					
-					$data = $facade->getIdUser($user);
-					
-					setVarSession("idUser",$data["idUser"]);
-					setVarSession("user",$data["user"]);					
+					$data = $facade->getIdUser($user);					
+					$_SESSION["idUser"] = $data["idUser"];
+					$_SESSION["user"] = $data["user"];
 					
 					$con->close();
-
 					return "0"; 								
 
 				}else{
 
 					$con->close();
-					return "-1";
+					return "1";
 
 				}				
 			}
-		}else {
-			return "-1";
 		}		
 
 	}
 
-	/*
-	*	Return:
-	*		 1 : usuario no consta en la bbdd
-	*		 0 : usuario consta en la bbdd
-	*		-1 : no se ha podido tomar datos de la bbdd o no existe variables
-	*			 POST
-	*
-	*/
 	function loginUser(){
 
 		if(isset($_POST["name"]) && isset($_POST["passwd0"])){
@@ -92,93 +80,40 @@
 			$user = filter_var($_POST["name"],FILTER_SANITIZE_STRING);
 			$pwd  = filter_var($_POST["passwd0"],FILTER_SANITIZE_STRING);
 			
-			$con    = new Connection();			
+			$con = new Connection();
+			
 			$facade = new Facade($con);
 
-			if($facade->existUser($user,$pwd)){
+			if($facade->existUser($user,$pwd))
+				echo "existe";
+			else
+				echo "no existe";
 
-				$data = $facade->getIdUser($user);
-				setVarSession("idUser",$data["idUser"]);
-				setVarSession("user",$data["user"]);
-				$con->close();
-				return "0";
+			$con->close();
 
-			}else {
 
-				$con->close();
-				return "1";
-
-			}				
 
 		}else {
-			$con->close();
-			return "-1";
+			echo "Error al ler las variables en loginUser()";
 		}
 
-	}
-
-	/*
-	*	Return:
-	*		password: el usuario existe en la bbdd
-	*		1 : el usuario no existe en la bbdd
-	*	 -1 : ha ocurrido un error con la bbdd
-	*/
-	function recoverPass(){
-
-		if(isset($_POST["nameuser"]) && isset($_POST["email"])) {
-
-			$user  = filter_var($_POST["nameuser"],FILTER_SANITIZE_STRING);
-			$email = filter_var($_POST["email"],FILTER_SANITIZE_STRING);
-
-			$con = new Connection();
-			$facade = new Facade($con);
-
-			$result = $facade->recoverPass($user,$email);
-
-			if($result) {
-				if(mysql_num_rows($result) > 0) {
-					$row = mysql_fetch_array($result);
-					return $row["password"];
-				}else
-					return 1;
-			}else 
-				return -1;
-		}
 	}
 
 	function modifyData(){}
 
 	function logout(){
+
 		session_unset();
 		session_destroy();
-	}
-
-	function changePassword(){}
-	/////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////
-
-	/////////////////////////////////////////////////////////////////////////
-	// 							Gestión de Categorios 
-	/////////////////////////////////////////////////////////////////////////
-	function chargeCategories(){
-
-		$con    = new Connection();			
-		$facade = new Facade($con);
-
-		$result = $facade->getCategories();
-		
-		if($result){
-			if(mysql_num_rows($result) > 0) {
-				$data = array();
-				while($row = mysql_fetch_array($result)) {
-					array_push($data, $row["categoria"]);
-				}
-				return $data;
-
-			}else
-				echo "erro al realizar consulta";
-		}else
-			echo "Error con acceso a bbdd";
 
 	}
+
+	function change_password(){}
+	/////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////
+
+	/////////////////////////////////////////////////////////////////////////
+	// 							Gestión de 
+	/////////////////////////////////////////////////////////////////////////
+
 ?>
