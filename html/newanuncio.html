@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang = "es-Es">
+<head>
+	<meta http-equiv = "Content-Type" content = "text/html; charset = UTF-8">
+	<!--<link rel="stylesheet" type="text/css" href="../css/newanuncio.css">-->
+	<title>Nuevo Anuncio</title>
+</head>
+<body>
+	##menu##
+	<div id = "background" >Background</div>
+
+    <h1>NUEVO ANUNCIO</h1>
+	<form action = "" id = "newanuncio">
+        <!-- INFORMACION BASICA -->
+		<input type = "text" placeholder = "Título" required>
+		<input type = "text" placeholder = "Localización" required>
+        <input type = "text" placeholder = "Teléfono">
+        <input type = "text" placeholder = "Precio">
+        
+        <!-- SELECTOR DE CATEGORIA -->
+        <label for="Categorias">Categoria</label>
+        <select id="Categorias" name="Categorias">
+            ##corteCategorias##
+            <option value="##idCategoria##">##categoria##</option>
+            ##corteCategorias##
+        </select>
+        
+        <!-- DESCRIPCION -->
+        <label for="Descripcion">Descripcion</label>
+        <textarea id="Descripcion" form="newanuncio" maxlength="2000" 
+        placeholder="Escriba la descripción del artículo..." rows="4" cols="50" wrap="hard"></textarea>
+            
+        <!-- ACTIVAR CAPA SUBIR IMAGENES -->
+        <button type="button">Subir Imágenes</button> 
+            
+		<input type = "submit" value = "Publicar">		
+	</form>
+	
+	<div id = "pie">Pie de Pagina</div>
+
+</body>
+</html>

@@ -128,6 +128,28 @@
         
     }
 
+    /*
+    *   Carga la pagina para publicar un anuncio nuevo
+    *   Lanza error si no se puede obtener la direccion del html
+    */
+    function newAnuncioView($categories) {
+        
+        $pathFront = "../html/newanuncio.html";
+        $text = file_get_contents($pathFront) or exit("Error newAnuncioView, [$pathFront]");
+        $trozos = explode("##corteCategorias##", $text);
+		$aux0 = "";
+        foreach ($categories as $key => $value) {
+            $aux1 = $trozos[1];
+            $aux1 = str_replace("##idCategoria##", $key, $aux1);
+            $aux1 = str_replace("##categoria##", $value, $aux1);
+            $aux0 .= $aux1;
+        }
+
+		$text = $trozos[0].$aux0.$trozos[2];
+        echo chargeMenu($text);
+        
+    }
+    
 	/*
 	*	Carga la pagina para recuperar la contraseña de un usuario
 	*	Recibe como parametro la contraseña que va a mostrar y un mensaje, que

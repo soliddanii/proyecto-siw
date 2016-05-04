@@ -61,6 +61,11 @@
                     browserView($data);
                     break;
                     
+                case '5':
+                    $data = chargeCategories();	
+                    newAnuncioView($data);
+                    break;
+                    
 				default:
 					# code...
 					break;
