@@ -62,18 +62,18 @@
 	*	Carga la pagina principal de la web
 	*	Lanza un error si no se puede obtner la direccion del html
 	*/
-	function frontView($categories,$errorMessage) {
+	function frontView($categories, $errorMessage) {
 
 		$pathFront = "../html/front.html";				
 		$text = file_get_contents($pathFront) or exit("Error frontView, [$pathFront]");
 		$trozos = explode("##corteCategorias##", $text);
 		$aux0 = "";
-		for ($i = 0; $i < count($categories); $i++) {
-			$aux1 = $trozos[1];
-			$aux1 = str_replace("##categoria##", $categories[$i], $aux1);
-			$aux1 = str_replace("##idCategoria##", $categories[$i], $aux1);
-			$aux0 .= $aux1;
-		}
+		foreach ($categories as $key => $value) {
+            $aux1 = $trozos[1];
+            $aux1 = str_replace("##idCategoria##", $value, $aux1);
+            $aux1 = str_replace("##categoria##", $value, $aux1);
+            $aux0 .= $aux1;
+        }
 		$text = $trozos[0].$aux0.$trozos[2];
 		$text = error($text,$errorMessage);
 		echo chargeMenu($text);
@@ -107,15 +107,23 @@
 	}
     
     /*
-    *   Carga la pagina para ver la lista de articulos /anuncios
+    *   Carga la pagina para ver la lista de articulos / anuncios
     *   Lanza error si no se puede obtener la direccion del html
     */
-    function browserView() {
+    function browserView($categories) {
         
         $pathFront = "../html/browser.html";
-        
         $text = file_get_contents($pathFront) or exit("Error browserView, [$pathFront]");
-        
+        $trozos = explode("##corteCategorias##", $text);
+		$aux0 = "";
+        foreach ($categories as $key => $value) {
+            $aux1 = $trozos[1];
+            $aux1 = str_replace("##idCategoria##", $key, $aux1);
+            $aux1 = str_replace("##categoria##", $value, $aux1);
+            $aux0 .= $aux1;
+        }
+
+		$text = $trozos[0].$aux0.$trozos[2];
         echo chargeMenu($text);
         
     }

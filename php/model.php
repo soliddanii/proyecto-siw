@@ -158,7 +158,7 @@
 	/////////////////////////////////////////////////////////////////////////
 
 	/////////////////////////////////////////////////////////////////////////
-	// 							Gestión de Categorios 
+	// 							Gestión de Categorias 
 	/////////////////////////////////////////////////////////////////////////
 	function chargeCategories(){
 
@@ -171,12 +171,12 @@
 			if(mysql_num_rows($result) > 0) {
 				$data = array();
 				while($row = mysql_fetch_array($result)) {
-					array_push($data, $row["categoria"]);
+					$data[$row['idCategoria']] = $row['categoria'];
 				}
 				return $data;
 
 			}else
-				echo "erro al realizar consulta";
+				echo "Error al realizar consulta";
 		}else
 			echo "Error con acceso a bbdd";
 

@@ -57,7 +57,8 @@
 					break;
 
                 case '4':
-                    browserView();
+                    $data = chargeCategories();	
+                    browserView($data);
                     break;
                     
 				default:

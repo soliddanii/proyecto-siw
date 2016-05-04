@@ -82,7 +82,7 @@ class Facade {
 	}
 
 	public function getCategories(){
-		$query = "SELECT categoria FROM final_categoria";
+		$query = "SELECT * FROM final_categoria";
 		return $this->con->action($query);
 	}
 }
