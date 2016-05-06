@@ -1,8 +1,15 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang = "es-Es">
 <head>
-	<meta http-equiv = "Content-Type" content = "text/html; charset = UTF-8">
-	<!--<link rel="stylesheet" type="text/css" href="../css/newanuncio.css">-->
+	<meta charset="utf-8">
+    <!--<link rel="stylesheet" type="text/css" href="../css/newanuncio.css">-->
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="../jscript/newanuncio.js"></script>
+    
+     <!-- LIBRERIA PARA SUBIR FOTOS -->
+    <script src="../jscript/dropzone.js"></script>
+    <link href="../css/dropzone.css" type="text/css" rel="stylesheet" />
+	
 	<title>Nuevo Anuncio</title>
 </head>
 <body>
@@ -10,16 +17,16 @@
 	<div id = "background" >Background</div>
 
     <h1>NUEVO ANUNCIO</h1>
-	<form action = "" id = "newanuncio">
+	<form action = "../php/controller.php?cmd=userCmd&id=5" method="POST" enctype="multipart/form-data">
         <!-- INFORMACION BASICA -->
-		<input type = "text" placeholder = "Título" required>
-		<input type = "text" placeholder = "Localización" required>
-        <input type = "text" placeholder = "Teléfono">
-        <input type = "text" placeholder = "Precio">
+		<input type = "text" name = "titulo" placeholder = "TÃ­tulo" required>
+		<input type = "text" name = "localizacion" placeholder = "LocalizaciÃ³n" required>
+        <input type = "tel" name = "telefono" placeholder = "TelÃ©fono">
+        <input type = "number" name = "precio" placeholder = "Precio">
         
         <!-- SELECTOR DE CATEGORIA -->
-        <label for="Categorias">Categoria</label>
-        <select id="Categorias" name="Categorias">
+        <label for="categoria">Categoria</label>
+        <select id="categoria" name="categoria">
             ##corteCategorias##
             <option value="##idCategoria##">##categoria##</option>
             ##corteCategorias##
@@ -27,14 +34,15 @@
         
         <!-- DESCRIPCION -->
         <label for="Descripcion">Descripcion</label>
-        <textarea id="Descripcion" form="newanuncio" maxlength="2000" 
-        placeholder="Escriba la descripción del artículo..." rows="4" cols="50" wrap="hard"></textarea>
+        <textarea id="Descripcion" name = "descripcion" form="newanuncio" maxlength="2000" 
+        placeholder = "Escriba la descripciÃ³n del artÃ­culo..." rows="4" cols="50" wrap="hard"></textarea>
             
-        <!-- ACTIVAR CAPA SUBIR IMAGENES -->
-        <button type="button">Subir Imágenes</button> 
+        <!-- PREVIEW DE LAS IMAGENES -->
+        <div class="dropzone dropzone-previews" id="myDropzoneJs"></div>
             
 		<input type = "submit" value = "Publicar">		
 	</form>
+
 	
 	<div id = "pie">Pie de Pagina</div>
 

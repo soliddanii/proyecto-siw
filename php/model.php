@@ -157,6 +157,67 @@
 	/////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////
 
+    /////////////////////////////////////////////////////////////////////////
+	// 							Gestión de los anuncios 
+	/////////////////////////////////////////////////////////////////////////
+    /*
+	*	Return:
+	*		 1 : 
+	*		 0 : 
+	*		-1 : Los campos enviados no son validos o falta alguno
+	*
+	*/
+	function newAnuncio(){
+
+		if(isset($_POST["titulo"]) && isset($_POST["localizacion"])){
+			
+			$titulo = filter_var($_POST["titulo"], FILTER_SANITIZE_STRING);
+			$localizacion  = filter_var($_POST["localizacion"], FILTER_SANITIZE_STRING);
+            $precio = 0.00;
+            
+            if (isset($_POST["categoria"]) && is_numeric($_POST["categoria"])){
+                $categoria = intval($_POST["categoria"]);
+            }else{
+                return "-1";
+            }
+            
+            if (isset($_POST["telefono"])){
+                $telefono = filter_var($_POST["telefono"], FILTER_SANITIZE_STRING);
+            }
+            
+            if (isset($_POST["precio"]) && is_numeric($_POST["precio"])){
+                $precio = floatval($_POST["precio"]);
+            }
+            
+            if (isset($_POST["descripcion"])){
+                $descripcion = filter_var($_POST["descripcion"], FILTER_SANITIZE_STRING);
+            }
+            
+			
+            //Conectar con la base de datos
+			$con    = new Connection();			
+			$facade = new Facade($con);
+
+			if($facade->existUser($user,$pwd)){
+
+				$data = $facade->getIdUser($user);
+				setVarSession("idUser",$data["idUser"]);
+				setVarSession("user",$data["user"]);
+				$con->close();
+				return "0";
+
+			}else {
+
+				return "1";
+
+			}				
+
+		}else {
+			return "-1";
+		}
+
+	}
+    
 	/////////////////////////////////////////////////////////////////////////
 	// 							Gestión de Categorias 
 	/////////////////////////////////////////////////////////////////////////

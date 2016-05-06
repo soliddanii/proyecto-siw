@@ -41,7 +41,7 @@ CREATE TABLE final_anuncio(
 	idUser INT(10) UNSIGNED NOT NULL,
 	idCategoria INT(5) UNSIGNED DEFAULT 0,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
-    precio INT(10) DEFAULT 0,
+    precio DECIMAL(7,2) DEFAULT 0,
     titulo VARCHAR(50) NOT NULL,
     descripcion VARCHAR(2000),
     localizacion VARCHAR(50) NOT NULL,
