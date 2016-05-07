@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 	// Incluimos los ficheros que vamos a utilizar
 	require_once 'view.php';
@@ -45,7 +45,7 @@
                     break;
                     
 				case '1':
-					signUpView();
+					signUpView("");
 					break;
 				
 				case '2':
@@ -118,7 +118,11 @@
 					break;
                     
                 case '5':
-
+                    $ret = newAnuncio();
+                    if ($ret == 1){
+						errorView('userCmd-newAnuncio: No existe sesión de usuario');
+ 						exit;
+ 					}
 					break;
 
 				default:

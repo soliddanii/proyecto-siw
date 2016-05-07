@@ -32,10 +32,10 @@
 	*   	-1 : error al registrar o no se encontraron variables POST
 	*/
 	function signUp(){
-
+    
 		if(isset($_POST["nameuser"]) && isset($_POST["name"]) && isset($_POST["email"]) 
 			&& isset($_POST["passwd0"]) && isset($_POST["passwd1"])){
-
+            
 			$user  = filter_var($_POST["nameuser"],FILTER_SANITIZE_STRING);
 			$name  = filter_var($_POST["name"],FILTER_SANITIZE_STRING);
 			$email = filter_var($_POST["email"],FILTER_SANITIZE_STRING);
@@ -162,13 +162,21 @@
 	/////////////////////////////////////////////////////////////////////////
     /*
 	*	Return:
-	*		 1 : 
-	*		 0 : 
+	*		 1 : El usuario no está logueado
+	*		 0 : La insercion del anuncio se ha realizado con exito
 	*		-1 : Los campos enviados no son validos o falta alguno
 	*
 	*/
 	function newAnuncio(){
 
+        //Obtener los datos del usuario que crea el anuncio
+        if(isset($_SESSION["idUser"])){
+            $idUser = $_SESSION["idUser"];
+        }else{
+            return "1";
+        }
+         
+        //Obtener los datos del anuncio
 		if(isset($_POST["titulo"]) && isset($_POST["localizacion"])){
 			
 			$titulo = filter_var($_POST["titulo"], FILTER_SANITIZE_STRING);
@@ -176,7 +184,7 @@
             $precio = 0.00;
             
             if (isset($_POST["categoria"]) && is_numeric($_POST["categoria"])){
-                $categoria = intval($_POST["categoria"]);
+                $idCategoria = intval($_POST["categoria"]);
             }else{
                 return "-1";
             }
@@ -192,17 +200,14 @@
             if (isset($_POST["descripcion"])){
                 $descripcion = filter_var($_POST["descripcion"], FILTER_SANITIZE_STRING);
             }
-            
-			
+
             //Conectar con la base de datos
 			$con    = new Connection();			
 			$facade = new Facade($con);
 
 			if($facade->existUser($user,$pwd)){
 
-				$data = $facade->getIdUser($user);
-				setVarSession("idUser",$data["idUser"]);
-				setVarSession("user",$data["user"]);
+
 				$con->close();
 				return "0";
 

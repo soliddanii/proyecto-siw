@@ -53,7 +53,7 @@ class Facade {
 	public function getIdUser($user){
 		$query = "SELECT idUser,nick FROM final_usuario WHERE nick='".$user."'";
 		$row = mysql_fetch_array($this->con->action($query));
-		$data = array('idUser' => $row["idUser"], 'nick' => $row["user"]);
+		$data = array('idUser' => $row["idUser"], 'user' => $row["nick"]);
 		return $data;
 	}
 
