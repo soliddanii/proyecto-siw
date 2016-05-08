@@ -7,6 +7,7 @@ class Connection{
 	private $userDB;
 	private $passDB;
 	private $nameDB;
+    private $conn;
 
 	public function __construct(){
 
@@ -22,23 +23,39 @@ class Connection{
 	public function getConnection(){
 
 		// Conexion con MySQL
-		mysql_connect($this->server,$this->userDB,$this->passDB) 
-		or exit("Error Conexion con MySQL");
+        $this->conn = mysqli_connect($this->server,$this->userDB,$this->passDB, $this->nameDB);
+        
+        if (!$this->conn) {
+            echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
+            echo "errno de depuración: " . mysqli_connect_errno() . PHP_EOL;
+            echo "error de depuración: " . mysqli_connect_error() . PHP_EOL;
+            exit;
+        }
 
 		//Conexion a la base de datos a utilizar
-		mysql_select_db($this->nameDB) or exit("Error Conexion con $nameDB");
+		//mysqli_select_db($this->conn, $this->nameDB) or die("Error Conexion con $nameDB");
 		
 	}
 
 	public function action($query){
-
-		return mysql_query($query);
+    
+        //Ejecutar una sentencia y devolver el error si se produce
+		$temp = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
+        return $temp;
 
 	}
+    
+    public function insertId(){
+        
+        //Devolver el ultimo id que ha producido una insercion
+        $id = mysqli_insert_id($this->conn);
+        return $id;
+        
+    }
 
 	public function close(){
 
-		mysql_close();
+		mysqli_close($this->conn);
 
 	}
 }

@@ -17,12 +17,12 @@
 	<div id = "background" >Background</div>
 
     <h1>NUEVO ANUNCIO</h1>
-	<form action = "../php/controller.php?cmd=userCmd&id=5" method="POST" enctype="multipart/form-data">
+	<form action = "/" method="POST" enctype="multipart/form-data">
         <!-- INFORMACION BASICA -->
-		<input type = "text" name = "titulo" placeholder = "Título" required>
-		<input type = "text" name = "localizacion" placeholder = "Localización" required>
-        <input type = "tel" name = "telefono" placeholder = "Teléfono">
-        <input type = "number" name = "precio" placeholder = "Precio">
+		<input type = "text" id = "titulo" name = "titulo" placeholder = "Título" required/>
+		<input type = "text" id = "localizacion" name = "localizacion" placeholder = "Localización" required/>
+        <input type = "tel" id = "telefono" name = "telefono" placeholder = "Teléfono"/>
+        <input type = "number" id = "precio" name = "precio" placeholder = "Precio"/>
         
         <!-- SELECTOR DE CATEGORIA -->
         <label for="categoria">Categoria</label>
@@ -33,16 +33,20 @@
         </select>
         
         <!-- DESCRIPCION -->
-        <label for="Descripcion">Descripcion</label>
-        <textarea id="Descripcion" name = "descripcion" form="newanuncio" maxlength="2000" 
+        <label for="descripcion">Descripcion</label>
+        <textarea id="descripcion" name = "descripcion" form="newanuncio" maxlength="2000" 
         placeholder = "Escriba la descripción del artículo..." rows="4" cols="50" wrap="hard"></textarea>
             
         <!-- PREVIEW DE LAS IMAGENES -->
-        <div class="dropzone dropzone-previews" id="myDropzoneJs"></div>
+        <div class="dropzone" id="myDropzone" name="file"></div>
+        <!--<div class="dropzone dropzone-previews" name="file" id="myDropzoneJs"></div>-->
             
-		<input type = "submit" value = "Publicar">		
+		<!--<input type = "submit" id = "formsubmit" value = "Publicar"/>	-->	
 	</form>
 
+    <div>
+        <button type="submit" id="submit-all"> Publicar </button>
+    </div>
 	
 	<div id = "pie">Pie de Pagina</div>
 

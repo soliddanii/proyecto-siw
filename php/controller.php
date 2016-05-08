@@ -119,10 +119,20 @@
                     
                 case '5':
                     $ret = newAnuncio();
-                    if ($ret == 1){
+                    if ($ret == '0'){
+                        //Si todo se ha realizado correctamente:
+                        //Redirigir al usuario a la pagina del anuncio
+                    }elseif ($ret == '1'){
 						errorView('userCmd-newAnuncio: No existe sesión de usuario');
- 						exit;
- 					}
+ 					}elseif ($ret == '2'){
+                        errorView('userCmd-newAnuncio: Error con la base de datos');
+                    }elseif ($ret == '3'){
+                        errorView('userCmd-newAnuncio: Los valores recibidos son erroneos o falta alguno');
+                    }elseif ($ret == '4'){
+                        errorView('userCmd-newAnuncio: El formato de alguna de las imagenes no es valido');
+                    }elseif ($ret == '5'){
+                        errorView('userCmd-newAnuncio: El tamaño de la imagen es mayor que el permitido');
+                    }
 					break;
 
 				default:

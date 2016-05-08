@@ -21,7 +21,7 @@ class Facade {
 	*/
 	public function existNameUser($user){		
 		$query = "SELECT idUser FROM final_usuario WHERE nick='".$user."'";
-		return mysql_num_rows($this->con->action($query))> 0? True: False;
+		return mysqli_num_rows($this->con->action($query))> 0? True: False;
 	}
 
 	/*
@@ -30,7 +30,7 @@ class Facade {
 	public function existUser($user,$pwd){
 		$query = "SELECT idUser FROM final_usuario WHERE nick='".$user."' and 
 		password='".$pwd."'";
-		return mysql_num_rows($this->con->action($query))> 0? True: False; 
+		return mysqli_num_rows($this->con->action($query))> 0? True: False; 
 	}
 
 	/*
@@ -52,7 +52,7 @@ class Facade {
 	*/
 	public function getIdUser($user){
 		$query = "SELECT idUser,nick FROM final_usuario WHERE nick='".$user."'";
-		$row = mysql_fetch_array($this->con->action($query));
+		$row = mysqli_fetch_array($this->con->action($query));
 		$data = array('idUser' => $row["idUser"], 'user' => $row["nick"]);
 		return $data;
 	}
@@ -135,11 +135,20 @@ class Facade {
 	*	Añade un nuevo anuncio a la bbdd	
 	*/
 	public function addAnuncio($data){
-		$query = "INSERT INTO final_anuncio VALUES ('','".$data["idUser"]."'
-			,'".$data["idCategoria"]."','','".$data["precio"]."','".$data["titulo"]."'
-            ,'".$data["descripcion"]."','".$data["localizacion"]."','".$data["telefono"]."','','')";
+		$query = "INSERT INTO final_anuncio (idUser, idCategoria, precio, titulo, descripcion, localizacion, telefono) 
+            VALUES ('".$data["idUser"]."','".$data["idCategoria"]."','".$data["precio"]."','".$data["titulo"]."'
+            ,'".$data["descripcion"]."','".$data["localizacion"]."','".$data["telefono"]."')";
 		return $this->con->action($query);
 	}
+    
+    /*
+    *   Obtener el id insertado
+    */
+    public function getLastId(){
+        return $this->con->insertId();
+    }
+    
+    
 }
 
 ?>

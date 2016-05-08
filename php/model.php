@@ -1,11 +1,15 @@
 <?php
 	
+    //temp for debug
+    //include '../chromephp/ChromePhp.php';
+    
 	// Clases que vamos a utilizar
 	//require_once 'class/config.php'; // configuracion para la BBDD
 	require_once 'class/users.php'; // manejo de los usuarios
 	require_once 'class/connection.php';
 	require_once 'class/facade.php';
 	require_once 'class/sessions.php';
+    require_once 'class/upload.php'; //subida de imagenes
 
 	/////////////////////////////////////////////////////////////////////////
 	// 							Gestión de Sesion
@@ -136,8 +140,8 @@
 			$result = $facade->recoverPass($user,$email);
 
 			if($result) {
-				if(mysql_num_rows($result) > 0) {
-					$row = mysql_fetch_array($result);
+				if(mysqli_num_rows($result) > 0) {
+					$row = mysqli_fetch_array($result);
 					return $row["password"];
 				}else
 					return 1;
@@ -162,9 +166,11 @@
 	/////////////////////////////////////////////////////////////////////////
     /*
 	*	Return:
+    *        0 : La insercion del anuncio se ha realizado con exito
 	*		 1 : El usuario no está logueado
-	*		 0 : La insercion del anuncio se ha realizado con exito
-	*		-1 : Los campos enviados no son validos o falta alguno
+	*		 2 : Ocurrio un error con la bbdd
+	*		 3 : Los campos enviados no son validos o falta alguno
+    *        
 	*
 	*/
 	function newAnuncio(){
@@ -173,7 +179,7 @@
         if(isset($_SESSION["idUser"])){
             $idUser = $_SESSION["idUser"];
         }else{
-            return "1";
+            return '3';
         }
          
         //Obtener los datos del anuncio
@@ -181,22 +187,25 @@
 			
 			$titulo = filter_var($_POST["titulo"], FILTER_SANITIZE_STRING);
 			$localizacion  = filter_var($_POST["localizacion"], FILTER_SANITIZE_STRING);
-            $precio = 0.00;
             
+            $idCategoria = 0;
             if (isset($_POST["categoria"]) && is_numeric($_POST["categoria"])){
                 $idCategoria = intval($_POST["categoria"]);
             }else{
-                return "-1";
+                return '3';
             }
             
+            $telefono = "";
             if (isset($_POST["telefono"])){
                 $telefono = filter_var($_POST["telefono"], FILTER_SANITIZE_STRING);
             }
             
+            $precio = 0.00;
             if (isset($_POST["precio"]) && is_numeric($_POST["precio"])){
                 $precio = floatval($_POST["precio"]);
             }
             
+            $descripcion = "";
             if (isset($_POST["descripcion"])){
                 $descripcion = filter_var($_POST["descripcion"], FILTER_SANITIZE_STRING);
             }
@@ -205,22 +214,32 @@
 			$con    = new Connection();			
 			$facade = new Facade($con);
 
-			if($facade->existUser($user,$pwd)){
-
-
+            $data = array("idUser"=>$idUser, "idCategoria"=>$idCategoria, "precio"=>$precio, "titulo"=>$titulo, 
+                    "descripcion"=>$descripcion, "localizacion"=>$localizacion, "telefono"=>$telefono);				
+				
+			if(!$facade->addAnuncio($data)){
 				$con->close();
-				return "0";
-
-			}else {
-
-				return "1";
-
-			}				
+                return '2';
+            }
 
 		}else {
-			return "-1";
+			return '3';
 		}
-
+        
+        //Obtener y procesar las imagenes
+        $idAnuncio = $facade->getLastId();
+        if(!$idAnuncio || $idAnuncio == 0){
+            return '2';
+        }
+        
+        $upload = new Upload();
+        $ret = $upload->processUploads($idAnuncio);
+        if ($ret !== '0'){
+            return $ret;
+        }
+        
+        $con->close();
+        return '0';
 	}
     
 	/////////////////////////////////////////////////////////////////////////
@@ -232,11 +251,11 @@
 		$facade = new Facade($con);
 
 		$result = $facade->getCategories();
-		
+
 		if($result){
-			if(mysql_num_rows($result) > 0) {
+			if(mysqli_num_rows($result) > 0) {
 				$data = array();
-				while($row = mysql_fetch_array($result)) {
+				while($row = mysqli_fetch_array($result)) {
 					$data[$row['idCategoria']] = $row['categoria'];
 				}
 				return $data;

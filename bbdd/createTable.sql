@@ -47,7 +47,7 @@ CREATE TABLE final_anuncio(
     localizacion VARCHAR(50) NOT NULL,
     telefono VARCHAR(15), 
     estado INT(1) DEFAULT 1,
-    idComprador INT(10) UNSIGNED,
+    idComprador INT(10) UNSIGNED NULL,
 	CONSTRAINT PK_anuncio PRIMARY KEY (idAnuncio),
 	CONSTRAINT FK_anuncio_categoria FOREIGN KEY (idCategoria) references final_categoria(idCategoria),
 	CONSTRAINT FK_anuncio_usuario FOREIGN KEY (idUser) references final_usuario (idUser) ON DELETE CASCADE,
