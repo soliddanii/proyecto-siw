@@ -168,27 +168,27 @@ class Facade {
         
         if ($condiciones["precioMin"] != ""){
             $query = $query." ".$aux." precio>=".$condiciones["precioMin"];
-            $aux = "AND"
+            $aux = "AND";
         }
         
         if ($condiciones["precioMax"] != ""){
             $query = $query." ".$aux." precio<=".$condiciones["precioMax"];
-            $aux = "AND"
+            $aux = "AND";
         }
         
         if ($condiciones["titulo"] != ""){
             $query = $query." ".$aux." LOWER(titulo) LIKE LOWER('%".$condiciones["titulo"]."%')";
-            $aux = "AND"
+            $aux = "AND";
         }
         
         if ($condiciones["localizacion"] != ""){
             $query = $query." ".$aux." LOWER(localizacion) LIKE LOWER('%".$condiciones["localizacion"]."%')";
-            $aux = "AND"
+            $aux = "AND";
         }
         
         if ($condiciones["categoria"] != ""){
             $query = $query." ".$aux." idCategoria=".$condiciones["categoria"];
-            $aux = "AND"
+            $aux = "AND";
         }
         
         if ($columnName != "" && $order != ""){
