@@ -142,10 +142,60 @@ class Facade {
 	}
     
     /*
-    *   Obtener el id insertado
+    *   Obtener el ultimo id insertado
     */
     public function getLastId(){
         return $this->con->insertId();
+    }
+    
+    /*
+    *   Devuelve un anuncio en concreto por su ID
+    */
+    public function getAnuncio($id){
+        $query = "SELECT * FROM final_anuncio WHERE idAnuncio='".$id."'";
+        return $this->con->action($query);
+    }
+    
+    /*
+    *  Devuleve anuncios con condicion y ordenados por una columna
+    *  $condiciones = condiciones["precioMin"]["precioMax"]["titulo"]["localizacion"]["categoria"]
+    *  $columnNameOrder = [precio;fecha;titulo]
+    *  $order = [DESC;ASC]
+    */
+    public function getAnuncios($condiciones, $columnNameOrder, $order){
+        $query = "SELECT * FROM final_anuncio";
+        $aux = "WHERE";
+        
+        if ($condiciones["precioMin"] != ""){
+            $query = $query." ".$aux." precio>=".$condiciones["precioMin"];
+            $aux = "AND"
+        }
+        
+        if ($condiciones["precioMax"] != ""){
+            $query = $query." ".$aux." precio<=".$condiciones["precioMax"];
+            $aux = "AND"
+        }
+        
+        if ($condiciones["titulo"] != ""){
+            $query = $query." ".$aux." LOWER(titulo) LIKE LOWER('%".$condiciones["titulo"]."%')";
+            $aux = "AND"
+        }
+        
+        if ($condiciones["localizacion"] != ""){
+            $query = $query." ".$aux." LOWER(localizacion) LIKE LOWER('%".$condiciones["localizacion"]."%')";
+            $aux = "AND"
+        }
+        
+        if ($condiciones["categoria"] != ""){
+            $query = $query." ".$aux." idCategoria=".$condiciones["categoria"];
+            $aux = "AND"
+        }
+        
+        if ($columnName != "" && $order != ""){
+            $query = $query." ORDER BY ".$columnNameOrder." ".$order;
+        }
+        
+        return $this->con->action($query);
     }
     
     

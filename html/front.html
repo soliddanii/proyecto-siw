@@ -9,15 +9,15 @@
 	##menu##
 	<div id = "background" >Background</div>
 
-	<form action = "" id = "buscador">
-		<input type = "text" class = "buscar" placeholder = "Palabra Clave">
-		<input type = "text" class = "buscar" placeholder = "Localización">
+	<form action = "../php/controller.php?cmd=userView&id=4" id = "buscador">
+		<input type = "text" class = "buscar" name = "titulo" placeholder = "Palabra Clave"/>
+		<input type = "text" class = "buscar" name = "localizacion" placeholder = "Localización"/>
 		<input type = "submit" value = "Buscar">		
 	</form>
 
 	<div id = "categorias">
 		##corteCategorias##
-		<button class = "categoriaItem" id= "##idCategoria##" type = "button" >##categoria##</button>
+		<button class = "categoriaItem" href="../php/controller.php?cmd=userView&id=4&categoria=##idCategoria##" type = "button" >##categoria##</button>
 		##corteCategorias##
 	</div>
 	

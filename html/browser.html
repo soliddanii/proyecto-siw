@@ -17,11 +17,12 @@
         <form action = "" id = "filtro">
         
             <!-- CAMPOS DE TEXTO -->
-            <input type = "text" class = "buscar" placeholder = "Palabra Clave">
-            <input type = "text" class = "buscar" placeholder = "Localización">
+            <input type = "text" name = "titulo" class = "buscar" placeholder = "Palabra Clave"/>
+            <input type = "text" name = "localizacion" class = "buscar" placeholder = "Localización"/>
             
             <!-- SELECTOR DE CATEGORIA -->
-            <select name="Categorias">
+            <select name="categoria">
+                <option value="-1">Todas</option>
                 ##corteCategorias##
                 <option value="##idCategoria##">##categoria##</option>
                 ##corteCategorias##
@@ -30,9 +31,9 @@
             <!-- RANGO DE PRECIOS -->
             <!-- NOTA: Podriamos sustituir 10000 con ##precioMAX## que es el precio del articulo mas caro -->
             <label for="priceMin">Precio Mínimo</label>
-            <input type="number" value="0" min="0" max="10000" step="1" id="priceMin" />
+            <input type="number" value="0" min="0" max="10000" step="1" name="priceMin" id="priceMin" />
             <label for="priceMax">Precio Máximo</label>
-            <input type="number" value="10000" min="0" max="10000" step="1" id="priceMax" />
+            <input type="number" value="10000" min="0" max="10000" step="1" name="priceMax" id="priceMax" />
             
             <!-- BUSCAR -->
             <input type = "submit" value = "Buscar">
@@ -41,7 +42,7 @@
     </div>
     
     <!-- PARAMETROS DE ORDENACION DE LOS ANUNCIOS -->
-    <div id = "ordenArticulos">
+    <div id = "ordenAnuncios">
         <!-- ORDENAR POR -->
         <select name="Orden">
             <option value="byPrice-minMax">Ordenar por precio: Más bajo primero</option>
@@ -60,10 +61,20 @@
         </ul>
     </div>
 	
-	<div id = "listaArticulos">
+	<div id = "listaAnuncios">
         <ul>
             ##corteListaArticulos##
-            <li class = "listaItem"><a href="" id= "##idListaItem##">##Lista##</a></li>
+            <li>
+                <a href="#">
+                    <div class = "bloqueAnuncio" id = "##idAnuncio##">
+                        <img class = "miniaturaAnuncio" src="##miniaturaAnuncio##" alt="miniatura"/>
+                        <span class = "tituloAnuncio" value="##tituloAnuncio##"/>
+                        <span class = "localizacionAnuncio" value="##localizacionAnuncio##"/>
+                        <span class = "precioAnuncio" value="##precioAnuncio##€"/>
+                        <span class = "fechaAnuncio" value="##fechaAnuncio##"/>
+                    </div>
+                </a>
+            </li>
             ##corteListaArticulos##
         </ul>
     </div>

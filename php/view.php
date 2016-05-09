@@ -70,7 +70,7 @@
 		$aux0 = "";
 		foreach ($categories as $key => $value) {
             $aux1 = $trozos[1];
-            $aux1 = str_replace("##idCategoria##", $value, $aux1);
+            $aux1 = str_replace("##idCategoria##", $key, $aux1);
             $aux1 = str_replace("##categoria##", $value, $aux1);
             $aux0 .= $aux1;
         }
@@ -114,6 +114,8 @@
         
         $pathFront = "../html/browser.html";
         $text = file_get_contents($pathFront) or exit("Error browserView, [$pathFront]");
+        
+        //Carcar las categorias en el select
         $trozos = explode("##corteCategorias##", $text);
 		$aux0 = "";
         foreach ($categories as $key => $value) {
@@ -122,8 +124,11 @@
             $aux1 = str_replace("##categoria##", $value, $aux1);
             $aux0 .= $aux1;
         }
-
 		$text = $trozos[0].$aux0.$trozos[2];
+        
+        //Cargar los anuncios en la lista
+        
+        
         echo chargeMenu($text);
         
     }

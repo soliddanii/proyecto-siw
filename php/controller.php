@@ -40,30 +40,36 @@
 		case 'userView':
 			switch ($id) {
                 case '0':
+                    //Pagina Principal
                     $data = chargeCategories();	
                     frontView($data);
                     break;
                     
 				case '1':
+                    //Pagina de registro
 					signUpView("");
 					break;
 				
 				case '2':
+                    //Pagina de login
 					loginView();
 					break;
 
 				case '3':
+                    //Pagina de recuperacion de contraseña
 					recoverPassView();
 					break;
 
                 case '4':
-                    $data = chargeCategories();	
-                    browserView($data);
+                    //Pagina de navegador
+                    $categorias = chargeCategories();	
+                    browserView($categorias);
                     break;
                     
                 case '5':
-                    $data = chargeCategories();	
-                    newAnuncioView($data);
+                    //Pagina de nuevo anuncio
+                    $categorias = chargeCategories();	
+                    newAnuncioView($categorias);
                     break;
                     
 				default:
