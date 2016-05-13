@@ -1,5 +1,8 @@
 <?php
 	
+    //temp for debug
+    require_once '../chromephp/ChromePhp.php';
+    
 	/////////////////////////////////////////////////////////////////////////
 	// 				Funciones comunes para varias paginas
 	/////////////////////////////////////////////////////////////////////////
@@ -110,7 +113,7 @@
     *   Carga la pagina para ver la lista de articulos / anuncios
     *   Lanza error si no se puede obtener la direccion del html
     */
-    function browserView($categories) {
+    function browserView($categories, $anuncios) {
         
         $pathFront = "../html/browser.html";
         $text = file_get_contents($pathFront) or exit("Error browserView, [$pathFront]");
@@ -127,7 +130,19 @@
 		$text = $trozos[0].$aux0.$trozos[2];
         
         //Cargar los anuncios en la lista
-        
+        $trozos = explode("##corteListaArticulos##", $text);
+        $aux0 = "";
+        for($i = 0; i<count($anuncios); $i++){
+            $aux1 = $trozos[1];
+            $aux1 = str_replace("##idAnuncio##", $anuncios[$i]['id'], $aux1);
+            $aux1 = str_replace("##miniaturaAnuncio##", $anuncios[$i]['miniatura'], $aux1);
+            $aux1 = str_replace("##tituloAnuncio##", $anuncios[$i]['titulo'], $aux1);
+            $aux1 = str_replace("##localizacionAnuncio##", $anuncios[$i]['localizacion'], $aux1);
+            $aux1 = str_replace("##precioAnuncio##", $anuncios[$i]['precio'], $aux1);
+            $aux1 = str_replace("##fechaAnuncio##", $anuncios[$i]['fecha'], $aux1);
+            $aux0 .= $aux1;
+        }
+        $text = $trozos[0].$aux0.$trozos[2];
         
         echo chargeMenu($text);
         
@@ -137,10 +152,11 @@
     *   Carga la pagina para publicar un anuncio nuevo
     *   Lanza error si no se puede obtener la direccion del html
     */
-    function newAnuncioView($categories) {
+    function newAnuncioView($categories, $errorMessage) {
         
         $pathFront = "../html/newanuncio.html";
         $text = file_get_contents($pathFront) or exit("Error newAnuncioView, [$pathFront]");
+        $text = error($text,$errorMessage);
         $trozos = explode("##corteCategorias##", $text);
 		$aux0 = "";
         foreach ($categories as $key => $value) {

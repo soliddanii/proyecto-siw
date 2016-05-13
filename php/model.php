@@ -1,11 +1,11 @@
 <?php
 	
     //temp for debug
-    //include '../chromephp/ChromePhp.php';
+    require_once '../chromephp/ChromePhp.php';
     
 	// Clases que vamos a utilizar
 	//require_once 'class/config.php'; // configuracion para la BBDD
-	require_once 'class/users.php'; // manejo de los usuarios
+	 'class/users.php'; // manejo de los usuarios
 	require_once 'class/connection.php';
 	require_once 'class/facade.php';
 	require_once 'class/sessions.php';
@@ -179,9 +179,9 @@
         if(isset($_SESSION["idUser"])){
             $idUser = $_SESSION["idUser"];
         }else{
-            return '3';
+            return '1';
         }
-         
+
         //Obtener los datos del anuncio
 		if(isset($_POST["titulo"]) && isset($_POST["localizacion"])){
 			
@@ -234,12 +234,56 @@
         
         $upload = new Upload();
         $ret = $upload->processUploads($idAnuncio);
-        if ($ret !== '0'){
+        $ret_err = $ret['error'];
+        if ($ret_err != '0'){
+            $con->close();
             return $ret;
+        }
+        
+        //ChromePhp::log($ret['info']);
+        $ret_inf = $ret['info'];
+        for($i=0; $i<count($ret_inf); $i++){
+            
+            $data = array("idAnuncio"=>$idAnuncio, "idImagen"=>$ret_inf[$i][0], 
+            "big"=>$ret_inf[$i][1], "medium"=>$ret_inf[$i][2], "small"=>$ret_inf[$i][3]);
+            
+            if(!$facade->addImage($data)){
+				$con->close();
+                return '2';
+            }
+            
         }
         
         $con->close();
         return '0';
+	}
+    
+    function chargeAnuncios(){
+
+		$con    = new Connection();			
+		$facade = new Facade($con);
+
+        //Fijar las condiciones para obtener los anuncios
+        if (isset($_POST["categoria"]) && is_numeric($_POST["categoria"])){
+            $idCategoria = intval($_POST["categoria"]);
+        }        
+        
+		$result = $facade->getAnuncios($condiciones, $columnNameOrder, $order);
+
+		if($result){
+			if(mysqli_num_rows($result) > 0) {
+				$data = array();
+				while($row = mysqli_fetch_array($result)) {
+					$data[$row['idCategoria']] = $row['categoria'];
+				}
+				return $data;
+
+			}else
+				echo "Error al realizar consulta";
+		}else
+			echo "Error con acceso a bbdd";
+
+
 	}
     
 	/////////////////////////////////////////////////////////////////////////

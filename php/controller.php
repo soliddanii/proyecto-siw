@@ -1,5 +1,8 @@
 ﻿<?php
 
+    //temp for debug
+    require_once '../chromephp/ChromePhp.php';
+    
 	// Incluimos los ficheros que vamos a utilizar
 	require_once 'view.php';
 	require_once 'model.php';
@@ -62,14 +65,15 @@
 
                 case '4':
                     //Pagina de navegador
-                    $categorias = chargeCategories();	
-                    browserView($categorias);
+                    $categorias = chargeCategories();
+                    $anuncios = chargeAnuncios();
+                    browserView($categorias, $anuncios);
                     break;
                     
                 case '5':
                     //Pagina de nuevo anuncio
                     $categorias = chargeCategories();	
-                    newAnuncioView($categorias);
+                    newAnuncioView($categorias, '');
                     break;
                     
 				default:
@@ -128,16 +132,19 @@
                     if ($ret == '0'){
                         //Si todo se ha realizado correctamente:
                         //Redirigir al usuario a la pagina del anuncio
-                    }elseif ($ret == '1'){
-						errorView('userCmd-newAnuncio: No existe sesión de usuario');
- 					}elseif ($ret == '2'){
-                        errorView('userCmd-newAnuncio: Error con la base de datos');
-                    }elseif ($ret == '3'){
-                        errorView('userCmd-newAnuncio: Los valores recibidos son erroneos o falta alguno');
-                    }elseif ($ret == '4'){
-                        errorView('userCmd-newAnuncio: El formato de alguna de las imagenes no es valido');
-                    }elseif ($ret == '5'){
-                        errorView('userCmd-newAnuncio: El tamaño de la imagen es mayor que el permitido');
+                    }else{
+                        $categorias = chargeCategories();
+                        if($ret == '1'){  
+                            newAnuncioView($categorias, 'userCmd-newAnuncio: No existe sesión de usuario');
+                        }elseif($ret == '2'){
+                            newAnuncioView($categorias, 'userCmd-newAnuncio: Error con la base de datos');
+                        }elseif ($ret == '3'){
+                            newAnuncioView($categorias, 'userCmd-newAnuncio: Los valores recibidos son erroneos o falta alguno');
+                        }elseif ($ret == '4'){
+                            newAnuncioView($categorias, 'userCmd-newAnuncio: El formato de alguna de las imagenes no es valido');
+                        }elseif ($ret == '5'){
+                            newAnuncioView($categorias, 'userCmd-newAnuncio: El tamaño de la imagen es mayor que el permitido');
+                        }                       
                     }
 					break;
 

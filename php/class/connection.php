@@ -17,10 +17,10 @@ class Connection{
 		$this->passDB = "Tesla314msql";
 		$this->nameDB = "siw21";
 
-		$this->getConnection();
+		$this->setConnection();
 	}
 
-	public function getConnection(){
+	public function setConnection(){
 
 		// Conexion con MySQL
         $this->conn = mysqli_connect($this->server,$this->userDB,$this->passDB, $this->nameDB);
@@ -37,6 +37,12 @@ class Connection{
 		
 	}
 
+    public function getConnection(){
+
+        return $this->conn;
+        
+	}
+    
 	public function action($query){
     
         //Ejecutar una sentencia y devolver el error si se produce

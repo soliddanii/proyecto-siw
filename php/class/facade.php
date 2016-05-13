@@ -110,7 +110,10 @@ class Facade {
 	*/
 	public function addImage($data){
 		$query = "INSERT INTO final_imagen VALUES ('".$data["idAnuncio"]."','".$data["idImagen"]."'
-        ,'".$data["big"]."','".$data["medium"]."','".$data["small"]."')";
+        ,'".mysqli_real_escape_string($this->con->getConnection(), $data["big"])."'
+        ,'".mysqli_real_escape_string($this->con->getConnection(), $data["medium"])."'
+        ,'".mysqli_real_escape_string($this->con->getConnection(), $data["small"])."')";
+        
 		return $this->con->action($query);
 	}
     

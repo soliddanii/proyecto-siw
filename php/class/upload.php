@@ -10,7 +10,8 @@ class Upload {
     */
     public function processUploads($idAnuncio){
     
-        $ret = '0';
+        $error = '0';
+        $imageInfo = array();
         
         if (!empty($_FILES)) {
             $ds = DIRECTORY_SEPARATOR;
@@ -24,7 +25,7 @@ class Upload {
                     
                 //Check file size (MAX 10MB)
                 if ($_FILES["file"]["size"][$i] > 10000000) {
-                    $ret = '5';
+                    $error = '5';
                     continue;
                 }
                 
@@ -32,7 +33,7 @@ class Upload {
                 $ext = pathinfo($_FILES['file']['name'][$i], PATHINFO_EXTENSION);
                 $allowed =  array('gif','png','jpg','jpeg');
                 if(!in_array($ext,$allowed) ) {
-                    $ret = '4';
+                    $error = '4';
                     continue;
                 }
                 
@@ -41,13 +42,19 @@ class Upload {
                     mkdir($storeFolder, 0777, true);
                 }
                     
-                $this->resizeAndSave(160, 220, $storeFolder, 'small', $ext, $i);
-                $this->resizeAndSave(480, 640, $storeFolder, 'medium', $ext, $i);
-                $this->resizeAndSave(720, 1280, $storeFolder, 'big', $ext, $i);
+                $pathI1 = $this->resizeAndSave(160, 220, $storeFolder, 'small', $ext, $i);
+                $pathI2 = $this->resizeAndSave(480, 640, $storeFolder, 'medium', $ext, $i);
+                $pathI3 = $this->resizeAndSave(720, 1280, $storeFolder, 'big', $ext, $i);
+                
+                $temp = array($i,$pathI1,$pathI2,$pathI3);
+                array_push($imageInfo, $temp);
+                
             }             
         }
         
-        return $ret;
+        //Prepare the return informacion (error info + image path info)
+        $returnArray = array('error' => $error, 'info' => $imageInfo);
+        return $returnArray;
     }
     
     /*
@@ -104,6 +111,8 @@ class Upload {
         /* cleanup memory */
         imagedestroy($image);
         imagedestroy($tmp);
+        
+        return $newFilePath;
     }
     
 }
