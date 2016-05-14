@@ -1,0 +1,124 @@
+.navbar * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+.navbar {
+    width: 100%;
+    background: #14334E; /*COLOR DEL MENU*/
+    display: inline-block;
+}
+
+.navbar ul {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: inline-block;
+    cursor: default;
+}
+
+.navbar ul li a {
+    color: #fff;
+    padding: 15px;
+    font: 20px 'Roboto', Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.navbar .menu-left {
+    float: left;
+}
+
+.navbar .menu-right {
+    float: right;
+}
+
+.navbar ul li:hover > a {
+    color: #fff;
+    background: #7296B4; /*COLOR HOVER MENU*/
+}
+
+.navbar ul li a.active {
+    color: #fff;
+    background: #486E8E;
+}
+
+.navbar li:hover > ul {
+    display: block;
+}
+
+.navbar ul ul {
+    width: auto;
+    min-width: 170px;
+    display: none;
+    background: #14334E; /*COLOR DEL SUBMENU*/
+    position: absolute;
+    z-index: 555;
+    text-align: left;
+    right:0;
+    margin-right:8px; /*mismo que el padding de abajo*/
+}
+
+.navbar ul ul li {
+    width: 100%;
+    display: block;
+    float: none;
+}
+
+.navbar ul ul a {
+    width: 100%;
+    padding: 8px 15px;
+    display: block;
+    color: #fff;
+}
+
+.separator{
+    margin: auto;
+    width: 90%;
+    height: 1px;
+    background-color: #7296B4; /*COLOR DEL SEPARADOR*/
+}
+
+.navbar ul ul li:hover > a {
+    background: #7296B4; /*COLOR DEL HOVER SUBMENU*/
+    color: #fff;
+}
+
+.navbar .login-box {
+    width: auto;
+    min-width: 170px;
+    display: none;
+    background: #14334E; /*COLOR DEL SUBMENU*/
+    position: absolute;
+    z-index: 555;
+    text-align: left;
+    right:0;
+    margin-right:8px; 
+    padding: 30px;
+}
+
+.navbar .login-box  input{
+    width: 100%;
+    margin: 10px 0px;
+    display: block;
+    float: none;
+}
+
+.navbar .login-box  a{
+    width: 100%;
+    display: block;
+    float: none;
+    font: 20px 'Roboto', Arial, Helvetica, sans-serif;
+    text-decoration: none;
+}
+
+.navbar li:hover > div.login-box {
+    display: block;
+}
+

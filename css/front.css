@@ -1,16 +1,37 @@
-body{
-	background-color: #F8FABF;
+form.hiddenForm{
+    display:inline;
 }
 
-#menu li{
-	
-	display: inline-block;
+button.categoriaItem {
+	background-color: #74ad5a;
+	border: 6px solid #3b6e22;
+    margin:10px;
+	cursor: pointer;
+	color: #ffffff;
+	font-family: Arial;
+	font-size: 24px;
+	font-weight: bold;
+	padding: 20px 18px;
 	text-decoration: none;
-	margin: 5px;
-	padding: 10px;	
 }
 
-#logo{
-
+button.categoriaItem:hover {
+	background-color:#68a54b;
 }
 
+input[type="submit"]{
+    background-color:#DCB5D3;
+    border: solid 5px #7C296A;
+    padding: 10px;
+    outline: none;
+}
+
+input[type="text"], input[type="password"]{
+    padding: 10px;
+    border: solid 5px #c9c9c9;
+    outline: none;
+}
+
+input [type="text"]:focus, input[type="password"]:focus {
+    border: solid 5px #969696;
+}

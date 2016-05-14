@@ -1,23 +1,35 @@
-<div id = "menu">
+<nav id = "menu" class="navbar">
 	<ul>
-		<li id = "logo"><a href="../php/controller.php">Logo</a></li>
-		<li class = "options"><a href="../php/controller.php?cmd=userView&id=4">Navegador</a></li>
+		<li class = "menu-left" id = "logo"><a class="active" href="../php/controller.php">Logo</a></li>
+		<li class = "menu-left"><a href="../php/controller.php?cmd=userView&id=4">Navegador</a></li>
 		
 		##nologin##
-        <li class = "options"><a href="../php/controller.php?cmd=userView&id=2">Favoritos</a></li>
-		<li class = "options"><a href="../php/controller.php?cmd=userView&id=2">Poner Anuncio</a></li>
-		<span id = "user">
-			<li class = "options" id = "reg"><a href="../php/controller.php?cmd=userView&id=1">Registrar</a></li>
-			<li class = "options" id = "log"><a href="../php/controller.php?cmd=userView&id=2">Login</a></li>
-		</span>
+        <li class = "menu-left"><a href="../php/controller.php?cmd=userView&id=2">Favoritos</a></li>
+		<li class = "menu-left"><a href="../php/controller.php?cmd=userView&id=2">Poner Anuncio</a></li>
+        <li class = "menu-right" id = "log">
+            <a id="login-box-trigger" href="../php/controller.php?cmd=userView&id=2">Login ▼</a>
+            <div class="login-box">
+                <form action = "../php/controller.php?cmd=userCmd&id=2" method="post">
+                    <input id="username" type="text" name="name" placeholder="Nombre de Usuario" required>   
+                    <input id="password" type="password" name="passwd0" placeholder="Contraseña" required>
+                    <input type="submit" id="submit" value="Iniciar Sesión">
+                    <a href="../php/controller.php?cmd=userView&id=3" id = "passwdlost" >He olvidado mi contraseña</a>
+                </form>
+            </div> 
+        </li>
+		<li class = "menu-right" id = "reg"><a href="../php/controller.php?cmd=userView&id=1">Registrar</a></li>
 		##nologin##
 		##login##
-        <li class = "options"><a href="">Favoritos</a></li>
-		<li class = "options"><a href="../php/controller.php?cmd=userView&id=5">Poner Anuncio</a></li>
-		<span >
-			<li><a href="">##nameUser##</a></li>
-			<li><a href="../php/controller.php?cmd=userCmd&id=3">Cerrar Sesión</a></li>
-		</span>
+        <li class = "menu-left"><a href="">Favoritos</a></li>
+		<li class = "menu-left"><a href="../php/controller.php?cmd=userView&id=5">Poner Anuncio</a></li>
+        <li class = "menu-right"><a>Bienvenid@, ##nameUser##</a>
+            <ul>
+                <li><a href="#">Editar Perfil</a></li>
+                <li><a href="#">Mis Anuncios</a></li>
+                <div class = "separator"></div>
+                <li><a href="../php/controller.php?cmd=userCmd&id=3">Cerrar Sesión</a></li>
+            </ul>
+        </li>
 		##login##
 	</ul>
-</div>
+</nav>

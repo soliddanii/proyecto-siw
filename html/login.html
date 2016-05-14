@@ -2,10 +2,16 @@
 <html lang = "es-Es">
 <head>
     <meta charset="utf-8">
+    
+    <!-- JAVASCRIPT -->
 	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 	<script language="JavaScript" type="text/javascript" src="../jscript/login.js"></script>
 	<script language="JavaScript" type="text/javascript" src="../jscript/macro.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
 	<link rel="stylesheet" type="text/css" href="../css/front.css">
+    
 	<title>Iniciar Sesión</title>
 </head>
 <body>
@@ -13,10 +19,10 @@
 
 	<form action = "../php/controller.php?cmd=userCmd&id=2" method="post" id = "login">
 		<div id = "logoLO" ><a href="">Logo Login</a></div>
-		<input type = "text" name = "name" placeholder = "Nombre de Usuario">	
-		<input type = "password" name = "passwd0" placeholder = "Contraseña">
+		<input type = "text" name = "name" placeholder = "Nombre de Usuario" required>	
+		<input type = "password" name = "passwd0" placeholder = "Contraseña" required>
 		<a href="../php/controller.php?cmd=userView&id=3" id = "passwdlost" >He olvidado mi contraseña</a>
-		<input type = "submit" id = "enter" value = "Entrar">
+		<input type = "submit" id = "enter" value = "Iniciar Sesión">
 		<a href="../php/controller.php?cmd=userView&id=1" id = "newacc" >Crear Cuenta</a>
 		<span id = "error">##error##</span>
 	</form>

@@ -45,7 +45,7 @@
                 case '0':
                     //Pagina Principal
                     $data = chargeCategories();	
-                    frontView($data);
+                    frontView($data, '');
                     break;
                     
 				case '1':

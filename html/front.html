@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang = "es-Es">
 <head>
-	<meta http-equiv = "Content-Type" content = "text/html; charset = UTF-8">
-	<link rel="stylesheet" type="text/css" href="../css/front.css">
+	<meta charset="utf-8">
+    
+    <!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/front.css">
+    
 	<title>Portada Principal</title>
 </head>
 <body>
 	##menu##
 	<div id = "background" >Background</div>
 
-	<form action = "../php/controller.php?cmd=userView&id=4" id = "buscador">
+	<form action = "../php/controller.php?cmd=userView&id=4" method="POST" id = "buscador">
 		<input type = "text" class = "buscar" name = "titulo" placeholder = "Palabra Clave"/>
 		<input type = "text" class = "buscar" name = "localizacion" placeholder = "Localización"/>
 		<input type = "submit" value = "Buscar">		
@@ -17,7 +21,10 @@
 
 	<div id = "categorias">
 		##corteCategorias##
-		<button class = "categoriaItem" href="../php/controller.php?cmd=userView&id=4&categoria=##idCategoria##" type = "button" >##categoria##</button>
+        <form class="hiddenForm" action = "../php/controller.php?cmd=userView&id=4" method="POST">
+            <input type="hidden" name="categoria" value="##idCategoria##">
+            <button type="submit" class = "categoriaItem">##categoria##</a>
+        </form>
 		##corteCategorias##
 	</div>
 	
