@@ -166,36 +166,39 @@ class Facade {
     *  $order = [DESC;ASC]
     */
     public function getAnuncios($condiciones, $columnNameOrder, $order){
-        $query = "SELECT * FROM final_anuncio";
+        $query = "SELECT fa.idAnuncio, fa.idCategoria, fa.precio, fa.fecha, fa.titulo, fa.localizacion, fi.small
+                  FROM final_anuncio fa LEFT JOIN final_imagen fi ON fi.idImagen = 
+                  (SELECT MIN(idImagen) FROM final_imagen WHERE idAnuncio = fa.idAnuncio)";
+                  
         $aux = "WHERE";
         
         if ($condiciones["precioMin"] != ""){
-            $query = $query." ".$aux." precio>=".$condiciones["precioMin"];
+            $query = $query." ".$aux." fa.precio>=".$condiciones["precioMin"];
             $aux = "AND";
         }
         
         if ($condiciones["precioMax"] != ""){
-            $query = $query." ".$aux." precio<=".$condiciones["precioMax"];
+            $query = $query." ".$aux." fa.precio<=".$condiciones["precioMax"];
             $aux = "AND";
         }
         
         if ($condiciones["titulo"] != ""){
-            $query = $query." ".$aux." LOWER(titulo) LIKE LOWER('%".$condiciones["titulo"]."%')";
+            $query = $query." ".$aux." LOWER(fa.titulo) LIKE LOWER('%".$condiciones["titulo"]."%')";
             $aux = "AND";
         }
         
         if ($condiciones["localizacion"] != ""){
-            $query = $query." ".$aux." LOWER(localizacion) LIKE LOWER('%".$condiciones["localizacion"]."%')";
+            $query = $query." ".$aux." LOWER(fa.localizacion) LIKE LOWER('%".$condiciones["localizacion"]."%')";
             $aux = "AND";
         }
         
         if ($condiciones["categoria"] != ""){
-            $query = $query." ".$aux." idCategoria=".$condiciones["categoria"];
+            $query = $query." ".$aux." fa.idCategoria=".$condiciones["categoria"];
             $aux = "AND";
         }
         
-        if ($columnName != "" && $order != ""){
-            $query = $query." ORDER BY ".$columnNameOrder." ".$order;
+        if ($columnNameOrder != "" && $order != ""){
+            $query = $query." ORDER BY fa.".$columnNameOrder." ".$order;
         }
         
         return $this->con->action($query);

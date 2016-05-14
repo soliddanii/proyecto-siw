@@ -46,6 +46,9 @@ class Upload {
                 $pathI2 = $this->resizeAndSave(480, 640, $storeFolder, 'medium', $ext, $i);
                 $pathI3 = $this->resizeAndSave(720, 1280, $storeFolder, 'big', $ext, $i);
                 
+                $pathI1 = '..'.substr($pathI1, strlen(dirname(dirname(dirname( __FILE__ )))));
+                $pathI2 = '..'.substr($pathI2, strlen(dirname(dirname(dirname( __FILE__ )))));
+                $pathI3 = '..'.substr($pathI3, strlen(dirname(dirname(dirname( __FILE__ )))));
                 $temp = array($i,$pathI1,$pathI2,$pathI3);
                 array_push($imageInfo, $temp);
                 

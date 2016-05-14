@@ -245,7 +245,7 @@
         for($i=0; $i<count($ret_inf); $i++){
             
             $data = array("idAnuncio"=>$idAnuncio, "idImagen"=>$ret_inf[$i][0], 
-            "big"=>$ret_inf[$i][1], "medium"=>$ret_inf[$i][2], "small"=>$ret_inf[$i][3]);
+            "big"=>$ret_inf[$i][3], "medium"=>$ret_inf[$i][2], "small"=>$ret_inf[$i][1]);
             
             if(!$facade->addImage($data)){
 				$con->close();
@@ -264,17 +264,54 @@
 		$facade = new Facade($con);
 
         //Fijar las condiciones para obtener los anuncios
+        $localizacion = "";
+        $idCategoria = "";
+        $priceMin = "";
+        $priceMax = "";
+        $titulo = "";
+        
         if (isset($_POST["categoria"]) && is_numeric($_POST["categoria"])){
             $idCategoria = intval($_POST["categoria"]);
+            if($idCategoria == -1){
+                $idCategoria = "";
+            }
+        }
+
+        if (isset($_POST["priceMin"]) && is_numeric($_POST["priceMin"])){
+            $priceMin = intval($_POST["priceMin"]);
+        }
+
+        if (isset($_POST["priceMax"]) && is_numeric($_POST["priceMax"])){
+            $priceMax = intval($_POST["priceMax"]);
+        }        
+
+        if (isset($_POST["titulo"])){
+            $titulo = filter_var($_POST["titulo"], FILTER_SANITIZE_STRING);
+        }    
+
+        if (isset($_POST["localizacion"])){
+            $localizacion = filter_var($_POST["localizacion"], FILTER_SANITIZE_STRING);
         }        
         
+        $condiciones = array("precioMin" => $priceMin, "precioMax" => $priceMax, 
+        "titulo" => $titulo, "localizacion" => $localizacion, "categoria" => $idCategoria);
+        
+        $columnNameOrder = "";
+        $order = "";
+        
 		$result = $facade->getAnuncios($condiciones, $columnNameOrder, $order);
-
+        
 		if($result){
 			if(mysqli_num_rows($result) > 0) {
 				$data = array();
 				while($row = mysqli_fetch_array($result)) {
-					$data[$row['idCategoria']] = $row['categoria'];
+					$temp_data = array('id'=>$row['idAnuncio'], 'titulo'=>$row['titulo'], 
+                    'localizacion'=>$row['localizacion'], 'precio'=>$row['precio'], 'fecha'=>$row['fecha'], 'miniatura'=>$row['small']);
+                    
+                    if($row['small'] == null){
+                        $temp_data['miniatura'] = '../images/default-product.png';
+                    }
+                    array_push($data, $temp_data);
 				}
 				return $data;
 

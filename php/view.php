@@ -132,7 +132,7 @@
         //Cargar los anuncios en la lista
         $trozos = explode("##corteListaArticulos##", $text);
         $aux0 = "";
-        for($i = 0; i<count($anuncios); $i++){
+        for($i = 0; $i<count($anuncios); $i++){
             $aux1 = $trozos[1];
             $aux1 = str_replace("##idAnuncio##", $anuncios[$i]['id'], $aux1);
             $aux1 = str_replace("##miniaturaAnuncio##", $anuncios[$i]['miniatura'], $aux1);
