@@ -1,3 +1,11 @@
+body {
+    margin: 0;
+}
+
+/***************************************************************/
+/********************* BARRA DE NAVEGACION *********************/
+/***************************************************************/
+
 .navbar * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -62,7 +70,7 @@
     z-index: 555;
     text-align: left;
     right:0;
-    margin-right:8px; /*mismo que el padding de abajo*/
+    /*margin-right:8px; /*depende del margin del body*/
 }
 
 .navbar ul ul li {
@@ -99,7 +107,7 @@
     z-index: 555;
     text-align: left;
     right:0;
-    margin-right:8px; 
+    /*margin-right:8px; /*depende del margin del body*/
     padding: 30px;
 }
 
@@ -120,5 +128,23 @@
 
 .navbar li:hover > div.login-box {
     display: block;
+}
+
+.navbar input[type="submit"]{
+    background-color:#E0F2F7;
+    border: solid 5px #81F7D8;
+    padding: 10px;
+    outline: none;
+}
+
+.navbar input[type="text"], input[type="password"]{
+    padding: 10px;
+    background-color: #E3CEF6;
+    border: solid 5px #BE81F7;
+    outline: none;
+}
+
+.navbar input [type="text"]:focus, input[type="password"]:focus {
+    border: solid 5px #7401DF;
 }
 

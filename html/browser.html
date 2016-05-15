@@ -15,10 +15,12 @@
 </head>
 <body>
 	##menu##
-	<div id = "background" >Background</div>
+	<!--<div id = "background" >Background</div> ESTO MEJOR EN EL CSS-->
+    
+    <div class = "contenido">
 
     <!-- PARAMETROS DE BUSQUEDA -->
-    <div id = "filtros">
+    <div class = "filterBox" id = "filtros">
         <h1>FILTRAR POR</h1>
         <form action = "" id = "filtro">
         
@@ -47,45 +49,50 @@
         </form>
     </div>
     
-    <!-- PARAMETROS DE ORDENACION DE LOS ANUNCIOS -->
-    <div id = "ordenAnuncios">
-        <!-- ORDENAR POR -->
-        <select name="Orden">
-            <option value="byPrice-minMax">Ordenar por precio: Más bajo primero</option>
-            <option value="byPrice-maxMin">Ordenar por precio: Más alto primero</option>
-            <option value="byDate-mostRecent">Ordenar por fecha: Más reciente primero</option>
-            <option value="byDate-leastRecent">Ordenar por fecha: Más antiguo primero</option>
-        </select>
+    <div class = "rightBlock">
     
-        <!-- PAGINACION -->
-        <ul class="pager">
-            <li><a href="#">Anterior</a></li>
-            ##cortePaginacion##
-            <li><a href="#">##numPagina##</a></li>
-            ##cortePaginacion##
-            <li><a href="#">Siguiente</a></li>
-        </ul>
-    </div>
+        <!-- PARAMETROS DE ORDENACION DE LOS ANUNCIOS -->
+        <div class = "orderBox" id = "ordenAnuncios">
+            <!-- ORDENAR POR -->
+            <select name="Orden">
+                <option value="byPrice-minMax">Ordenar por precio: Más bajo primero</option>
+                <option value="byPrice-maxMin">Ordenar por precio: Más alto primero</option>
+                <option value="byDate-mostRecent">Ordenar por fecha: Más reciente primero</option>
+                <option value="byDate-leastRecent">Ordenar por fecha: Más antiguo primero</option>
+            </select>
+    
+            <!-- PAGINACION -->
+            <ul class="pager">
+                <li><a href="#">Anterior</a></li>
+                ##cortePaginacion##
+                <li><a href="#">##numPagina##</a></li>
+                ##cortePaginacion##
+                <li><a href="#">Siguiente</a></li>
+            </ul>
+        </div>
 	
-	<div id = "listaAnuncios">
-        <ul>
-            ##corteListaArticulos##
-            <li>
-                <a href="#">
-                    <div class = "bloqueAnuncio" id = "##idAnuncio##">
-                        <img class = "miniaturaAnuncio" src="##miniaturaAnuncio##" alt="miniatura"/>
-                        <span class = "tituloAnuncio" value="##tituloAnuncio##"/>
-                        <span class = "localizacionAnuncio" value="##localizacionAnuncio##"/>
-                        <span class = "precioAnuncio" value="##precioAnuncio##€"/>
-                        <span class = "fechaAnuncio" value="##fechaAnuncio##"/>
-                    </div>
-                </a>
-            </li>
-            ##corteListaArticulos##
-        </ul>
-    </div>
+        <div class = "listaAnuncios" id = "listaAnuncios">
+            <ul>
+                ##corteListaArticulos##
+                <li>
+                    <a href="#">
+                        <div class = "bloqueAnuncio" id = "##idAnuncio##">
+                            <img class = "miniaturaAnuncio" src="##miniaturaAnuncio##" width="220px" height="160px" alt="miniatura"/>
+                            <span class = "tituloAnuncio">##tituloAnuncio##</span>
+                            <span class = "localizacionAnuncio">##localizacionAnuncio##</span>
+                            <span class = "precioAnuncio">##precioAnuncio##€</span>
+                            <span class = "fechaAnuncio">##fechaAnuncio##</span>
+                        </div>
+                    </a>
+                </li>
+                ##corteListaArticulos##
+            </ul>
+        </div>
 	
-	<div id = "pie">Pie de Pagina</div>
+    </div>
+    
+	<!--<div id = "pie">Pie de Pagina</div>-->
+    </div>
 
 </body>
 </html>

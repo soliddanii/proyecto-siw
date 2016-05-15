@@ -1,0 +1,173 @@
+/***************************************************************/
+/******************** BLOQUE DE CONTENIDO **********************/
+/***************************************************************/
+.contenido{
+    width: 85%;
+    margin: auto;
+}
+
+/***************************************************************/
+/*********************** CAJA DE FILTROS ***********************/
+/***************************************************************/
+
+.filterBox{
+    font: 20px 'Roboto', Arial, Helvetica, sans-serif;
+    padding: 10px;
+    margin: 20px auto; /*top right bottom left*/ /*top-bottom right-left*/
+    border: solid 5px #AEE30F;
+    width: 20%;
+    float: left;
+}
+
+.filterBox *{
+    display: block;
+    margin: 10px auto;
+}
+
+.filterBox h1{
+    color: #13A83E;
+    text-align: center;
+    font-size: 24px;
+}
+
+.filterBox label{
+    color: #13A83E;
+    font-weight: bold;
+    text-align: left;
+    font-size: 16px;
+}
+
+.filterBox select{    
+     /* styling */
+    border: solid 5px #13A83E;
+    display: block;
+    padding: 0.5em 3.5em 0.5em 1em;
+    font-size: 18px;
+    width: 90%;
+    margin: auto;
+    
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+    background-image:
+        linear-gradient(45deg, transparent 50%, green 50%),
+        linear-gradient(135deg, green 50%, transparent 50%),
+        linear-gradient(to right, #13A83E, #13A83E);
+    background-position:
+        calc(100% - 20px) calc(1em + 2px),
+        calc(100% - 15px) calc(1em + 2px),
+        100% 0;
+    background-size:
+        5px 5px,
+        5px 5px,
+        2.2em 2.2em;
+    background-repeat: no-repeat;
+}
+
+.filterBox select:focus {
+    background-image:
+        linear-gradient(45deg, white 50%, transparent 50%),
+        linear-gradient(135deg, transparent 50%, white 50%),
+        linear-gradient(to right, #4B8A08, #4B8A08);
+    background-position:
+        calc(100% - 15px) 1em,
+        calc(100% - 20px) 1em,
+        100% 0;
+    background-size:
+        5px 5px,
+        5px 5px,
+        2.2em 2.2em;
+    background-repeat: no-repeat;
+    border-color: #4B8A08;
+    outline: 0;
+}
+
+.filterBox input[type="text"]{
+    border: solid 5px #13A83E;
+    font-size: 18px;
+    width: 80%;
+    padding: 8px;
+    outline: none;
+}
+
+.filterBox input[type="text"]:focus{
+    border: solid 5px #4B8A08;
+    outline: none;
+}
+
+.filterBox input[type="number"]{
+    border: solid 5px #13A83E;
+    font-size: 18px;
+    padding: 8px;
+    outline: none;
+}
+
+.filterBox input[type="number"]:focus{
+    border: solid 5px #4B8A08;
+    outline: none;
+}
+
+.filterBox input[type="submit"]{
+    font: 20px 'Roboto', Arial, Helvetica, sans-serif;
+    border: solid 5px #AB7250;
+    padding: 8px;
+    margin: auto;
+    width: 50%;
+    font-size: 24px;
+}
+
+.filterBox input[type="submit"]:hover{
+    border: solid 5px #865A40;
+}
+
+/***************************************************************/
+/******************** BLOQUE DE LA DERECHA *********************/
+/**********(el de la izquierda es la caja de filtros)***********/
+.rightBlock{
+    width: 75%;
+    margin: 20px auto; /*top right bottom left*/ /*top-bottom right-left*/
+    float: right;
+    margin-right: 8px;
+}
+
+.rightBlock li{
+    list-style-type: none;
+}
+
+.listaAnuncios li{
+    margin: 15px 0px;
+}
+
+.rightBlock ul {
+    margin:0;
+    padding: 0;
+}
+
+/***************************************************************/
+/********************* CAJA DE ORDENACION **********************/
+/***************************************************************/
+
+.orderBox{
+    font: 20px 'Roboto', Arial, Helvetica, sans-serif;
+    padding: 10px;
+    border: solid 5px #FAA8C6;
+    width: 100%;
+}
+
+.orderrBox *{
+    display: inline;
+    margin: 0px 8px;
+}
+
+/***************************************************************/
+/******************** CAJA DE CADA ANUNCIO *********************/
+/***************************************************************/
+.bloqueAnuncio{
+    font: 20px 'Roboto', Arial, Helvetica, sans-serif;
+    padding: 10px;
+    border: solid 5px #1C9CD1;
+    width: 100%;
+}
