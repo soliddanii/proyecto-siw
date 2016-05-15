@@ -11,24 +11,33 @@
 </head>
 <body>
 	##menu##
-	<div id = "background" >Background</div>
+    
+    <div class = "contenido">
 
-	<form action = "../php/controller.php?cmd=userView&id=4" method="POST" class = "buscar" id = "buscador">
-		<input type = "text" name = "titulo" placeholder = "Palabra Clave"/>
-		<input type = "text" name = "localizacion" placeholder = "Localización"/>
-		<input type = "submit" value = "Buscar">		
-	</form>
-
-	<div id = "categorias">
-		##corteCategorias##
-        <form class="hiddenForm" action = "../php/controller.php?cmd=userView&id=4" method="POST">
-            <input type="hidden" name="categoria" value="##idCategoria##">
-            <button type="submit" class = "categoriaItem">##categoria##</a>
+        <form action = "../php/controller.php?cmd=userView&id=4" method="POST" class = "buscador" id = "buscador">
+            <input type = "text" name = "titulo" placeholder = "Palabra Clave"/>
+            <input type = "text" name = "localizacion" placeholder = "Localización"/>
+            <input type = "submit" value = "Buscar">		
         </form>
-		##corteCategorias##
-	</div>
+
+        <div class = "botonesCategorias">
+        
+            ##corteListaErrores##
+            <div id = "errorMessage">##errorCode##: ##error##</div>
+            ##corteListaErrores##
+        
+            ##corteCategorias##
+            <form class="hiddenForm" action = "../php/controller.php?cmd=userView&id=4" method="POST">
+                <input type="hidden" name="categoria" value="##idCategoria##"/>
+                <button type="submit" class = "categoriaItem">##categoria##</a>
+            </form>
+            ##corteCategorias##
+        </div>
 	
-	<div id = "pie">Pie de Pagina</div>
+    </div>
+    
+	<div id = "pie">Proyecto SIW 2016 <br/> Daniel Catalán y Edson Benites <br/>Copyright © 2016</div>
+    
 
 </body>
 </html>

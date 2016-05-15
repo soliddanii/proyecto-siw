@@ -1,3 +1,19 @@
+/***************************************************************/
+/******************** BLOQUE DE CONTENIDO **********************/
+/***************************************************************/
+.contenido{
+    width: 85%;
+    margin: auto;
+}
+
+/***************************************************************/
+/******************** BLOQUE DE CATEGORIAS *********************/
+/***************************************************************/
+.botonesCategorias{
+    width: 80%;
+    margin: 40px auto;
+}
+
 form.hiddenForm{
     display:inline;
 }
@@ -13,25 +29,59 @@ button.categoriaItem {
 	font-weight: bold;
 	padding: 20px 18px;
 	text-decoration: none;
+    text-align: center;
 }
 
 button.categoriaItem:hover {
 	background-color:#68a54b;
 }
 
-.buscar input[type="submit"]{
+/***************************************************************/
+/*************** BLOQUE DE CUADROS DE BUSQUEDA******************/
+/***************************************************************/
+
+.buscador{
+    font: 20px 'Roboto', Arial, Helvetica, sans-serif;
+    width: 80%;
+    margin: 40px auto;
+    text-align:center;
+}
+
+.buscador input[type="submit"]{
     background-color:#DCB5D3;
     border: solid 5px #7C296A;
     padding: 10px;
+    font-size: 24px;
     outline: none;
 }
 
-.buscar input[type="text"]{
+.buscador input[type="submit"]:hover{
+    background-color: #B580A9;
+    cursor: pointer; 
+}
+
+.buscador input[type="text"]{
     padding: 10px;
+    min-width: 200px;
     border: solid 5px #c9c9c9;
+    font-size: 24px;
     outline: none;
 }
 
-.buscar input [type="text"]:focus {
+.buscador input [type="text"]:focus {
     border: solid 5px #969696;
+}
+
+/***************************************************************/
+/*********************** PIE DE PAGINA *************************/
+/***************************************************************/
+#pie{
+    font: 20px 'Roboto', Arial, Helvetica, sans-serif;
+    text-align:center;
+    font-size: 24px;    
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 20px;
 }

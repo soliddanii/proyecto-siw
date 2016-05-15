@@ -24,7 +24,7 @@ CREATE TABLE final_categoria(
 	CONSTRAINT PK_categoria PRIMARY KEY (idCategoria)
 );
 
-INSERT INTO final_categoria VALUES(0, 'Otros');
+INSERT INTO final_categoria VALUES(1, 'Otros');
 
 /* 
 *  TABLA ANUNCIO: 

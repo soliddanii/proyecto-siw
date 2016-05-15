@@ -171,3 +171,13 @@
     border: solid 5px #1C9CD1;
     width: 100%;
 }
+
+.bloqueAnuncio span.tituloAnuncio{
+    text-align: left;
+    vertical-align: top;
+}
+
+.bloqueAnuncio span.localizacionAnuncio{
+    float: right;
+    vertical-align: top;
+}

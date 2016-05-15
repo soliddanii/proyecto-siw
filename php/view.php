@@ -49,6 +49,32 @@
 			$page = str_replace("##error##", "", $page);
 		return $page;
 	}
+    
+    /*
+    * NUEVA FUNCION PARA ADMINISTRAR ERRORES MULTIPLES
+    * Estructura de cada error: ('errorCode' => 'code', 'message' => 'mensaje')
+    */
+    function processErrors($text, $errors){
+
+        if (strpos($text, '##corteListaErrores##') !== false) {
+            $trozos = explode('##corteListaErrores##', $text);
+        
+            if(is_null($errors) || empty($errors)){
+                $text = $trozos[0].$trozos[2];
+            }else{
+                $aux0 = "";
+                for($i=0; $i<count($errors); $i++) {
+                    $aux1 = $trozos[1];
+                    $aux1 = str_replace("##errorCode##", $errors[$i]['errorCode'], $aux1);
+                    $aux1 = str_replace("##error##", $errors[$i]['message'], $aux1);
+                    $aux0 .= $aux1;
+                }
+                $text = $trozos[0].$aux0.$trozos[2];
+            }
+        }
+        
+        return $text;
+	}
 
 	/*
 	*	Muestra una pagina distinta cuando ocurre un error inesperado
@@ -65,10 +91,12 @@
 	*	Carga la pagina principal de la web
 	*	Lanza un error si no se puede obtner la direccion del html
 	*/
-	function frontView($categories, $errorMessage) {
+	function frontView($categories, $errores) {
 
 		$pathFront = "../html/front.html";				
 		$text = file_get_contents($pathFront) or exit("Error frontView, [$pathFront]");
+        $text = processErrors($text, $errores);
+        
 		$trozos = explode("##corteCategorias##", $text);
 		$aux0 = "";
 		foreach ($categories as $key => $value) {
@@ -78,7 +106,7 @@
             $aux0 .= $aux1;
         }
 		$text = $trozos[0].$aux0.$trozos[2];
-		$text = error($text,$errorMessage);
+		
 		echo chargeMenu($text);
 		
 	}
@@ -113,10 +141,11 @@
     *   Carga la pagina para ver la lista de articulos / anuncios
     *   Lanza error si no se puede obtener la direccion del html
     */
-    function browserView($categories, $anuncios) {
+    function browserView($categories, $anuncios, $errores) {
         
         $pathFront = "../html/browser.html";
         $text = file_get_contents($pathFront) or exit("Error browserView, [$pathFront]");
+        $text = processErrors($text, $errores);
         
         //Carcar las categorias en el select
         $trozos = explode("##corteCategorias##", $text);
@@ -152,11 +181,11 @@
     *   Carga la pagina para publicar un anuncio nuevo
     *   Lanza error si no se puede obtener la direccion del html
     */
-    function newAnuncioView($categories, $errorMessage) {
+    function newAnuncioView($categories, $errores) {
         
         $pathFront = "../html/newanuncio.html";
         $text = file_get_contents($pathFront) or exit("Error newAnuncioView, [$pathFront]");
-        $text = error($text,$errorMessage);
+        $text = processErrors($text, $errores);
         $trozos = explode("##corteCategorias##", $text);
 		$aux0 = "";
         foreach ($categories as $key => $value) {

@@ -70,6 +70,10 @@
                 <li><a href="#">Siguiente</a></li>
             </ul>
         </div>
+        
+        ##corteListaErrores##
+        <div id = "errorMessage">##errorCode##: ##error##</div>
+        ##corteListaErrores##
 	
         <div class = "listaAnuncios" id = "listaAnuncios">
             <ul>
@@ -79,7 +83,7 @@
                         <div class = "bloqueAnuncio" id = "##idAnuncio##">
                             <img class = "miniaturaAnuncio" src="##miniaturaAnuncio##" width="220px" height="160px" alt="miniatura"/>
                             <span class = "tituloAnuncio">##tituloAnuncio##</span>
-                            <span class = "localizacionAnuncio">##localizacionAnuncio##</span>
+                            <span class = "localizacionAnuncio">Localización: ##localizacionAnuncio##</span>
                             <span class = "precioAnuncio">##precioAnuncio##€</span>
                             <span class = "fechaAnuncio">##fechaAnuncio##</span>
                         </div>

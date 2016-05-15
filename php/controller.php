@@ -44,8 +44,9 @@
 			switch ($id) {
                 case '0':
                     //Pagina Principal
-                    $data = chargeCategories();	
-                    frontView($data, '');
+                    //[0] = data; [1] = errores
+                    $dataCategorias = chargeCategories();
+                    frontView($dataCategorias[0], $dataCategorias[1]);
                     break;
                     
 				case '1':
@@ -65,15 +66,16 @@
 
                 case '4':
                     //Pagina de navegador
-                    $categorias = chargeCategories();
-                    $anuncios = chargeAnuncios();
-                    browserView($categorias, $anuncios);
+                    //[0] = data; [1] = errores
+                    $dataCategorias = chargeCategories();
+                    $dataAnuncios = chargeAnuncios(); 
+                    browserView($dataCategorias[0], $dataAnuncios[0], array_merge($dataAnuncios[1],$dataCategorias[1]));
                     break;
                     
                 case '5':
                     //Pagina de nuevo anuncio
                     $categorias = chargeCategories();	
-                    newAnuncioView($categorias, '');
+                    newAnuncioView($categorias, null);
                     break;
                     
 				default:

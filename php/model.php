@@ -259,7 +259,11 @@
 	}
     
     function chargeAnuncios(){
-
+    
+        //Array para guardar los posibles errores que encontremos
+        $errorList = array(); //Array de arrays: error("errorCode" => "code", "message" => "mensaje" )
+        
+        //Establecer la conexion a la BBDD
 		$con    = new Connection();			
 		$facade = new Facade($con);
 
@@ -301,9 +305,12 @@
         
 		$result = $facade->getAnuncios($condiciones, $columnNameOrder, $order);
         
+        //Inicializacion de los datos
+        $data = array();
+ 
 		if($result){
 			if(mysqli_num_rows($result) > 0) {
-				$data = array();
+				
 				while($row = mysqli_fetch_array($result)) {
 					$temp_data = array('id'=>$row['idAnuncio'], 'titulo'=>$row['titulo'], 
                     'localizacion'=>$row['localizacion'], 'precio'=>$row['precio'], 'fecha'=>$row['fecha'], 'miniatura'=>$row['small']);
@@ -313,13 +320,15 @@
                     }
                     array_push($data, $temp_data);
 				}
-				return $data;
-
+                
 			}else
-				echo "Error al realizar consulta";
-		}else
-			echo "Error con acceso a bbdd";
-
+				array_push($errorList, array('errorCode' => '2', 'message' => "No se ha obtenido ningún dato"));
+		}else{
+			array_push($errorList, array('errorCode' => '1', 'message' => "Error al consultar la BBDD"));
+        }
+        
+        //Devolvemos los datos y los reportes de errores (si hay)
+        return array($data, $errorList);
 
 	}
     
@@ -327,24 +336,33 @@
 	// 							Gestión de Categorias 
 	/////////////////////////////////////////////////////////////////////////
 	function chargeCategories(){
+    
+        //Array para guardar los posibles errores que encontremos
+        $errorList = array(); //Array de arrays: error("errorCode" => "code", "message" => "mensaje" )
 
+        //Establecer la conexion a la BBDD
 		$con    = new Connection();			
 		$facade = new Facade($con);
 
 		$result = $facade->getCategories();
 
+        //Inicializacion de los datos
+        $data = array();
+        
 		if($result){
 			if(mysqli_num_rows($result) > 0) {
-				$data = array();
+
 				while($row = mysqli_fetch_array($result)) {
 					$data[$row['idCategoria']] = $row['categoria'];
 				}
-				return $data;
 
 			}else
-				echo "Error al realizar consulta";
-		}else
-			echo "Error con acceso a bbdd";
-
+				array_push($errorList, array('errorCode' => '2', 'message' => "No se ha obtenido ningúna categoria"));
+		}else{
+			array_push($errorList, array('errorCode' => '1', 'message' => "Error al consultar la BBDD"));
+        }
+        
+        //Devolvemos los datos y los reportes de errores (si hay)
+        return array($data, $errorList);
 	}
 ?>

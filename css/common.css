@@ -148,3 +148,33 @@ body {
     border: solid 5px #7401DF;
 }
 
+/***************************************************************/
+/************** MENSAJES DE INFO, ERROR Y AVISO ****************/
+/***************************************************************/
+
+#errorMessage{
+    font: 20px 'Roboto', Arial, Helvetica, sans-serif;
+    padding: 10px;
+    border: solid 5px #7A2018;
+    background-color: #FF9389;
+    color: #5A0700;
+    width: 100%;
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#warningMessage{
+    font: 20px 'Roboto', Arial, Helvetica, sans-serif;
+    padding: 10px;
+    border: solid 5px #905600;
+    background-color: #FFC977;
+    color: #905600;
+    width: 100%;
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+
