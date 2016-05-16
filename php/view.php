@@ -115,11 +115,11 @@
 	*	Carga la pagina para realizar el login de usuarios
 	*	Lanza un error si no se puede obtner la direccion del html
 	*/
-	function loginView($errorMessage) {
+	function loginView($errors) {
 
 		$pathFront = "../html/login.html";
 		$text = file_get_contents($pathFront) or exit("Error signupView, [$pathFront]");
-		$text = error($text,$errorMessage);
+		$text = processErrors($text, $errors);
 		echo chargeMenu($text);
 
 	}
@@ -128,11 +128,11 @@
 	*	Carga la pagina para realizar el registro de usuarios
 	*	Lanza un error si no se puede obtner la direccion del html
 	*/
-	function signUpView($errorMessage) {
+	function signUpView($errors) {
 
 		$pathFront = "../html/signup.html";
 		$text = file_get_contents($pathFront) or exit("Error signupView, [$pathFront]");
-		$text = error($text,$errorMessage);
+		$text = processErrors($text, $errors);
 		echo chargeMenu($text);
 
 	}

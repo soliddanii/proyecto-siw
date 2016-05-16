@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang = "es-Es">
 <head>
     <meta charset="utf-8">
@@ -10,24 +10,31 @@
     
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="../css/common.css">
-	<link rel="stylesheet" type="text/css" href="../css/front.css">
+	<link rel="stylesheet" type="text/css" href="../css/login.css">
     
 	<title>Iniciar Sesión</title>
 </head>
 <body>
 	##menu##
-
-	<form action = "../php/controller.php?cmd=userCmd&id=2" method="post" id = "login">
-		<div id = "logoLO" ><a href="">Logo Login</a></div>
-		<input type = "text" name = "name" placeholder = "Nombre de Usuario" required>	
-		<input type = "password" name = "passwd0" placeholder = "Contraseña" required>
-		<a href="../php/controller.php?cmd=userView&id=3" id = "passwdlost" >He olvidado mi contraseña</a>
-		<input type = "submit" id = "enter" value = "Iniciar Sesión">
-		<a href="../php/controller.php?cmd=userView&id=1" id = "newacc" >Crear Cuenta</a>
-		<span id = "error">##error##</span>
-	</form>
+    
+    <div class = "contenido">
+    
+        <form action = "../php/controller.php?cmd=userCmd&id=2" method="POST" id = "login" class = "loginForm">
+        
+            <img id = "logoLO" src="../images/logoBig.jpg" height="210" width="180"></img>
+            <input type = "text" id = "name" name = "name" placeholder = "Nombre de Usuario" required />	
+            <input type = "password" id = "passwd0" name = "passwd0" placeholder = "Contraseña" required />
+            <input type = "submit" id = "enter" value = "Iniciar Sesión"/>
+            <a href="../php/controller.php?cmd=userView&id=3" id = "passwdlost" >He olvidado mi contraseña</a>
+            <a href="../php/controller.php?cmd=userView&id=1" id = "newacc" >Crear una Cuenta Nueva</a>
+            
+        </form>
+        
+        ##corteListaErrores##
+        <div id = "errorMessage">##errorCode##: ##error##</div>
+        ##corteListaErrores##
 	
-	<div id = "pie">Pie de Pagina</div>
+	</div>
 
 </body>
 </html>

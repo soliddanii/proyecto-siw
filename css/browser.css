@@ -112,6 +112,7 @@
 
 .filterBox input[type="submit"]{
     font: 20px 'Roboto', Arial, Helvetica, sans-serif;
+    background-color: #DAB39D;
     border: solid 5px #AB7250;
     padding: 8px;
     margin: auto;
@@ -121,6 +122,7 @@
 
 .filterBox input[type="submit"]:hover{
     border: solid 5px #865A40;
+    cursor: pointer;
 }
 
 /***************************************************************/

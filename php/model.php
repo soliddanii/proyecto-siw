@@ -31,19 +31,25 @@
 
 	/*
 	*	Return:
-	*		 1 : usuario ya existe
 	*		 0 : usuario registrado correctamente	
-	*   	-1 : error al registrar o no se encontraron variables POST
+	*    array : Se ha producido algun error y se devuelve con los detalles
 	*/
 	function signUp(){
     
-		if(isset($_POST["nameuser"]) && isset($_POST["name"]) && isset($_POST["email"]) 
+        //Array para guardar los posibles errores que encontremos
+        $errorList = array(); //Array de arrays: error("errorCode" => "code", "message" => "mensaje" )
+    
+		if(isset($_POST["nameuser"]) && isset($_POST["email"]) 
 			&& isset($_POST["passwd0"]) && isset($_POST["passwd1"])){
             
+            $name = '';
 			$user  = filter_var($_POST["nameuser"],FILTER_SANITIZE_STRING);
-			$name  = filter_var($_POST["name"],FILTER_SANITIZE_STRING);
 			$email = filter_var($_POST["email"],FILTER_SANITIZE_STRING);
 			$pwd  = filter_var($_POST["passwd0"],FILTER_SANITIZE_STRING);
+            
+            if(isset($_POST["name"])){
+                $name  = filter_var($_POST["name"],FILTER_SANITIZE_STRING);
+            }
 
 			$con = new Connection();
 			$facade = new Facade($con);
@@ -51,7 +57,7 @@
 			if($facade->existNameUser($user)){
 
 				$con->close();
-				return "1";
+				array_push($errorList, array('errorCode' => '1', 'message' => "Lo sentimos, el nombre de usuario ya existe."));
 
 			}else{
 
@@ -66,18 +72,19 @@
 					
 					$con->close();
 
-					return "0"; 								
+					return '0'; 								
 
 				}else{
-
 					$con->close();
-					return "-1";
-
+					array_push($errorList, array('errorCode' => '2', 'message' => "Se ha producido un error con la BBDD"));
 				}				
 			}
 		}else {
-			return "-1";
+			array_push($errorList, array('errorCode' => '-1', 'message' => "No se han proporcionado todos los datos necesarios."));
 		}		
+        
+        //Devolvemos los datos y los reportes de errores (si hay)
+        return $errorList;
 
 	}
 
@@ -90,12 +97,16 @@
 	*
 	*/
 	function loginUser(){
-
+    
+        //Array para guardar los posibles errores que encontremos
+        $errorList = array(); //Array de arrays: error("errorCode" => "code", "message" => "mensaje" )
+        
 		if(isset($_POST["name"]) && isset($_POST["passwd0"])){
 			
 			$user = filter_var($_POST["name"],FILTER_SANITIZE_STRING);
 			$pwd  = filter_var($_POST["passwd0"],FILTER_SANITIZE_STRING);
 			
+            //Establecer la conexion a la BBDD
 			$con    = new Connection();			
 			$facade = new Facade($con);
 
@@ -105,19 +116,20 @@
 				setVarSession("idUser",$data["idUser"]);
 				setVarSession("user",$data["user"]);
 				$con->close();
-				return "0";
+				return '0';
 
 			}else {
-
 				$con->close();
-				return "1";
-
+				array_push($errorList, array('errorCode' => '1', 'message' => "El usuario no existe, vuelva a intentarlo."));
 			}				
 
 		}else {
 			$con->close();
-			return "-1";
+			array_push($errorList, array('errorCode' => '-1', 'message' => "No se ha proporcionado un nick o una contraseña."));
 		}
+        
+        //Devolvemos los datos y los reportes de errores (si hay)
+        return $errorList;
 
 	}
 

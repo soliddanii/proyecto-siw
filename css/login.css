@@ -1,0 +1,73 @@
+/***************************************************************/
+/******************** BLOQUE DE CONTENIDO **********************/
+/***************************************************************/
+.contenido{
+    width: 40%;
+    margin: auto;
+    margin-top: 20px;
+    border: solid 5px #A9E2F3;
+    text-align:center;
+}
+
+/***************************************************************/
+/******************** BLOQUE DE FORMULARIO *********************/
+/***************************************************************/
+
+.loginForm *{
+    font: 20px 'Roboto', Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    display: block;
+    margin: auto;
+    margin-bottom: 18px;
+}
+
+.loginForm input[type="text"], .loginForm input[type="password"]{
+    width: 40%;
+    background-color: #E0F2F7;
+    border: solid 5px #0174DF;
+    padding: 10px;
+    outline: none;
+}
+
+.loginForm input[type="text"]:focus, .loginForm input[type="password"]:focus{
+    background-color: #E0F2F7;
+    border: solid 5px #0431B4;
+}
+
+.loginForm input[type="submit"]{
+    width: 40%;
+    background-color: #ECCEF5;
+    border: solid 5px #6A0888;
+    padding: 10px;
+    cursor: pointer;
+    outline: none;
+}
+
+.loginForm input[type="submit"]:hover{
+    background-color: #D293E6;
+}
+
+.loginForm a#passwdlost{
+    
+}
+
+.loginForm a#newacc{
+    background-color: #81F79F;
+    border: solid 5px green;
+    color: black;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-align: center;	
+    text-decoration: none;
+    display: inline-block;
+}
+
+.loginForm a#newacc:hover{
+    background-color: green;
+    color: white;
+}
+
+#errorMessage{
+    width: 80%;
+    margin: 8px auto;
+}

@@ -1,0 +1,58 @@
+/***************************************************************/
+/******************** BLOQUE DE CONTENIDO **********************/
+/***************************************************************/
+.contenido{
+    width: 40%;
+    margin: auto;
+    margin-top: 20px;
+    border: solid 5px #A9E2F3;
+    text-align:center;
+}
+
+/***************************************************************/
+/******************** BLOQUE DE FORMULARIO *********************/
+/***************************************************************/
+
+.signupForm *{
+    font: 20px 'Roboto', Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    display: block;
+    margin: auto;
+    margin-bottom: 18px;
+}
+
+.signupForm input[type="text"], .signupForm input[type="password"]{
+    width: 40%;
+    background-color: #E0F2F7;
+    border: solid 5px #0174DF;
+    padding: 10px;
+    outline: none;
+}
+
+.signupForm input[type="text"]:focus, .signupForm input[type="password"]:focus{
+    background-color: #E0F2F7;
+    border: solid 5px #0431B4;
+}
+
+.signupForm input[type="submit"]{
+    width: 40%;
+    background-color: #ECCEF5;
+    border: solid 5px #6A0888;
+    padding: 10px;
+    cursor: pointer;
+    outline: none;
+}
+
+.signupForm input[type="submit"]:hover{
+    background-color: #D293E6;
+}
+
+.signupForm h1{
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+#errorMessage{
+    width: 80%;
+    margin: 8px auto;
+}

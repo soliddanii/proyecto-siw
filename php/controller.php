@@ -51,12 +51,12 @@
                     
 				case '1':
                     //Pagina de registro
-					signUpView("");
+					signUpView(null);
 					break;
 				
 				case '2':
                     //Pagina de login
-					loginView();
+					loginView(null);
 					break;
 
 				case '3':
@@ -90,14 +90,12 @@
 				case '1':				
 					$ret = signUp();
 					
-					if ($ret == 1)
-						signUpView("Nombre de usuario no disponible");
-					elseif ($ret == 0) {
+                    if ($ret == 0) {
 						header("Location:controller.php");
  						exit;
- 					}
-					elseif ($ret == -1)
-						errorView("userCmd-signUp");
+ 					}else{
+                        signUpView($ret);
+                    }
 					break;
 				
 				case '2':
@@ -106,11 +104,9 @@
 					if ($ret == 0){
 						header("Location:controller.php");
  						exit;
- 					}
-					elseif ($ret == 1)
-						loginView("El usuario no existe, vuelva a intentarlo");
-					elseif ($ret == -1)
-						errorView("userCmd-loginUser");
+ 					}else{
+                        loginView($ret);
+                    }
 					break;
 
 				case '3':
