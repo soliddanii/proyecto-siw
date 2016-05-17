@@ -133,6 +133,14 @@ class Facade {
 		return $this->con->action($query);
 	}
     
+    /*
+	*	Obtiene todas las imagenes de un anuncio de la bbdd	
+	*/
+	public function getImages($idAnuncio){
+		$query = "SELECT fi.IdImagen fi.small, fi.medium, fi.big FROM final_imagen fi WHERE idAnuncio = '".$idAnuncio."'";
+		return $this->con->action($query);
+	}
+    
       
     /*
 	*	Añade un nuevo anuncio a la bbdd	
@@ -167,8 +175,8 @@ class Facade {
     */
     public function getAnuncios($condiciones, $columnNameOrder, $order){
         $query = "SELECT fa.idAnuncio, fa.idCategoria, fa.precio, fa.fecha, fa.titulo, fa.localizacion, fi.small
-                  FROM final_anuncio fa LEFT JOIN final_imagen fi ON fi.idImagen = 
-                  (SELECT MIN(idImagen) FROM final_imagen WHERE idAnuncio = fa.idAnuncio)";
+                    FROM final_anuncio fa LEFT JOIN final_imagen fi ON (fi.idAnuncio = fa.idAnuncio AND
+                        fi.idImagen = (SELECT MIN(idImagen) FROM final_imagen WHERE idAnuncio = fa.idAnuncio))";
                   
         $aux = "WHERE";
         

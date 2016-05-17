@@ -214,5 +214,28 @@
 		$text = str_replace("##password##", $password, $text);
 		echo chargeMenu($text);
 	}
+    
+    /*
+	*	Carga la pagina principal de la web
+	*	Lanza un error si no se puede obtner la direccion del html
+	*/
+	function anuncioView($data, $errores) {
 
+		$pathFront = "../html/anuncio.html";				
+		$text = file_get_contents($pathFront) or exit("Error frontView, [$pathFront]");
+        $text = processErrors($text, $errores);
+        
+		/*$trozos = explode("##corteCategorias##", $text);
+		$aux0 = "";
+		foreach ($categories as $key => $value) {
+            $aux1 = $trozos[1];
+            $aux1 = str_replace("##idCategoria##", $key, $aux1);
+            $aux1 = str_replace("##categoria##", $value, $aux1);
+            $aux0 .= $aux1;
+        }
+		$text = $trozos[0].$aux0.$trozos[2];*/
+		
+		echo chargeMenu($text);
+		
+	}
 ?>

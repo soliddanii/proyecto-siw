@@ -1,0 +1,32 @@
+/***************************************************************/
+/******************** BLOQUE DE CONTENIDO **********************/
+/***************************************************************/
+.contenido{
+    width: 85%;
+    margin: auto;
+}
+
+.contenido .bloqueImagenes{
+    margin: 30px auto;
+    padding: 10px;
+    float: left;
+    height: 80px;
+    width: 40%;
+}
+
+.contenido .bloqueInformacion{
+    border: solid 5px rgb(31, 176, 75);
+    margin: 30px auto;
+    padding: 10px;
+    float: right;
+    height: 80px;
+    width: 40%;
+}
+
+.contenido .bloqueDescripcion{
+
+}
+
+.contenido .bloqueComentarios{
+
+}

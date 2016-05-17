@@ -1,5 +1,8 @@
 <?php
    
+   //temp for debug
+   require_once '../chromephp/ChromePhp.php';
+    
 class Upload {
 
     /*
@@ -9,8 +12,9 @@ class Upload {
     *       5 : El tamaño de la imagen es mayor que el permitido
     */
     public function processUploads($idAnuncio){
-    
-        $error = '0';
+
+        //Array para guardar los posibles errores que encontremos
+        $errorList = array(); //Array de arrays: error("errorCode" => "code", "message" => "mensaje" )
         $imageInfo = array();
         
         if (!empty($_FILES)) {
@@ -25,7 +29,7 @@ class Upload {
                     
                 //Check file size (MAX 10MB)
                 if ($_FILES["file"]["size"][$i] > 10000000) {
-                    $error = '5';
+                    array_push($errorList, array('errorCode' => '5', 'message' => "El tamaño de la imagen ".($i+1)." es mayor que el permitido."));
                     continue;
                 }
                 
@@ -33,7 +37,7 @@ class Upload {
                 $ext = pathinfo($_FILES['file']['name'][$i], PATHINFO_EXTENSION);
                 $allowed =  array('gif','png','jpg','jpeg');
                 if(!in_array($ext,$allowed) ) {
-                    $error = '4';
+                    array_push($errorList, array('errorCode' => '5', 'message' => "El formato de la imagen ".($i+1)." no es válido."));
                     continue;
                 }
                 
@@ -56,7 +60,7 @@ class Upload {
         }
         
         //Prepare the return informacion (error info + image path info)
-        $returnArray = array('error' => $error, 'info' => $imageInfo);
+        $returnArray = array($errorList, $imageInfo);
         return $returnArray;
     }
     
@@ -75,11 +79,15 @@ class Upload {
         // Get original image x y
         list($w, $h) = getimagesize($_FILES['file']['tmp_name'][$idx]);
   
-        // Calculate new image size with ratio 
-        $ratio = max($width/$w, $height/$h);
-        $h = ceil($height / $ratio);
-        $x = ($w - $width / $ratio) / 2;
-        $w = ceil($width / $ratio);
+        //Calcular nuevas dimensiones a partir del aspect ratio
+        $ratio = $w / $h;
+        if( $ratio > 1) {
+            $width = $width;
+            $height = $height/$ratio;
+        }else{
+            $width = $width*$ratio;
+            $height = $height;
+        }        
    
         // New File Path [ ejemplo: path/anuncio-x/i_big.jpg ]
         $newFilePath = $path.$ds.$idx.'_'.$name.'.'.$ext; 
@@ -90,7 +98,7 @@ class Upload {
         /* create image from string */
         $image = imagecreatefromstring($imgString);
         $tmp = imagecreatetruecolor($width, $height);
-        imagecopyresampled($tmp, $image, 0, 0, $x, 0, $width, $height, $w, $h);
+        imagecopyresampled($tmp, $image, 0, 0, 0, 0, $width, $height, $w, $h);
         
         /* Save image */
         switch ($_FILES['file']['type'][$idx]) {

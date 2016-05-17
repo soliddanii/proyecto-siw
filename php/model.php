@@ -124,7 +124,6 @@
 			}				
 
 		}else {
-			$con->close();
 			array_push($errorList, array('errorCode' => '-1', 'message' => "No se ha proporcionado un nick o una contraseña."));
 		}
         
@@ -187,13 +186,23 @@
 	*/
 	function newAnuncio(){
 
+        //Array para guardar los posibles errores que encontremos
+        $errorList = array(); //Array de arrays: error("errorCode" => "code", "message" => "mensaje" )
+        $return = '0';
+        
         //Obtener los datos del usuario que crea el anuncio
         if(isset($_SESSION["idUser"])){
             $idUser = $_SESSION["idUser"];
         }else{
-            return '1';
+            array_push($errorList, array('errorCode' => '1', 'message' => "No existe ninguna sesión de usuario."));
+            return array('1',$errorList);
         }
-
+            
+        
+        //Conectar con la base de datos
+        $con    = new Connection();			
+        $facade = new Facade($con);
+            
         //Obtener los datos del anuncio
 		if(isset($_POST["titulo"]) && isset($_POST["localizacion"])){
 			
@@ -204,7 +213,8 @@
             if (isset($_POST["categoria"]) && is_numeric($_POST["categoria"])){
                 $idCategoria = intval($_POST["categoria"]);
             }else{
-                return '3';
+                array_push($errorList, array('errorCode' => '3', 'message' => "Los valores recibidos son erroneos o falta alguno."));
+                return array('1',$errorList);
             }
             
             $telefono = "";
@@ -221,53 +231,59 @@
             if (isset($_POST["descripcion"])){
                 $descripcion = filter_var($_POST["descripcion"], FILTER_SANITIZE_STRING);
             }
-
-            //Conectar con la base de datos
-			$con    = new Connection();			
-			$facade = new Facade($con);
-
+        
             $data = array("idUser"=>$idUser, "idCategoria"=>$idCategoria, "precio"=>$precio, "titulo"=>$titulo, 
                     "descripcion"=>$descripcion, "localizacion"=>$localizacion, "telefono"=>$telefono);				
 				
 			if(!$facade->addAnuncio($data)){
 				$con->close();
-                return '2';
+                array_push($errorList, array('errorCode' => '2', 'message' => "Se ha producido un error con la BBDD."));
+                return array('1',$errorList);
             }
 
 		}else {
-			return '3';
+            $con->close();
+			array_push($errorList, array('errorCode' => '3', 'message' => "Los valores recibidos son erroneos o falta alguno."));
+            return array('1',$errorList);
 		}
         
+            
         //Obtener y procesar las imagenes
         $idAnuncio = $facade->getLastId();
         if(!$idAnuncio || $idAnuncio == 0){
-            return '2';
+            $con->close();
+            array_push($errorList, array('errorCode' => '2.1', 'message' => "Se ha producido un error al recuperar el indice del Anuncio."));
+            return array('1',$errorList);
         }
         
         $upload = new Upload();
         $ret = $upload->processUploads($idAnuncio);
-        $ret_err = $ret['error'];
-        if ($ret_err != '0'){
-            $con->close();
-            return $ret;
-        }
+        $ret_err = $ret[0];
+        $ret_inf = $ret[1];
         
-        //ChromePhp::log($ret['info']);
-        $ret_inf = $ret['info'];
-        for($i=0; $i<count($ret_inf); $i++){
+        array_merge($errorList, $ret_err);
+        
+        if (empty($ret_inf)){
+            //No hay info de ninguna imagen
+            $con->close();
+            return array('1',$errorList);
+        }else{
+            //Almenos una imagen ha sido guardada
+            for($i=0; $i<count($ret_inf); $i++){
             
-            $data = array("idAnuncio"=>$idAnuncio, "idImagen"=>$ret_inf[$i][0], 
-            "big"=>$ret_inf[$i][3], "medium"=>$ret_inf[$i][2], "small"=>$ret_inf[$i][1]);
+                $data = array("idAnuncio"=>$idAnuncio, "idImagen"=>$ret_inf[$i][0], 
+                "big"=>$ret_inf[$i][3], "medium"=>$ret_inf[$i][2], "small"=>$ret_inf[$i][1]);
             
-            if(!$facade->addImage($data)){
-				$con->close();
-                return '2';
-            }
-            
+                if(!$facade->addImage($data)){
+                    $return = '1';
+                    array_push($errorList, array('errorCode' => '2', 'message' => "Se ha producido un error con la BBDD."));
+                }
+            }  
         }
         
         $con->close();
-        return '0';
+        return array($return, $errorList);
+         
 	}
     
     function chargeAnuncios(){
@@ -334,15 +350,44 @@
 				}
                 
 			}else
-				array_push($errorList, array('errorCode' => '2', 'message' => "No se ha obtenido ningún dato"));
+				array_push($errorList, array('errorCode' => '2', 'message' => "No se ha encontrado ningún artículo."));
 		}else{
-			array_push($errorList, array('errorCode' => '1', 'message' => "Error al consultar la BBDD"));
+			array_push($errorList, array('errorCode' => '1', 'message' => "Error al consultar la BBDD."));
         }
         
         //Devolvemos los datos y los reportes de errores (si hay)
+        //ChromePhp::log($data);
         return array($data, $errorList);
 
 	}
+    
+    function chargeAnuncio(){
+        //Array para guardar los posibles errores que encontremos
+        $errorList = array(); //Array de arrays: error("errorCode" => "code", "message" => "mensaje" )
+        
+        //Inicializamos en array de datos
+        $data = array();
+        
+        //Establecer la conexion a la BBDD
+		$con    = new Connection();			
+		$facade = new Facade($con);
+        
+        if (isset($_POST["idAnuncio"]) && is_numeric($_POST["idAnuncio"])){
+            $idAnuncio = intval($_POST["idAnuncio"]);
+            
+            $result = $facade->getAnuncio($idAnuncio);
+            
+            
+        }else{
+            array_push($errorList, array('errorCode' => '1', 'message' => "No se ha especificado el anuncio a recuperar."));
+        }
+    
+        
+    
+    
+        //Devolvemos los datos y los reportes de errores (si hay)
+        return array($data, $errorList);
+    }
     
 	/////////////////////////////////////////////////////////////////////////
 	// 							Gestión de Categorias 

@@ -1,0 +1,150 @@
+/***************************************************************/
+/******************** BLOQUE DE CONTENIDO **********************/
+/***************************************************************/
+.contenido{
+    width: 85%;
+    margin: auto;
+    margin-top: 20px;
+    border: solid 5px #A9E2F3;
+    font: 20px 'Roboto', Arial, Helvetica, sans-serif;
+    display: block;
+}
+
+.contenido #linea1{
+    width: 75%;
+    margin: auto;
+    padding: 40px;
+}
+
+.contenido #linea1 #titulo{
+    float: left;
+    width: 46.5%;
+}
+
+.contenido #linea1 #localizacion{
+    float: right;
+    width: 40%;
+}
+
+.contenido #linea2{
+    width: 75%;
+    margin: auto;
+    padding: 40px;
+}
+
+.contenido #linea2 #linea2sub{
+    float: right;
+    width: 35%;
+    text-align: right;
+}
+
+.contenido #descripcionContainer{
+    width: 75%;
+    margin: auto;
+    padding: 0px 40px;
+}
+
+.contenido #descripcionContainer #descripcion{
+    width: 100%;
+    margin: auto;
+    resize: vertical;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.contenido h1{
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#errorMessage{
+    width: 45%;
+    display:block;
+    margin: 20px auto;
+}
+
+.contenido input, .contenido textarea{
+    border: solid 5px #13A83E;
+    font-size: 18px;
+    padding: 8px;
+    outline: none;
+}
+
+.contenido input:focus, .contenido textarea:focus{
+    border: solid 5px #4B8A08;
+    outline: none;
+}
+
+.contenido button[type="submit"]{
+    text-align: center;
+    margin: auto;
+    display:block;
+    margin-bottom: 20px;
+    width: 20%;
+    border: solid 5px #B40486;
+    background-color: #F6CEF5;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 8px;
+    outline: none;
+}
+
+.contenido button[type="submit"]:hover{
+    background-color: #FE2EC8;
+    color: white;
+}
+
+
+.contenido select{    
+     /* styling */
+    border: solid 5px #13A83E;
+    padding: 0.5em 3.5em 0.5em 1em;
+    font-size: 18px;
+    
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+    background-image:
+        linear-gradient(45deg, transparent 50%, green 50%),
+        linear-gradient(135deg, green 50%, transparent 50%),
+        linear-gradient(to right, #13A83E, #13A83E);
+    background-position:
+        calc(100% - 20px) calc(1em + 2px),
+        calc(100% - 15px) calc(1em + 2px),
+        100% 0;
+    background-size:
+        5px 5px,
+        5px 5px,
+        2.2em 2.2em;
+    background-repeat: no-repeat;
+}
+
+.contenido select:focus {
+    background-image:
+        linear-gradient(45deg, white 50%, transparent 50%),
+        linear-gradient(135deg, transparent 50%, white 50%),
+        linear-gradient(to right, #4B8A08, #4B8A08);
+    background-position:
+        calc(100% - 15px) 1em,
+        calc(100% - 20px) 1em,
+        100% 0;
+    background-size:
+        5px 5px,
+        5px 5px,
+        2.2em 2.2em;
+    background-repeat: no-repeat;
+    border-color: #4B8A08;
+    outline: 0;
+}
+
+.dropzone{
+    width: 75%;
+    margin: 20px auto;
+    border: solid 5px #FAAC58;
+    background-color: #F5ECCE;
+}

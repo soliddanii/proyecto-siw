@@ -36,7 +36,13 @@
                 formData.append("categoria", $("#categoria").val());
                 formData.append("descripcion", $("#descripcion").val());
             });
+            
+            this.on("success", function(file, response) {
+                //console.log(response);
+                $("html").html(response);
+            });
         }
+        
     };  
 });
 

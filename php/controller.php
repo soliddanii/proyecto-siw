@@ -74,8 +74,14 @@
                     
                 case '5':
                     //Pagina de nuevo anuncio
-                    $categorias = chargeCategories();	
-                    newAnuncioView($categorias, null);
+                    $dataCategorias = chargeCategories();	
+                    newAnuncioView($dataCategorias[0], $dataCategorias[1]);
+                    break;
+                    
+                case '7':
+                    //Pagina de anuncio
+                    $dataAnuncio = chargeAnuncio();
+                    anuncioView($dataAnuncio[0], $dataAnuncio[1]);
                     break;
                     
 				default:
@@ -127,22 +133,14 @@
                     
                 case '5':
                     $ret = newAnuncio();
-                    if ($ret == '0'){
+                    if ($ret[0] == '0'){
                         //Si todo se ha realizado correctamente:
                         //Redirigir al usuario a la pagina del anuncio
+                        $dataCategorias = chargeCategories();
+                        newAnuncioView($dataCategorias[0], array_merge($dataCategorias[1],$ret[1]));     
                     }else{
-                        $categorias = chargeCategories();
-                        if($ret == '1'){  
-                            newAnuncioView($categorias, 'userCmd-newAnuncio: No existe sesión de usuario');
-                        }elseif($ret == '2'){
-                            newAnuncioView($categorias, 'userCmd-newAnuncio: Error con la base de datos');
-                        }elseif ($ret == '3'){
-                            newAnuncioView($categorias, 'userCmd-newAnuncio: Los valores recibidos son erroneos o falta alguno');
-                        }elseif ($ret == '4'){
-                            newAnuncioView($categorias, 'userCmd-newAnuncio: El formato de alguna de las imagenes no es valido');
-                        }elseif ($ret == '5'){
-                            newAnuncioView($categorias, 'userCmd-newAnuncio: El tamaño de la imagen es mayor que el permitido');
-                        }                       
+                        $dataCategorias = chargeCategories();
+                        newAnuncioView($dataCategorias[0], array_merge($dataCategorias[1],$ret[1]));                     
                     }
 					break;
 

@@ -1,16 +1,18 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang = "es-Es">
 <head>
 	<meta charset="utf-8">
-    <!--<link rel="stylesheet" type="text/css" href="../css/newanuncio.css">-->
-    <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    
+    <!-- JAVASCRIPT -->
+    <script src="../jscript/jquery-1.12.3.min.js"></script>
+    <script src="../jscript/dropzone.js"></script>
     <script src="../jscript/newanuncio.js"></script>
     
-     <!-- LIBRERIA PARA SUBIR FOTOS -->
-    <script src="../jscript/dropzone.js"></script>
-    <link href="../css/dropzone.css" type="text/css" rel="stylesheet" />
-	
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="../css/dropzone.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/newanuncio.css"/>
+
 	<title>Nuevo Anuncio</title>
 </head>
 <body>
@@ -24,24 +26,33 @@
         
         <h1>NUEVO ANUNCIO</h1>
         <form action = "../php/controller.php?cmd=userCmd&id=5" id="full-form" method="POST" enctype="multipart/form-data">
+        
             <!-- INFORMACION BASICA -->
-            <input type = "text" id = "titulo" name = "titulo" placeholder = "Título" required/>
-            <input type = "text" id = "localizacion" name = "localizacion" placeholder = "Localización" required/>
-            <input type = "tel" id = "telefono" name = "telefono" placeholder = "Teléfono"/>
-            <input type = "number" id = "precio" name = "precio" placeholder = "Precio"/>
+            <div id = "linea1">
+                <input type = "text" id = "titulo" name = "titulo" placeholder = "Título" required/>
+                <input type = "text" id = "localizacion" name = "localizacion" placeholder = "Localización" required/>
+            </div>
+            
+            <div id = "linea2">
+                <input type = "tel" id = "telefono" name = "telefono" placeholder = "Teléfono"/>
+                <input type = "number" id = "precio" name = "precio" placeholder = "Precio"/>
         
-            <!-- SELECTOR DE CATEGORIA -->
-            <label for="categoria">Categoria</label>
-            <select id="categoria" name="categoria">
-                ##corteCategorias##
-                <option value="##idCategoria##">##categoria##</option>
-                ##corteCategorias##
-            </select>
-        
+                <!-- SELECTOR DE CATEGORIA -->
+                <div id = "linea2sub">
+                    <label for="categoria">Categoria:</label>
+                    <select id="categoria" name="categoria">
+                        ##corteCategorias##
+                        <option value="##idCategoria##">##categoria##</option>
+                        ##corteCategorias##
+                    </select>
+                </div>
+            </div>
+            
             <!-- DESCRIPCION -->
-            <label for="descripcion">Descripcion</label>
-            <textarea id="descripcion" name = "descripcion" form="newanuncio" maxlength="2000" 
-            placeholder = "Escriba la descripción del artículo..." rows="4" cols="50" wrap="hard"></textarea>
+            <div id = "descripcionContainer">
+                <textarea id="descripcion" name = "descripcion" form="newanuncio" maxlength="2000" 
+                placeholder = "Escriba la descripción del artículo..." rows="4" cols="40" wrap="hard"></textarea>
+            </div>
             
             <!-- PREVIEW DE LAS IMAGENES -->
             <div class="dropzone" id="myDropzone" name="file"></div>
