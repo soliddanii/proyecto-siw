@@ -387,6 +387,7 @@
 			array_push($errorList, array('errorCode' => '1', 'message' => "Error al consultar la BBDD."));
         }
         
+        $con->close(); 
         //Devolvemos los datos y los reportes de errores (si hay)
         //ChromePhp::log($data);
         return array($data, $errorList);
@@ -397,8 +398,8 @@
         //Array para guardar los posibles errores que encontremos
         $errorList = array(); //Array de arrays: error("errorCode" => "code", "message" => "mensaje" )
         
-        //Inicializamos en array de datos
-        $data = array();
+        //Inicializamos en array de datos [info, img, comentarios, isFavorito, itsMine] 
+        $data = array(array(), array(), array(), false, false); 
         
         //Establecer la conexion a la BBDD
 		$con    = new Connection();			
@@ -408,16 +409,77 @@
             $idAnuncio = intval($_POST["idAnuncio"]);
             
             $result = $facade->getAnuncio($idAnuncio);
-            
+             if($result && (mysqli_num_rows($result) > 0)){ 
+         
+                //Procesar los datos del anuncio 
+                $row = mysqli_fetch_array($result);    
+                $data_inf = array('id'=>$row['idAnuncio'], 'idUser'=>$row['idUser'], 'fecha'=>$row['fecha'], 
+                    'titulo'=>$row['titulo'], 'precio'=>$row['precio'], 'descripcion'=>$row['descripcion'], 
+                    'localizacion'=>$row['localizacion'], 'telefono'=>$row['telefono'], 'estado'=>$row['estado'], 
+                    'idComprador'=>$row['idComprador']); 
+                $data[0] = $data_inf;     
+                 
+                     
+                //Obtener las imagenes del anuncio 
+                $result = $facade->getImages($idAnuncio); 
+                if($result){ 
+                    if(mysqli_num_rows($result) > 0){ 
+                        $data_img = array(); 
+                        while($row = mysqli_fetch_array($result)){ 
+                            $data_img_tmp = array('id'=>$row['idImagen'], 'small'=>$row['small'], 'medium'=>$row['medium'], 'big'=>$row['big']); 
+                            array_push($data_img, $data_img_tmp); 
+                        }   
+                        $data[1] = $data_img; 
+                    } 
+                }else{ 
+                    //Error al recuperar las imagenes 
+                    array_push($errorList, array('errorCode' => '3', 'message' => "No se han podido recuperar las imagenes asociadas al anuncio.")); 
+                } 
+                     
+                     
+                     
+                //Obtener los comentarios del anuncio 
+                $result = $facade->getComentarios($idAnuncio); 
+                if($result){ 
+                    if(mysqli_num_rows($result) > 0){ 
+                        $data_cmt = array(); 
+                        while($row = mysqli_fetch_array($result)){ 
+                            $data_cmt_tmp = array('id'=>$row['idComentario'], 'idUser'=>$row['idUser'], 'comentario'=>$row['comentario'] 
+                                , 'idPadre'=>$row['idPadre'], 'fecha'=>$row['fecha']); 
+                            array_push($data_cmt, $data_cmt_tmp); 
+                        }   
+                        $data[2] = $data_cmt; 
+                    } 
+                }else{ 
+                    //Error al recuperar los comentarios 
+                    array_push($errorList, array('errorCode' => '4', 'message' => "No se han podido recuperar los comentarios asociados al anuncio.")); 
+                } 
+                 
+                 
+                //Y por ultimo, obtener informacion del usuario y de si este anuncio es suyo o es su favorito 
+                if(isset($_SESSION["idUser"])){ 
+                    $idUser = $_SESSION["idUser"]; 
+                    if($facade->isFavorito($idUser, $idAnuncio)){ 
+                        $data[3] = true; 
+                    } 
+                    if($data[0]['idUser'] == $idUser){ 
+                        $data[4] = true; 
+                    } 
+                } 
+                 
+            }else{ 
+                //Error al obtener resultados del anuncio de la BBDD 
+                array_push($errorList, array('errorCode' => '2', 'message' => "No se ha podido recuperar ningún dato coincidente de la BBDD.")); 
+            } 
             
         }else{
+            //Error no hay parametro de anuncio 
             array_push($errorList, array('errorCode' => '1', 'message' => "No se ha especificado el anuncio a recuperar."));
         }
     
-        
     
-    
-        //Devolvemos los datos y los reportes de errores (si hay)
+        $con->close(); 
+        //Devolvemos los datos y los reportes de errores (si hay)  
         return array($data, $errorList);
     }
     
