@@ -174,8 +174,12 @@
             $aux1 = str_replace("##miniaturaAnuncio##", $anuncios[$i]['miniatura'], $aux1);
             $aux1 = str_replace("##tituloAnuncio##", $anuncios[$i]['titulo'], $aux1);
             $aux1 = str_replace("##localizacionAnuncio##", $anuncios[$i]['localizacion'], $aux1);
-            $aux1 = str_replace("##precioAnuncio##", $anuncios[$i]['precio'], $aux1);
             $aux1 = str_replace("##fechaAnuncio##", $anuncios[$i]['fecha'], $aux1);
+            if($anuncios[$i]['precio'] != '0.00'){ 
+                $aux1 = str_replace("##precioAnuncio##", $anuncios[$i]['precio'].' €', $aux1); 
+            }else{ 
+                $aux1 = str_replace("##precioAnuncio##", 'GRATIS', $aux1); 
+            }
             $aux0 .= $aux1;
         }
         $text = $trozos[0].$aux0.$trozos[2];
@@ -232,15 +236,52 @@
 		$text = file_get_contents($pathFront) or exit("Error frontView, [$pathFront]");
         $text = processErrors($text, $errores);
         
-		/*$trozos = explode("##corteCategorias##", $text);
-		$aux0 = "";
-		foreach ($categories as $key => $value) {
-            $aux1 = $trozos[1];
-            $aux1 = str_replace("##idCategoria##", $key, $aux1);
-            $aux1 = str_replace("##categoria##", $value, $aux1);
-            $aux0 .= $aux1;
-        }
-		$text = $trozos[0].$aux0.$trozos[2];*/
+		// PROCESAR INFORMACION 
+        $text = str_replace("##titulo##", $data[0]['titulo'], $text); 
+        $text = str_replace("##localizacion##", $data[0]['localizacion'], $text); 
+        $text = str_replace("##telefono##", $data[0]['telefono'], $text); 
+        $text = str_replace("##nombre##", $data[0]['idUser'], $text); 
+        $text = str_replace("##fecha##", $data[0]['fecha'], $text); 
+        if($data[0]['precio'] != '0.00'){ 
+            $text = str_replace("##precio##", $data[0]['precio'].' €', $text); 
+        }else{ 
+            $text = str_replace("##precio##", 'GRATIS', $text); 
+        } 
+        
+        // PROCESAR IMAGENES (MINIATURAS) 
+        $trozos = explode("##siHayMiniaturas##", $text); 
+        if(!empty($data[1])){ 
+            $subtrozos = explode("##corteMiniatura##", $trozos[1]); 
+            $aux0 = ""; 
+            for ($i=0; $i<count($data[1]); $i++) { 
+                $aux1 = $subtrozos[1]; 
+                $aux1 = str_replace("##urlMiniatura##", $data[1][$i]['small'], $aux1); 
+                $aux0 .= $aux1; 
+            } 
+            $trozos[1] = $subtrozos[0].$aux0.$subtrozos[2]; 
+             
+            $text = $trozos[0].$trozos[1].$trozos[2]; 
+        }else{ 
+            $text = $trozos[0].$trozos[2]; 
+        } 
+         
+        // PROCESAR IMAGENES (MEDIANAS) 
+        $trozos = explode("##corteMedianas##", $text); 
+        if(!empty($data[1])){ 
+            $aux0 = ""; 
+            for ($i=0; $i<count($data[1]); $i++) { 
+                $aux1 = $trozos[1]; 
+                $aux1 = str_replace("##urlMediana##", $data[1][$i]['medium'], $aux1); 
+                $aux0 .= $aux1; 
+            } 
+            $trozos[1] = $aux0; 
+        }else{ 
+            $trozos[1] = str_replace("##urlMediana##", '../images/default-product.png', $subtrozos[1]); 
+        } 
+        $text = $trozos[0].$trozos[1].$trozos[2]; 
+         
+         
+        // PROCESAR COMENTARIOS 
 		
 		echo chargeMenu($text);
 		
