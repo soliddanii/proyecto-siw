@@ -161,14 +161,46 @@
 		}
 	}
 
-	function modifyData(){}
+	function editProfile(){
+
+		if(isset($_SESSION['idUser']) && isset($_SESSION['user'])){
+			
+			$con = new Connection();
+			$facade = new Facade($con);		
+
+			$id = $_SESSION['idUser'];
+
+			if(isset($_POST['name']) && strlen($_POST['name']) > 0 ){
+				$name = filter_var($_POST['name'],FILTER_SANITIZE_STRING);				
+				$facade->editName($id,$name);
+			}
+
+			if(isset($_POST['email']) && strlen($_POST['email']) > 0){
+				$email = filter_var($_POST['email'],FILTER_SANITIZE_STRING);
+				$facade->editEmail($id,$email);
+			}	
+			
+			if(isset($_POST['passwd0']) && isset($_POST['passwd1']) 
+				&& strlen($_POST['passwd0']) > 0 && strlen($_POST['passwd1']) > 0){
+				$passwd0 = filter_var($_POST['passwd0'],FILTER_SANITIZE_STRING);
+				$passwd1 = filter_var($_POST['passwd1'],FILTER_SANITIZE_STRING);
+
+				if($facade->existUser($_SESSION['user'],$passwd0))
+					$facade->editPass($id,$passwd1);
+				else
+					return 1;
+			}
+
+		}else
+			return -1;
+
+	}
 
 	function logout(){
 		session_unset();
 		session_destroy();
 	}
 
-	function changePassword(){}
 	/////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////
 

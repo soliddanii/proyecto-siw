@@ -137,6 +137,13 @@
 
 	}
     
+	function editProfileView($error){
+		$pathFront = "../html/editprofile.html";
+		$text = file_get_contents($pathFront) or exit("Error signupView, [$pathFront]");
+		$text = error($text,$error);
+		echo chargeMenu($text);
+	}
+    
     /*
     *   Carga la pagina para ver la lista de articulos / anuncios
     *   Lanza error si no se puede obtener la direccion del html

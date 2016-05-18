@@ -70,8 +70,19 @@ class Facade {
 	/*
 	*	Modifica los datos de un usuario
 	*/
-	public function modifyUser(){
+	public function editName($id,$name){
+		$query = "UPDATE final_usuario set name='".$name."' WHERE idUser ='".$id."'";
+		$this->con->action($query);
+	}
 
+	public function editEmail($id,$email){
+		$query = "UPDATE final_usuario set email='".$email."' WHERE idUser ='".$id."'";
+		$this->con->action($query);
+	}
+
+	public function editPass($id,$passwd){
+		$query = "UPDATE final_usuario set password='".$passwd."' WHERE idUser ='".$id."'";
+		$this->con->action($query);
 	}
 
 	/*

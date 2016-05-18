@@ -2,18 +2,23 @@
 <html lang = "es-Es">
 <head>
 	<meta http-equiv = "Content-Type" content = "text/html; charset = UTF-8">
+	<link rel="stylesheet" type="text/css" href="../css/front.css">
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script language="JavaScript" type="text/javascript" src="../jscript/editprofile.js"></script>
+	<script language="JavaScript" type="text/javascript" src="../jscript/macro.js"></script>
 	<title>Editar Perfil</title>
 </head>
 <body>
 	##menu##
 
-	<form action = "" id = "editprofile">
+	<form action = "../php/controller.php?cmd=userCmd&id=6" method = "post" id = "editprofile">
 		<div id = "logo" ><a href="">Logo</a></div>
 		<input type = "text" name = "name" placeholder = "Nombre">
 		<input type = "text" name = "email" placeholder = "Correo Electrónico">
-		<input type = "text" name = "passwd0" placeholder = "Contraseña">
-		<input type = "text" name = "passwd1" placeholder = "Repetir Contraseña">
-		<input type = "submit" id = "save" value = "Guardar">		
+		<input type = "password" name = "passwd0" placeholder = "Contraseña">
+		<input type = "password" name = "passwd1" placeholder = "Repetir Contraseña">
+		<input type = "submit" id = "save" value = "Guardar">
+		<span id = "error">##error##</span>	
 	</form>
 	
 	<div id = "pie">Pie de Pagina</div>

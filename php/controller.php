@@ -77,7 +77,10 @@
                     $dataCategorias = chargeCategories();	
                     newAnuncioView($dataCategorias[0], $dataCategorias[1]);
                     break;
-                    
+				case '6':
+                	//Pagina de modificar perfil de usuario
+                	editProfileView();
+                	break;                    
                 case '7':
                     //Pagina de anuncio
                     $dataAnuncio = chargeAnuncio();
@@ -143,7 +146,16 @@
                         newAnuncioView($dataCategorias[0], array_merge($dataCategorias[1],$ret[1]));                     
                     }
 					break;
-
+				case '6':
+					$ret = editProfile();
+					switch ($ret) {						
+						case '1':
+							editProfileView('La contraseña es incorrecta');
+							break;						
+						default:
+							header("Location:controller.php");
+							break;
+					}
 				default:
 					# code...
 					break;
