@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="../css/common.css"/>
     <link rel="stylesheet" type="text/css" href="../css/anuncio.css"/>
 
-	<title>##Titulo##</title>
+	<title>##titulo##</title>
 </head>
 <body>
 	##menu##
@@ -23,7 +23,23 @@
         ##corteListaErrores##
         
         <div class = "bloqueImagenes" id = "bloqueImagenes">
-        
+            <!-- MEDIANA --> 
+            <div class "mediana"> 
+                ##corteMedianas## 
+                <img src="##urlMediana##"/> 
+                ##corteMedianas## 
+            </div> 
+            
+            <!-- MINIATURAS --> 
+            ##siHayMiniaturas## 
+            <div class="wrapper"> 
+                <div class="scrolls"> 
+                    ##corteMiniatura## 
+                    <img src="##urlMiniatura##" /> 
+                    ##corteMiniatura## 
+                </div> 
+            </div> 
+            ##siHayMiniaturas##
         </div>
         
         <div class = "bloqueInformacion" id = "bloqueInformacion">

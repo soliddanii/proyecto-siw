@@ -79,15 +79,24 @@
             <ul>
                 ##corteListaArticulos##
                 <li>
-                    <a href="#">
-                        <div class = "bloqueAnuncio" id = "##idAnuncio##">
-                            <img class = "miniaturaAnuncio" src="##miniaturaAnuncio##" width="220px" height="160px" alt="miniatura"/>
-                            <span class = "tituloAnuncio">##tituloAnuncio##</span>
-                            <span class = "localizacionAnuncio">Localización: ##localizacionAnuncio##</span>
-                            <span class = "precioAnuncio">##precioAnuncio##€</span>
-                            <span class = "fechaAnuncio">##fechaAnuncio##</span>
-                        </div>
-                    </a>
+                    <form id="anuncioForm##idAnuncio##" action="../php/controller.php?cmd=userView&id=7" method="POST"> 
+                        <input type="hidden" name="idAnuncio" value="##idAnuncio##"/> 
+                        <div class = "bloqueAnuncio" onClick="document.getElementById('anuncioForm##idAnuncio##').submit();"> 
+                            <div class = "Aleft"> 
+                                <img class = "miniaturaAnuncio" src="##miniaturaAnuncio##" height="160px" alt="miniatura"/> 
+                            </div> 
+                            <div class = "Aright"> 
+                                <div class = "Atop"> 
+                                    <span class = "tituloAnuncio">##tituloAnuncio##</span> 
+                                    <span class = "precioAnuncio">##precioAnuncio##</span> 
+                                </div> 
+                                <div class = "Abottom"> 
+                                    <span class = "localizacionAnuncio">Localización: ##localizacionAnuncio##</span>        
+                                    <span class = "fechaAnuncio">##fechaAnuncio##</span> 
+                                </div> 
+                            </div> 
+                        </div> 
+                    </form>
                 </li>
                 ##corteListaArticulos##
             </ul>
@@ -95,7 +104,6 @@
 	
     </div>
     
-	<!--<div id = "pie">Pie de Pagina</div>-->
     </div>
 
 </body>

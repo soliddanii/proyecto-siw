@@ -77,10 +77,12 @@
                     $dataCategorias = chargeCategories();	
                     newAnuncioView($dataCategorias[0], $dataCategorias[1]);
                     break;
+                    
 				case '6':
                 	//Pagina de modificar perfil de usuario
                 	editProfileView();
-                	break;                    
+                	break;    
+                    
                 case '7':
                     //Pagina de anuncio
                     $dataAnuncio = chargeAnuncio();

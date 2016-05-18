@@ -132,7 +132,9 @@
     width: 75%;
     margin: 20px auto; /*top right bottom left*/ /*top-bottom right-left*/
     float: right;
-    margin-right: 8px;
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box; 
+    box-sizing: border-box; 
 }
 
 .rightBlock li{
@@ -157,9 +159,12 @@
     padding: 10px;
     border: solid 5px #FAA8C6;
     width: 100%;
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box; 
+    box-sizing: border-box;
 }
 
-.orderrBox *{
+.orderBox *{
     display: inline;
     margin: 0px 8px;
 }
@@ -169,17 +174,84 @@
 /***************************************************************/
 .bloqueAnuncio{
     font: 20px 'Roboto', Arial, Helvetica, sans-serif;
-    padding: 10px;
+    position: relative; 
     border: solid 5px #1C9CD1;
+    background-color: #CEECF5; 
     width: 100%;
+    cursor: pointer; 
+    height: 216px; 
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box; 
+    box-sizing: border-box; 
 }
 
-.bloqueAnuncio span.tituloAnuncio{
-    text-align: left;
-    vertical-align: top;
+.bloqueAnuncio:hover{ 
+    background-color: #81BEF7; 
+    transition: 0.7s; 
 }
 
-.bloqueAnuncio span.localizacionAnuncio{
-    float: right;
-    vertical-align: top;
+.bloqueAnuncio img{ 
+    border: solid 3px #1C9CD1; 
+    width: 220px; 
+    height: 160px; 
+    display:block; 
+} 
+ 
+.bloqueAnuncio .Aleft { 
+    position: absolute; 
+    padding: 20px; 
+    width: 226px; 
+    top: 0; 
+    left: 0; 
+} 
+ 
+.bloqueAnuncio .Aright { 
+    position: absolute; 
+    top: 0; 
+    right: 0; 
+    left: 266px; 
+    height: 166px; 
+    padding: 20px; 
+} 
+ 
+.bloqueAnuncio .Aright .Atop{ 
+    position: relative; 
+    left: 0; 
+    top: 0; 
+} 
+ 
+.bloqueAnuncio .Aright .Atop *{ 
+    display: block; 
+    font-weight: bold; 
+    color: #0B0B61; 
+} 
+ 
+.bloqueAnuncio .Aright .Atop .tituloAnuncio{ 
+    font-size: 35px; 
+} 
+ 
+.bloqueAnuncio .Aright .Atop .precioAnuncio{ 
+    font-size: 44px; 
+    color: #FFBF00; 
+} 
+ 
+.bloqueAnuncio .Aright .Abottom { 
+    width: 100%; 
+    margin: auto; 
+    position: absolute; 
+    bottom: 50px; 
+    height: auto; 
+} 
+ 
+.bloqueAnuncio .Aright .Abottom .localizacionAnuncio{ 
+    position: absolute; 
+    font-size: 30px; 
+} 
+ 
+.bloqueAnuncio .Aright .Abottom .fechaAnuncio{ 
+    position: absolute; 
+    right: 40px; 
+    font-size: 20px; 
+    bottom: -30px; 
+    font-style: italic; 
 }

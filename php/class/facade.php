@@ -148,7 +148,7 @@ class Facade {
 	*	Obtiene todas las imagenes de un anuncio de la bbdd	
 	*/
 	public function getImages($idAnuncio){
-		$query = "SELECT fi.IdImagen fi.small, fi.medium, fi.big FROM final_imagen fi WHERE idAnuncio = '".$idAnuncio."'";
+		$query = "SELECT fi.idImagen, fi.small, fi.medium, fi.big FROM final_imagen fi WHERE idAnuncio = '".$idAnuncio."'"; 
 		return $this->con->action($query);
 	}
     
@@ -223,6 +223,32 @@ class Facade {
         return $this->con->action($query);
     }
     
+    /* 
+    *  Obtiene todas los comentarios de un anuncio de la bbdd   
+    */ 
+    public function getComentarios($idAnuncio){ 
+        $query = "SELECT * FROM final_comentario WHERE idAnuncio = '".$idAnuncio."'"; 
+        return $this->con->action($query); 
+    } 
+     
+     
+    /* 
+    *  Obtiene todas los anuncios favoritos de un usuario   
+    */ 
+    public function getFavoritosDeUsuario($idUser){ 
+        $query = "SELECT idAnuncio FROM final_favorito WHERE idUser = '".$idUser."'"; 
+        return $this->con->action($query); 
+    } 
+     
+     
+    /* 
+    *  Obtiene si un anuncio es favorito de un usuario 
+    */ 
+    public function isFavorito($idUser, $idAnuncio){ 
+        $query = "SELECT idUser FROM final_favorito WHERE idUser='".$idUser."' AND idAnuncio='".$idAnuncio."'"; 
+        return mysqli_num_rows($this->con->action($query))> 0 ? True : False; 
+    } 
+     
     
 }
 
