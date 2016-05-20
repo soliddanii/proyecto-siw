@@ -80,7 +80,7 @@
                     
 				case '6':
                 	//Pagina de modificar perfil de usuario
-                	editProfileView();
+                	editProfileView(null);
                 	break;    
                     
                 case '7':
@@ -150,15 +150,14 @@
 					break;
                     
 				case '6':
+                    //Editar el perfil
 					$ret = editProfile();
-					switch ($ret) {						
-						case '1':
-							editProfileView('La contraseña es incorrecta');
-							break;						
-						default:
-							header("Location:controller.php");
-							break;
-					}
+                    if(empty($ret)){
+                        header("Location:controller.php");
+                    }else{
+                        editProfileView($ret);
+                    }
+
                     
                 case '7':
                     //Añadir o eliminar de favoritos 
@@ -168,9 +167,10 @@
                 case '8':
                     //Descargar anuncio en PDF
                     $dataAnuncio = chargeAnuncio();
-                    $ret = descargaAnuncio($dataAnuncio);
-                    if(!empty($ret)){
-                        errorView2($ret);
+                    if(!empty($dataAnuncio[0][0])){
+                        descargaAnuncio($dataAnuncio[0]);
+                    }else{
+                        errorView2($dataAnuncio[1]);
                     }
                     break;
                     

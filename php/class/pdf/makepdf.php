@@ -4,12 +4,7 @@
 
     class MakePDF {
     
-        public function createAndDownload($dataAnuncio){
-        
-            $data = $dataAnuncio[0];
-            if($data[0] == null || empty($data[0])){
-                return $dataAnuncio[1];
-            }
+        public function createAndDownload($data){
         
             $pdf = new FPDF('P','pt','Letter');
             $pdf->SetTopMargin(40); 
@@ -63,8 +58,6 @@
             
             $pdf->Output(); /* D: force download; F: Save to disk; S: return as string; I: inline*/
             //$pdf->Output('nombre.pdf','F');
-            
-            return $dataAnuncio[1];
         
         }
         

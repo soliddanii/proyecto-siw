@@ -148,10 +148,10 @@
 
 	}
     
-	function editProfileView($error){
-		$pathFront = "../html/editprofile.html";
-		$text = file_get_contents($pathFront) or exit("Error signupView, [$pathFront]");
-		$text = error($text,$error);
+	function editProfileView($errores){
+		$pathEdit = "../html/editprofile.html";
+		$text = file_get_contents($pathEdit) or exit("Error editView, [$pathEdit]");
+		$text = processErrors($text, $errores);
 		echo chargeMenu($text);
 	}
     

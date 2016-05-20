@@ -1,27 +1,40 @@
 <!DOCTYPE html>
 <html lang = "es-Es">
 <head>
-	<meta http-equiv = "Content-Type" content = "text/html; charset = UTF-8">
-	<link rel="stylesheet" type="text/css" href="../css/front.css">
-	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-	<script language="JavaScript" type="text/javascript" src="../jscript/editprofile.js"></script>
+    <meta charset="utf-8">
+    
+    <!-- JAVASCRIPT -->
+    <script src="../jscript/jquery-1.12.3.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="../jscript/editprofile.js"></script>
 	<script language="JavaScript" type="text/javascript" src="../jscript/macro.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/editProfile.css"/>
+	
 	<title>Editar Perfil</title>
 </head>
 <body>
 	##menu##
 
-	<form action = "../php/controller.php?cmd=userCmd&id=6" method = "post" id = "editprofile">
-		<div id = "logo" ><a href="">Logo</a></div>
-		<input type = "text" name = "name" placeholder = "Nombre">
-		<input type = "text" name = "email" placeholder = "Correo Electrónico">
-		<input type = "password" name = "passwd0" placeholder = "Contraseña">
-		<input type = "password" name = "passwd1" placeholder = "Repetir Contraseña">
-		<input type = "submit" id = "save" value = "Guardar">
-		<span id = "error">##error##</span>	
-	</form>
-	
-	<div id = "pie">Pie de Pagina</div>
+    <div class = "contenido">
+        
+        <form action = "../php/controller.php?cmd=userCmd&id=6" method = "post" class = "editForm" id = "editprofile">
+            <h1>Editar Perfil</h1>
+            <input type = "text" id = "name" name = "name" placeholder = "Nuevo Nombre">
+            <input type = "text" id = "email" name = "email" placeholder = "Nuevo Email">
+            <input type = "password" id = "passwd0" name = "passwd0" placeholder = "Vieja Contraseña">
+            <input type = "password" id = "passwd1" name = "passwd1" placeholder = "Nueva Contraseña">
+            
+            <input type = "submit" id = "save" value = "Guardar">
+            
+        </form>
+    
+        ##corteListaErrores##
+        <div id = "errorMessage">##errorCode##: ##error##</div>
+        ##corteListaErrores##
+        
+    </div>
 
 </body>
 </html>

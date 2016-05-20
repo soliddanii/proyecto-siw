@@ -51,6 +51,11 @@
             if(isset($_POST["name"])){
                 $name  = filter_var($_POST["name"],FILTER_SANITIZE_STRING);
             }
+            
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                array_push($errorList, array('errorCode' => '1', 'message' => "Formato de Email Inválido."));
+                return $errorList;
+            }
 
 			$con = new Connection();
 			$facade = new Facade($con);
@@ -104,8 +109,8 @@
         
 		if(isset($_POST["name"]) && isset($_POST["passwd0"])){
 			
-			$user = filter_var($_POST["name"],FILTER_SANITIZE_STRING);
-			$pwd  = filter_var($_POST["passwd0"],FILTER_SANITIZE_STRING);
+			$user = filter_var($_POST["name"], FILTER_SANITIZE_STRING);
+			$pwd  = filter_var($_POST["passwd0"], FILTER_SANITIZE_STRING);
 			
             //Establecer la conexion a la BBDD
 			$con    = new Connection();			
@@ -163,6 +168,9 @@
 	}
 
 	function editProfile(){
+    
+        //Array para guardar los posibles errores que encontremos
+        $errorList = array(); //Array de arrays: error("errorCode" => "code", "message" => "mensaje" )
 
 		if(isset($_SESSION['idUser']) && isset($_SESSION['user'])){
 			
@@ -171,16 +179,23 @@
 
 			$id = $_SESSION['idUser'];
 
+            //NOMBRE
 			if(isset($_POST['name']) && strlen($_POST['name']) > 0 ){
 				$name = filter_var($_POST['name'],FILTER_SANITIZE_STRING);				
 				$facade->editName($id,$name);
 			}
 
+            //EMAIL
 			if(isset($_POST['email']) && strlen($_POST['email']) > 0){
 				$email = filter_var($_POST['email'],FILTER_SANITIZE_STRING);
-				$facade->editEmail($id,$email);
+                if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $facade->editEmail($id,$email);
+                }else{
+                    array_push($errorList, array('errorCode' => '1', 'message' => "Formato de Email Inválido."));
+                }			
 			}	
 			
+            //Contraseña
 			if(isset($_POST['passwd0']) && isset($_POST['passwd1']) 
 				&& strlen($_POST['passwd0']) > 0 && strlen($_POST['passwd1']) > 0){
 				$passwd0 = filter_var($_POST['passwd0'],FILTER_SANITIZE_STRING);
@@ -188,12 +203,16 @@
 
 				if($facade->existUser($_SESSION['user'],$passwd0))
 					$facade->editPass($id,$passwd1);
-				else
-					return 1;
+				else{
+					array_push($errorList, array('errorCode' => '1', 'message' => "La contraseña es incorrecta."));
+                }
 			}
 
-		}else
-			return -1;
+		}else{
+			array_push($errorList, array('errorCode' => '-1', 'message' => "No existe sesión de usuario"));
+        }
+        
+        return $errorList;
 
 	}
 

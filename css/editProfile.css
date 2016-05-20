@@ -1,0 +1,58 @@
+/***************************************************************/
+/******************** BLOQUE DE CONTENIDO **********************/
+/***************************************************************/
+.contenido{
+    width: 40%;
+    margin: auto;
+    margin-top: 20px;
+    border: solid 5px #A9E2F3;
+    text-align:center;
+}
+
+/***************************************************************/
+/******************** BLOQUE DE FORMULARIO *********************/
+/***************************************************************/
+
+.editForm *{
+    font: 20px 'Roboto', Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    display: block;
+    margin: auto;
+    margin-bottom: 18px;
+}
+
+.editForm input[type="text"], .editForm input[type="password"]{
+    width: 40%;
+    background-color: #E0F2F7;
+    border: solid 5px #0174DF;
+    padding: 10px;
+    outline: none;
+}
+
+.editForm input[type="text"]:focus, .editForm input[type="password"]:focus{
+    background-color: #E0F2F7;
+    border: solid 5px #0431B4;
+}
+
+.editForm input[type="submit"]{
+    width: 40%;
+    background-color: #ECCEF5;
+    border: solid 5px #6A0888;
+    padding: 10px;
+    cursor: pointer;
+    outline: none;
+}
+
+.editForm input[type="submit"]:hover{
+    background-color: #D293E6;
+}
+
+.editForm h1{
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+#errorMessage{
+    width: 80%;
+    margin: 8px auto;
+}
