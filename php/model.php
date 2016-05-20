@@ -10,6 +10,7 @@
 	require_once 'class/facade.php';
 	require_once 'class/sessions.php';
     require_once 'class/upload.php'; //subida de imagenes
+    require_once 'class/pdf/makepdf.php'; //generar PDF
 
 	/////////////////////////////////////////////////////////////////////////
 	// 							Gestión de Sesion
@@ -220,14 +221,14 @@
 
         //Array para guardar los posibles errores que encontremos
         $errorList = array(); //Array de arrays: error("errorCode" => "code", "message" => "mensaje" )
-        $return = '0';
+        $return = '-1';
         
         //Obtener los datos del usuario que crea el anuncio
         if(isset($_SESSION["idUser"])){
             $idUser = $_SESSION["idUser"];
         }else{
             array_push($errorList, array('errorCode' => '1', 'message' => "No existe ninguna sesión de usuario."));
-            return array('1',$errorList);
+            return array('-1',$errorList);
         }
             
         
@@ -246,7 +247,7 @@
                 $idCategoria = intval($_POST["categoria"]);
             }else{
                 array_push($errorList, array('errorCode' => '3', 'message' => "Los valores recibidos son erroneos o falta alguno."));
-                return array('1',$errorList);
+                return array('-1',$errorList);
             }
             
             $telefono = "";
@@ -270,13 +271,13 @@
 			if(!$facade->addAnuncio($data)){
 				$con->close();
                 array_push($errorList, array('errorCode' => '2', 'message' => "Se ha producido un error con la BBDD."));
-                return array('1',$errorList);
+                return array('-1',$errorList);
             }
 
 		}else {
             $con->close();
 			array_push($errorList, array('errorCode' => '3', 'message' => "Los valores recibidos son erroneos o falta alguno."));
-            return array('1',$errorList);
+            return array('-1',$errorList);
 		}
         
             
@@ -285,8 +286,10 @@
         if(!$idAnuncio || $idAnuncio == 0){
             $con->close();
             array_push($errorList, array('errorCode' => '2.1', 'message' => "Se ha producido un error al recuperar el indice del Anuncio."));
-            return array('1',$errorList);
+            return array('-1',$errorList);
         }
+        
+        $return = $idAnuncio;
         
         $upload = new Upload();
         $ret = $upload->processUploads($idAnuncio);
@@ -298,7 +301,7 @@
         if (empty($ret_inf)){
             //No hay info de ninguna imagen
             $con->close();
-            return array('1',$errorList);
+            return array($return, $errorList);
         }else{
             //Almenos una imagen ha sido guardada
             for($i=0; $i<count($ret_inf); $i++){
@@ -307,7 +310,6 @@
                 "big"=>$ret_inf[$i][3], "medium"=>$ret_inf[$i][2], "small"=>$ret_inf[$i][1]);
             
                 if(!$facade->addImage($data)){
-                    $return = '1';
                     array_push($errorList, array('errorCode' => '2', 'message' => "Se ha producido un error con la BBDD."));
                 }
             }  
@@ -398,8 +400,8 @@
         //Array para guardar los posibles errores que encontremos
         $errorList = array(); //Array de arrays: error("errorCode" => "code", "message" => "mensaje" )
         
-        //Inicializamos en array de datos [info, img, comentarios, isFavorito, itsMine] 
-        $data = array(array(), array(), array(), false, false); 
+        //Inicializamos en array de datos [info, img, comentarios, isLoguedIn, isFavorito, itsMine] 
+        $data = array(array(), array(), array(), false, false, false); 
         
         //Establecer la conexion a la BBDD
 		$con    = new Connection();			
@@ -416,7 +418,7 @@
                 $data_inf = array('id'=>$row['idAnuncio'], 'idUser'=>$row['idUser'], 'fecha'=>$row['fecha'], 
                     'titulo'=>$row['titulo'], 'precio'=>$row['precio'], 'descripcion'=>$row['descripcion'], 
                     'localizacion'=>$row['localizacion'], 'telefono'=>$row['telefono'], 'estado'=>$row['estado'], 
-                    'idComprador'=>$row['idComprador']); 
+                    'idComprador'=>$row['idComprador'], 'nickSeller'=>$row['nick'], 'nameSeller'=>$row['name']); 
                 $data[0] = $data_inf;     
                  
                      
@@ -458,12 +460,13 @@
                  
                 //Y por ultimo, obtener informacion del usuario y de si este anuncio es suyo o es su favorito 
                 if(isset($_SESSION["idUser"])){ 
+                    $data[3] = true;
                     $idUser = $_SESSION["idUser"]; 
                     if($facade->isFavorito($idUser, $idAnuncio)){ 
-                        $data[3] = true; 
+                        $data[4] = true; 
                     } 
                     if($data[0]['idUser'] == $idUser){ 
-                        $data[4] = true; 
+                        $data[5] = true; 
                     } 
                 } 
                  
@@ -481,6 +484,14 @@
         $con->close(); 
         //Devolvemos los datos y los reportes de errores (si hay)  
         return array($data, $errorList);
+    }
+    
+    function descargaAnuncio($dataAnuncio){
+        
+        $makepdf = new MakePDF();
+        $ret = $makepdf->createAndDownload($dataAnuncio);
+        return $ret;
+        
     }
     
 	/////////////////////////////////////////////////////////////////////////

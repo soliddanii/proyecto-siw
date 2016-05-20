@@ -46,9 +46,9 @@ class Upload {
                     mkdir($storeFolder, 0777, true);
                 }
                     
-                $pathI1 = $this->resizeAndSave(160, 220, $storeFolder, 'small', $ext, $i);
-                $pathI2 = $this->resizeAndSave(480, 640, $storeFolder, 'medium', $ext, $i);
-                $pathI3 = $this->resizeAndSave(720, 1280, $storeFolder, 'big', $ext, $i);
+                $pathI1 = $this->resizeAndSave(160, $storeFolder, 'small', $ext, $i);
+                $pathI2 = $this->resizeAndSave(480, $storeFolder, 'medium', $ext, $i);
+                $pathI3 = $this->resizeAndSave(680, $storeFolder, 'big', $ext, $i);
                 
                 $pathI1 = '..'.substr($pathI1, strlen(dirname(dirname(dirname( __FILE__ )))));
                 $pathI2 = '..'.substr($pathI2, strlen(dirname(dirname(dirname( __FILE__ )))));
@@ -72,22 +72,16 @@ class Upload {
     * @param string $name: big, small, medium...
     * @param int $idx: indice de la imagen
     */
-    function resizeAndSave($height, $width, $path, $name, $ext, $idx){
+    function resizeAndSave($height, $path, $name, $ext, $idx){
         
         $ds = DIRECTORY_SEPARATOR;
         
         // Get original image x y
         list($w, $h) = getimagesize($_FILES['file']['tmp_name'][$idx]);
   
-        //Calcular nuevas dimensiones a partir del aspect ratio
-        $ratio = $w / $h;
-        if( $ratio > 1) {
-            $width = $width;
-            $height = $height/$ratio;
-        }else{
-            $width = $width*$ratio;
-            $height = $height;
-        }        
+        //Calcular nuevas dimensiones proporcionales
+        $width = $height * $w / $h;
+        
    
         // New File Path [ ejemplo: path/anuncio-x/i_big.jpg ]
         $newFilePath = $path.$ds.$idx.'_'.$name.'.'.$ext; 

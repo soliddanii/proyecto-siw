@@ -38,8 +38,24 @@
             });
             
             this.on("success", function(file, response) {
-                //console.log(response);
-                $("html").html(response);
+                //LA RESPUESTA DE PHP A ESTE FORM NO PUEDE
+                //SER COMO LAS DEMAS (UNA PAGINA ENTERA)
+                
+                //maldito dropzone
+                location.reload();
+                
+                /*console.log(response);
+                
+                if(response.startsWith('redirect')){
+                    //Redirigir al nuevo anuncio
+                    $('#redirectIdAnuncio').val(response.substring(9))
+                    $('#redirectToAnuncio').submit();
+                    
+                }else{
+                    //Mantener esta pagina y cargar errores
+                    
+                }*/
+
             });
         }
         

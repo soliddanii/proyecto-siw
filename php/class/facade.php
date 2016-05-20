@@ -174,7 +174,9 @@ class Facade {
     *   Devuelve un anuncio en concreto por su ID
     */
     public function getAnuncio($id){
-        $query = "SELECT * FROM final_anuncio WHERE idAnuncio='".$id."'";
+        $query = "SELECT fa.idUser, fa.idAnuncio, fa.fecha, fa.precio, fa.titulo, fa.descripcion, 
+        fa.localizacion, fa.telefono, fa.estado, fa.idComprador, fu.nick, fu.name 
+        FROM final_anuncio fa INNER JOIN final_usuario fu USING(idUser) WHERE idAnuncio='".$id."'";
         return $this->con->action($query);
     }
     

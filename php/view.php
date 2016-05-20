@@ -82,6 +82,17 @@
 	function errorView($errorMessage){
 		echo "Ha ocurrido un error en [".$errorMessage."]";
 	}
+    
+    /*
+	*	Muestra una pagina distinta cuando ocurre un error inesperado
+	*/
+	function errorView2($errores){
+		$errorView = "../html/errorView.html";		
+        $text = file_get_contents($errorView) or exit("Error errorView, [$errorView]");
+        $text = processErrors($text, $errores);
+        echo chargeMenu($text);
+	}
+            
 
 	/////////////////////////////////////////////////////////////////////////
 	// 			Funciones para cargar paginas de la web
@@ -232,58 +243,128 @@
 	*/
 	function anuncioView($data, $errores) {
 
-		$pathFront = "../html/anuncio.html";				
-		$text = file_get_contents($pathFront) or exit("Error frontView, [$pathFront]");
+        if(empty($data[0]) || $data[0] == null){
+            //Si no hay datos, directamente a la pagina principal con los errores
+            errorView2($errores);
+            return '-1';
+        }
+    
+    
+		$pathAnuncio = "../html/anuncio.html";		
+		$text = file_get_contents($pathAnuncio) or exit("Error anuncioView, [$pathAnuncio]");
         $text = processErrors($text, $errores);
         
 		// PROCESAR INFORMACION 
         $text = str_replace("##titulo##", $data[0]['titulo'], $text); 
-        $text = str_replace("##localizacion##", $data[0]['localizacion'], $text); 
-        $text = str_replace("##telefono##", $data[0]['telefono'], $text); 
-        $text = str_replace("##nombre##", $data[0]['idUser'], $text); 
+        $text = str_replace("##localizacion##", $data[0]['localizacion'], $text);             
         $text = str_replace("##fecha##", $data[0]['fecha'], $text); 
         if($data[0]['precio'] != '0.00'){ 
             $text = str_replace("##precio##", $data[0]['precio'].' €', $text); 
         }else{ 
             $text = str_replace("##precio##", 'GRATIS', $text); 
         } 
+        if($data[0]['nameSeller'] != ''){
+            $text = str_replace("##nombre##", 'Nombre: '.$data[0]['nameSeller'].' ('.$data[0]['nickSeller'].')', $text);
+        }else{
+            $text = str_replace("##nombre##", 'Nick: '.$data[0]['nickSeller'], $text);
+        }
+        if($data[0]['telefono'] != ''){
+            $text = str_replace("##telefono##", $data[0]['telefono'], $text);
+        }else{
+            $text = str_replace("##telefono##", 'NO', $text);
+        }
+        if($data[0]['descripcion'] != ''){
+            $text = str_replace("##descripcion##", nl2br($data[0]['descripcion']), $text);
+        }else{
+            $text = str_replace("##descripcion##", 'No Disponible', $text);
+        }
+
         
-        // PROCESAR IMAGENES (MINIATURAS) 
+        // PROCESAR IMAGENES 
+        //Asignar las ministuras
         $trozos = explode("##siHayMiniaturas##", $text); 
         if(!empty($data[1])){ 
             $subtrozos = explode("##corteMiniatura##", $trozos[1]); 
             $aux0 = ""; 
             for ($i=0; $i<count($data[1]); $i++) { 
-                $aux1 = $subtrozos[1]; 
+                $aux1 = $subtrozos[1];      
                 $aux1 = str_replace("##urlMiniatura##", $data[1][$i]['small'], $aux1); 
+                $aux1 = str_replace("##urlMediana##", $data[1][$i]['medium'], $aux1); 
+                $aux1 = str_replace("##urlGrande##", $data[1][$i]['big'], $aux1); 
+                $aux1 = str_replace("##idAnuncio##", $data[1][$i]['id'], $aux1); 
                 $aux0 .= $aux1; 
             } 
             $trozos[1] = $subtrozos[0].$aux0.$subtrozos[2]; 
              
             $text = $trozos[0].$trozos[1].$trozos[2]; 
         }else{ 
-            $text = $trozos[0].$trozos[2]; 
+            $text = $trozos[0].$trozos[2];   
+            $text = str_replace("##primeraMediana##", '../images/default-product.png', $text); 
         } 
          
-        // PROCESAR IMAGENES (MEDIANAS) 
-        $trozos = explode("##corteMedianas##", $text); 
-        if(!empty($data[1])){ 
-            $aux0 = ""; 
-            for ($i=0; $i<count($data[1]); $i++) { 
-                $aux1 = $trozos[1]; 
-                $aux1 = str_replace("##urlMediana##", $data[1][$i]['medium'], $aux1); 
-                $aux0 .= $aux1; 
-            } 
-            $trozos[1] = $aux0; 
-        }else{ 
-            $trozos[1] = str_replace("##urlMediana##", '../images/default-product.png', $subtrozos[1]); 
-        } 
-        $text = $trozos[0].$trozos[1].$trozos[2]; 
-         
-         
+        //Asignar la primera mediana, la primera grande, y el numero total de imagenes
+        if(empty($data[1])){ 
+            $text = str_replace("##primeraMediana##", '../images/default-product.png', $text); 
+            $text = str_replace("##primeraGrande##", '../images/default-product.png', $text); 
+            $text = str_replace("##maxImg##", '1', $text); 
+        }else{
+            $text = str_replace("##primeraMediana##", $data[1][0]['medium'], $text); 
+            $text = str_replace("##primeraGrande##", $data[1][0]['big'], $text); 
+            $text = str_replace("##maxImg##", count($data[1]), $text); 
+        }
+        
+        
+        
+        
         // PROCESAR COMENTARIOS 
 		
+        
+        //Procesar favoritos y compra
+        $text = str_replace("##idAnuncio##", $data[0]['id'], $text); 
+        if($data[3]){
+            //Logueado
+            $trozos = explode("##nologin2##", $text);
+            $text = $trozos[0].$trozos[2];
+            
+            $trozos = explode("##login2##", $text);
+            
+            //PROCESAR FAVORITO
+            if($data[4]){
+                //El anuncio esta en mis favoritos
+                $trozos[1] = str_replace("##mensajeBotonFav##", 'Eliminar de<br/>Favoritos', $trozos[1]); 
+                $trozos[1] = str_replace("##isFavorite##", 'isFavorite', $trozos[1]); 
+            }else{
+                //El anuncio no es mi favorito
+                $trozos[1] = str_replace("##mensajeBotonFav##", 'Añadir a<br/>Favoritos', $trozos[1]); 
+                $trozos[1] = str_replace("##isFavorite##", 'isNotFavorite', $trozos[1]); 
+            }
+            
+            //PROCESAR COMPRA
+            if($data[5]){
+                //El anuncio es mio
+                $trozos[1] = str_replace("##canBuy##", 'cancelAnuncio', $trozos[1]); 
+                $trozos[1] = str_replace("##mensajeBotonComprar##", 'Cancelar<br/>Anuncio', $trozos[1]); 
+            }else{
+                //El anuncio no es mio
+                $trozos[1] = str_replace("##canBuy##", 'buyAnuncio', $trozos[1]); 
+                $trozos[1] = str_replace("##mensajeBotonComprar##", 'Adquirir<br/>Artículo', $trozos[1]); 
+            }
+            
+            $text = $trozos[0].$trozos[1].$trozos[2];
+            
+        }else{
+            //No logueado
+            $trozos = explode("##login2##", $text);
+            $text = $trozos[0].$trozos[2];
+            $trozos = explode("##nologin2##", $text);
+            $text = $trozos[0].$trozos[1].$trozos[2];
+        }
+        
+        
+        
 		echo chargeMenu($text);
 		
 	}
+    
+    
 ?>

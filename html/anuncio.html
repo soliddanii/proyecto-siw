@@ -5,7 +5,7 @@
     
     <!-- JAVASCRIPT -->
     <script src="../jscript/jquery-1.12.3.min.js"></script>
-    <!--<script src="../jscript/anuncio.js"></script> -->
+    <script src="../jscript/anuncio.js"></script>
     
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="../css/common.css"/>
@@ -16,47 +16,92 @@
 <body>
 	##menu##
     
+    <!-- CAPA IMAGEN GRANDE -->
+    <div class = "lightbox">
+        <div id = "capa-grande">
+            <div id="nav-container">
+                <div id="case-left"></div>
+                <div id="case-right"></div>
+                <img id = "imagenGrande" data-actual="0" data-max="##maxImg##" src="##primeraGrande##" />
+            </div>
+        </div>
+    </div>
+    
+    <!-- BLOQUE DE CONTENIDO NORMAL --> 
     <div class = "contenido">
 
-        ##corteListaErrores##
-        <div id = "errorMessage">##errorCode##: ##error##</div>
-        ##corteListaErrores##
+        <div class = "contenido1">
         
-        <div class = "bloqueImagenes" id = "bloqueImagenes">
-            <!-- MEDIANA --> 
-            <div class "mediana"> 
-                ##corteMedianas## 
-                <img src="##urlMediana##"/> 
-                ##corteMedianas## 
-            </div> 
-            
-            <!-- MINIATURAS --> 
-            ##siHayMiniaturas## 
-            <div class="wrapper"> 
-                <div class="scrolls"> 
-                    ##corteMiniatura## 
-                    <img src="##urlMiniatura##" /> 
-                    ##corteMiniatura## 
+            ##corteListaErrores##
+            <div id = "errorMessage">##errorCode##: ##error##</div>
+            ##corteListaErrores##
+        
+            <div class = "bloqueImagenes" id = "bloqueImagenes">       
+                <!-- MEDIANA --> 
+                <div class = "mediana"> 
+                    <img id = "imagenMediana" src="##primeraMediana##" data-big="##primeraGrande##"/> 
                 </div> 
-            </div> 
-            ##siHayMiniaturas##
+            
+                <!-- MINIATURAS --> 
+                ##siHayMiniaturas## 
+                <div class="wrapper"> 
+                    <div class="scrolls"> 
+                        ##corteMiniatura## 
+                        <img class="imagenEnana" id = "##idAnuncio##" src="##urlMiniatura##" 
+                        data-medium="##urlMediana##" data-big="##urlGrande##" /> 
+                        ##corteMiniatura## 
+                    </div> 
+                </div> 
+                ##siHayMiniaturas##
+            </div>
+        
+            <div class = "bloqueInformacion" id = "bloqueInformacion">
+                <span class = "titulo">##titulo##</span>
+                <span class = "localizacion">##localizacion##</span>
+                <span class = "precio">##precio##</span>
+                <span class = "telefono">Teléfono: ##telefono##</span>
+                <span class = "nombre">##nombre##</span>
+                <span class = "fecha">Fecha de Plublicación: ##fecha##</span>
+            
+                <div class="button-container">
+                    ##login2##
+                    <form id = "addOrDeleteFav" action = "../php/controller.php?cmd=userCmd&id=7" method = "POST"> 
+                        <input type = "hidden" name = "idAnuncio" value = "##idAnuncio##" />
+                        <button type = "submit" class = "##isFavorite##">##mensajeBotonFav##</button>
+                    </form>
+                
+                    <form id = "buyCancelProduct" action = "" method = "POST"> 
+                        <input type = "hidden" name = "idAnuncio" value = "##idAnuncio##" />
+                        <button type = "submit" class = "##canBuy##">##mensajeBotonComprar##</button>
+                    </form>
+                    ##login2##
+                    ##nologin2##
+                        <a id = "addOrDeleteFav" href = "../php/controller.php?cmd=userView&id=2" class = "nLiB isNotFavorite">Añadir a<br/>Favoritos</a>
+                        <a id = "buyCancelProduct" href = "../php/controller.php?cmd=userView&id=2" class = "loginToBuy">Acceder<br/>para comprar</a>
+                    ##nologin2##
+                </div>
+                
+                <form action="../php/controller.php?cmd=userCmd&id=8" method="post" target="_blank">
+                    <input type = "hidden" name = "idAnuncio" value = "##idAnuncio##" />
+                    <button type = "submit" class = "downloadPDF">Descargar anuncio en PDF</button>
+                </form>
+                
+            </div>
+        
         </div>
         
-        <div class = "bloqueInformacion" id = "bloqueInformacion">
-            <span class = "titulo">##titulo##</span>
-            <span class = "localizacion">##localizacion##</span>
-            <span class = "precio">##precio##</span>
-            <span class = "telefono">##telefono##</span>
-            <span class = "nombre">##nombre##</span>
-            <span class = "fecha">##fecha##</span>
+        <div class = "contenido2">
+            <div class = "bloqueDescripcion" id = "bloqueDescripcion">
+                <h1>Descripción:</h1>
+                ##descripcion##
+            </div>
         </div>
         
-        <div class = "bloqueDescripcion" id = "bloqueDescripcion">
-        
-        </div>
-        
-        <div class = "bloqueComentarios" id = "bloqueComentarios">
-        
+        <div class = "contenido3">
+            <div class = "bloqueComentarios" id = "bloqueComentarios">
+                <h1>Comentarios:</h1>
+          
+            </div>
         </div>
         
     </div>

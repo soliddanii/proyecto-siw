@@ -138,7 +138,7 @@
                     
                 case '5':
                     $ret = newAnuncio();
-                    if ($ret[0] == '0'){
+                    if ($ret[0] != '-1'){
                         //Si todo se ha realizado correctamente:
                         //Redirigir al usuario a la pagina del anuncio
                         $dataCategorias = chargeCategories();
@@ -148,6 +148,7 @@
                         newAnuncioView($dataCategorias[0], array_merge($dataCategorias[1],$ret[1]));                     
                     }
 					break;
+                    
 				case '6':
 					$ret = editProfile();
 					switch ($ret) {						
@@ -158,6 +159,22 @@
 							header("Location:controller.php");
 							break;
 					}
+                    
+                case '7':
+                    //Añadir o eliminar de favoritos 
+                    
+                    break;
+                
+                case '8':
+                    //Descargar anuncio en PDF
+                    $dataAnuncio = chargeAnuncio();
+                    $ret = descargaAnuncio($dataAnuncio);
+                    if(!empty($ret)){
+                        errorView2($ret);
+                    }
+                    break;
+                    
+                    
 				default:
 					# code...
 					break;
