@@ -124,7 +124,7 @@
     background: #CEE3F6 url("../images/fav_delete.png");
     background-position: 8px 8px;
     background-repeat: no-repeat;
-    text-align:right;
+    text-align:right; 
     cursor: pointer;
     font-weight: bold;
     height: 80px;
@@ -132,7 +132,7 @@
 }
 
 .contenido .bloqueInformacion .isFavorite:hover{
-    border: solid 3px #2E64FE;
+    border: solid 3px #2E64FE; 
     background-color: #819FF7;
 }
 

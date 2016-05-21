@@ -76,10 +76,10 @@
 					setVarSession("idUser",$data["idUser"]);
 					setVarSession("user",$data["user"]);					
 					
-					$con->close();
+					$con->close(); 
 
 					return '0'; 								
-
+ 
 				}else{
 					$con->close();
 					array_push($errorList, array('errorCode' => '2', 'message' => "Se ha producido un error con la BBDD"));

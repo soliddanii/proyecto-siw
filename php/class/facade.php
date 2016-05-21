@@ -85,7 +85,7 @@ class Facade {
 		$this->con->action($query);
 	}
 
-	/*
+	/* 
 	*	Elimina un usuario de la bbdd	
 	*/
 	public function deleteUser(){
@@ -93,7 +93,7 @@ class Facade {
 	}
 
     /*
-	*	Recupera todas las categorias de la bbdd	
+	*	Recupera todas las categorias de la bbdd	 
 	*/
 	public function getCategories(){
 		$query = "SELECT * FROM final_categoria";

@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-﻿
-=======
-﻿<?php
+<?php
 
     //temp for debug
     require_once '../chromephp/ChromePhp.php';
@@ -89,10 +86,14 @@
                 case '7':
                     //Pagina de anuncio
                     $dataAnuncio = chargeAnuncio();
+                    if(empty($dataAnuncio[0][0]) || $dataAnuncio[0][0] == null){
+                        //Si no hay datos, directamente a la pagina de errores
+                        errorView2($dataAnuncio[1]);
+                    }
                     anuncioView($dataAnuncio[0], $dataAnuncio[1]);
                     break;
                     
-				default:
+				default: 
 					# code...
 					break;
 			}
@@ -110,7 +111,7 @@
  					}else{
                         signUpView($ret);
                     }
-					break;
+					break; 
 				
 				case '2':
 					$ret = loginUser();
@@ -139,45 +140,65 @@
 						recoverPassView($pass);
 					break;
                     
-          case '5':
-            $ret = newAnuncio();
-            if ($ret[0] != '-1'){
-                //Si todo se ha realizado correctamente:
-                //Redirigir al usuario a la pagina del anuncio
-                $dataCategorias = chargeCategories();
-                newAnuncioView($dataCategorias[0], array_merge($dataCategorias[1],$ret[1]));     
-            }else{
-                $dataCategorias = chargeCategories();
-                newAnuncioView($dataCategorias[0], array_merge($dataCategorias[1],$ret[1]));                     
-            }
+                case '5':
+                    $ret = newAnuncio();
+                    if ($ret[0] != '-1'){
+                        //Si todo se ha realizado correctamente:
+                        //Redirigir al usuario a la pagina del anuncio
+                        $dataCategorias = chargeCategories();
+                        newAnuncioView($dataCategorias[0], array_merge($dataCategorias[1],$ret[1]));     
+                    }else{
+                        $dataCategorias = chargeCategories();
+                        newAnuncioView($dataCategorias[0], array_merge($dataCategorias[1],$ret[1]));                     
+                    }
 						break;
                     
-				case '6':
-          //Editar el perfil
+                case '6':
+                    //Editar el perfil
 					$ret = editProfile();
-	        if(empty($ret)){
-	            header("Location:controller.php");
-	        }else{
-	            editProfileView($ret);
-	        }
-	        break;
+                    if(empty($ret)){
+                        header("Location:controller.php");
+                    }else{
+                        editProfileView($ret);
+                    }
+                    break;
+                  
+                case '7':
+                    //Añadir o eliminar de favoritos 
                     
-        case '7':
-          //Añadir o eliminar de favoritos 
-          
-          break;
-        
-        case '8':
-            //Descargar anuncio en PDF
-            $dataAnuncio = chargeAnuncio();
-            if(!empty($dataAnuncio[0][0])){
-                descargaAnuncio($dataAnuncio[0]);
-            }else{
-                errorView2($dataAnuncio[1]);
-            }
-            break;
+                    break;
+                
+                case '8':
+                    //Descargar anuncio en PDF
+                    $dataAnuncio = chargeAnuncio();
+                    if(!empty($dataAnuncio[0][0])){
+                        descargaAnuncio($dataAnuncio[0]);
+                    }else{
+                        errorView2($dataAnuncio[1]);
+                    }
+                    break;
+                 
+                case '9':                 
+                    //Publicar un nuevo comentario
+                    $ret = guardarComentario();
+                    if(empty($ret[1])){
+                        header("Location:controller.php?cmd=userView&id=7&idAnuncio=".$ret[0]);
+                    }else{
+                        $dataAnuncio = chargeAnuncio();
+                        anuncioView($dataAnuncio[0], array_merge($dataAnuncio[1], $ret[1]));
+                    }    
+                    break;
                     
-                    
+                case '10':
+                    //Borrar un comentario
+                    $ret = borrarComentario();
+                    if(empty($ret[1])){
+                        header("Location:controller.php?cmd=userView&id=7&idAnuncio=".$ret[0]);
+                    }else{
+                        $dataAnuncio = chargeAnuncio();
+                        anuncioView($dataAnuncio[0], array_merge($dataAnuncio[1], $ret[1]));
+                    }
+                
 				default:
 					# code...
 					break;
@@ -235,4 +256,3 @@
 		break;
 	}
 ?>
->>>>>>> master

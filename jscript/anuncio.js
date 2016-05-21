@@ -85,7 +85,7 @@ $(document).ready(function(){
     //**********************************************************
     //*************** Click en el boton responder **************
     //**********************************************************
-    $('.linkRespuesta').click(function() {
+    $('.linkRespuesta').click(function() {  
         
         id = $(this).data('id');
         $('#idComentarioRespuesta').val(parseInt(id));
@@ -96,7 +96,7 @@ $(document).ready(function(){
 
     });
     
-    $('#cancelResponse').click(function() {
+    $('#cancelResponse').click(function(){
     
         $('#cancelResponse').css('display', 'none');
         $('#idComentarioRespuesta').val(-1);

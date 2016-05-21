@@ -79,13 +79,13 @@ CREATE TABLE final_comentario(
 */
 CREATE TABLE final_favorito(
 	idUser INT(10) UNSIGNED NOT NULL,
-	idAnuncio INT(10) UNSIGNED NOT NULL,
+	idAnuncio INT(10) UNSIGNED NOT NULL,  
 	CONSTRAINT PK_favorito PRIMARY KEY (idUser,idAnuncio),
 	CONSTRAINT FK_favorito_usuario FOREIGN KEY (idUser) references final_usuario(idUser) ON DELETE CASCADE,
 	CONSTRAINT FK_favorito_anuncio FOREIGN KEY (idAnuncio) references final_anuncio(idAnuncio) ON DELETE CASCADE
 );
 
-/* 
+/*  
 *  TABLA IMAGEN: 
 *  La imagen pertenece a un usuario, y tiene un id 
 *  (En un anuncio puede haber mas de una imagen)
