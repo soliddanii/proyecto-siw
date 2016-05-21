@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3c.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<!-- LIBRERIAS -->
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	
+	<!-- JAVASCRIPT -->
+	<script language="JavaScript" type="text/javascript" src="../jscript/macro.js"></script>
+	<script language="JavaScript" type="text/javascript" src="../jscript/loginadmin.js"></script>
+
+	<title>Login Admin</title>
+	  
+	  <script>
+	  $(function() {
+	    $( document ).tooltip();
+	  });
+	  </script>
+
+</head>
+<body>
+	<center>		
+		<form id="loginadmin" method="post" action="../php/controller.php?cmd=adminCmd&id=0">
+			<h2>Login</h2><br>
+			<input type="text" id="usuario" name="user" title="Se permite números, letras minúscula y mayúscula. Guión y punto. Entre 4 y 20 caracteres." placeholder="Usuario"><br>
+			<input type="password" id="password" name="password" title="La contraseña debe contener numeros y letras. Entre 5 y 20 caracteres." placeholder="Contraseña"><br>
+			<input type="submit" id="logear" value="Continuar"><br>
+			<span id="error">##error##</span>
+		</form>
+	</center>
+</body>
+</html>

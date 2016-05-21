@@ -72,7 +72,7 @@
 				if($facade->insertUser($data)){
 					
 					$data = $facade->getIdUser($user);
-					
+					session_unset();
 					setVarSession("idUser",$data["idUser"]);
 					setVarSession("user",$data["user"]);					
 					
@@ -119,6 +119,7 @@
 			if($facade->existUser($user,$pwd)){
 
 				$data = $facade->getIdUser($user);
+                session_unset();
 				setVarSession("idUser",$data["idUser"]);
 				setVarSession("user",$data["user"]);
 				$con->close();
@@ -546,4 +547,34 @@
         //Devolvemos los datos y los reportes de errores (si hay)
         return array($data, $errorList);
 	}
+
+    /////////////////////////////////////////////////////////////////////////
+    //                          Gestión de Admmin
+    /////////////////////////////////////////////////////////////////////////
+
+  function loginAdmin(){
+
+    if(isset($_POST["user"]) && isset($_POST["password"])){
+
+      $user  = filter_var($_POST["user"],FILTER_SANITIZE_STRING);
+      $pass  = filter_var($_POST["password"],FILTER_SANITIZE_STRING);
+
+      $con = new Connection();
+      $facade = new Facade($con);
+
+      if($facade->existAdmin($user,$pass)){
+        $data = $facade->getDataAdmin($user,$pass);
+        session_unset();
+        setVarSession('idAdmin',$data['idAdmin']);
+        setVarSession('user',$data['user']);
+        return 0;
+      }else{
+          return 1;
+      }
+
+    }else{
+      echo "retorno -1";
+      return -1;
+    }
+  }
 ?>

@@ -136,43 +136,43 @@
 						recoverPassView($pass);
 					break;
                     
-                case '5':
-                    $ret = newAnuncio();
-                    if ($ret[0] != '-1'){
-                        //Si todo se ha realizado correctamente:
-                        //Redirigir al usuario a la pagina del anuncio
-                        $dataCategorias = chargeCategories();
-                        newAnuncioView($dataCategorias[0], array_merge($dataCategorias[1],$ret[1]));     
-                    }else{
-                        $dataCategorias = chargeCategories();
-                        newAnuncioView($dataCategorias[0], array_merge($dataCategorias[1],$ret[1]));                     
-                    }
-					break;
+          case '5':
+            $ret = newAnuncio();
+            if ($ret[0] != '-1'){
+                //Si todo se ha realizado correctamente:
+                //Redirigir al usuario a la pagina del anuncio
+                $dataCategorias = chargeCategories();
+                newAnuncioView($dataCategorias[0], array_merge($dataCategorias[1],$ret[1]));     
+            }else{
+                $dataCategorias = chargeCategories();
+                newAnuncioView($dataCategorias[0], array_merge($dataCategorias[1],$ret[1]));                     
+            }
+						break;
                     
 				case '6':
-                    //Editar el perfil
+          //Editar el perfil
 					$ret = editProfile();
-                    if(empty($ret)){
-                        header("Location:controller.php");
-                    }else{
-                        editProfileView($ret);
-                    }
-
+	        if(empty($ret)){
+	            header("Location:controller.php");
+	        }else{
+	            editProfileView($ret);
+	        }
+	        break;
                     
-                case '7':
-                    //Añadir o eliminar de favoritos 
-                    
-                    break;
-                
-                case '8':
-                    //Descargar anuncio en PDF
-                    $dataAnuncio = chargeAnuncio();
-                    if(!empty($dataAnuncio[0][0])){
-                        descargaAnuncio($dataAnuncio[0]);
-                    }else{
-                        errorView2($dataAnuncio[1]);
-                    }
-                    break;
+        case '7':
+          //Añadir o eliminar de favoritos 
+          
+          break;
+        
+        case '8':
+            //Descargar anuncio en PDF
+            $dataAnuncio = chargeAnuncio();
+            if(!empty($dataAnuncio[0][0])){
+                descargaAnuncio($dataAnuncio[0]);
+            }else{
+                errorView2($dataAnuncio[1]);
+            }
+            break;
                     
                     
 				default:
@@ -180,9 +180,55 @@
 					break;
 			}
 			break;
-		
-		default:
-			
+
+		case 'adminView':
+			switch ($id) {
+				// Mostrar pagina de login
+				case '0':
+					if (isset($_SESSION['idAdmin']))
+						frontViewAdmin();
+					else	
+						loginViewAdmin();
+					break;
+				case '1':					
+					if (!isset($_SESSION['idAdmin']))
+						loginViewAdmin();
+					else
+						frontViewAdmin();
+					break;
+				default:
+					# code...
+					break;
+			}
 			break;
+			
+		case 'adminCmd':
+			switch ($id) {
+				
+				case '0':				
+					$ret = loginAdmin();
+
+					if ($ret == 0){
+						frontViewAdmin();
+					}
+					elseif ($ret == 1){
+						loginViewAdmin('Los datos de usuario no son correctos.');
+					}elseif ($ret == -1){
+						errorView('No se pudieron tomar datos');
+					}
+					break;
+				
+				case '1':
+					logOut();
+					header("Location:controller.php?cmd=adminView");
+					break;
+				default:
+					# code...
+					break;
+			}
+			break;
+	default:
+		
+		break;
 	}
 ?>
