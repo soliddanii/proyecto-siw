@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang = "es-Es">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<!-- LIBRERIAS -->
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	
+    <!-- JAVASCRIPT -->    
+	<script language="JavaScript" type="text/javascript" src="../javascript/gestion_usuarios.js"></script>	
+
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="../css/menuadmin.css"/>
+
+	<title>Portada Admin</title>
+	<style>
+		.ui-menu {
+		width: 200px;
+	}
+	</style>
+
+	<script>
+	$(function () {
+		$("#menu").menu();
+	});
+	</script>
+</head>
+<body>
+
+	<!-- Datos del admin -->
+	<div id="admin">
+		<ul style="##admin##">			
+			<li><a href="../php/controller.php?cmd=adminCmd&id=1"><span>Cerrar Cesión</span></a></li>
+			<li><span>##user##</span></li>
+		</ul>
+	</div>
+
+	<!-- Funciones que va a realizar -->
+	<div style="position: absolute; top: 100px; left: 0px; z-index: 100">
+		<ul id="menu">
+		<li><a href="#1">Usuarios</a>
+			<ul>
+			<li><a href="">Consultar</a></li>			
+			<li><a href="">Modificar</a></li>
+			<li><a href="">Eliminar</a></li>
+			</ul>
+		</li>
+		<li><a href="#2">Anuncios</a>
+			<ul>
+			<li><a href="">1.1</a></li>
+			</ul>
+		</li>
+		<li><a href="#3">2</a>
+			<ul>
+			<li><a href="">2.1</a></li>
+			<li><a href="">2.2</a></li>
+			</ul>
+		</li>
+		<li><a href="#4">3</a>
+			<ul>
+			<li><a href="">3.1</a></li>
+			<li><a href="">3.2</a></li>
+			<li><a href="">3.3</a></li>
+			</ul>
+		</li>
+		</ul>
+	</div>
+
+	<!-- Resultados de modificaciones -->
+	<div class="resultado">
+		##resultado##
+	</div>
+</body>
+</html>

@@ -18,7 +18,7 @@
 		$text     = str_replace("##menu##",$textMenu,$text);
 
 		// Comprueba si el usuario se ha logueado
-		if(isset($_SESSION["user"])){
+		if(isset($_SESSION["user"]) && isset($_SESSION["idUser"])){
 
 			$trozos0 = explode("##nologin##", $text);
 			$trozos1 = explode("##login##", $trozos0[2]);
@@ -394,5 +394,29 @@
 		
 	}
     
+  /////////////////////////////////////////////////////////////////////////
+  //              Funciones para el admin
+  /////////////////////////////////////////////////////////////////////////
+
+  function loginViewAdmin(){
+
+    $pathFront = "../html/loginadmin.html";             
+    $text = file_get_contents($pathFront) or exit("Error loginViewAdmin, [$pathFront]");        
+    
+    $text = str_replace("##error##", "", $text);
+    
+    echo $text;
+  }
+
+  function frontViewAdmin(){
+
+    $pathFront = "../html/frontadmin.html";             
+    $text = file_get_contents($pathFront) or exit("Error frontViewAdmin, [$pathFront]");
+    $text = str_replace("##user##", $_SESSION["user"], $text);
+    $text = str_replace("##resultado##", "", $text);
+    
+    echo $text;
+
+  }
     
 ?>

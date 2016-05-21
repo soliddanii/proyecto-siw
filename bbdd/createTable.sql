@@ -40,7 +40,7 @@ CREATE TABLE final_anuncio(
 	idAnuncio INT(10) UNSIGNED AUTO_INCREMENT,
 	idUser INT(10) UNSIGNED NOT NULL,
 	idCategoria INT(5) UNSIGNED DEFAULT 0,
-    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,/*DATETIME DEFAULT CURRENT_TIMESTAMP,*/
     precio DECIMAL(7,2) DEFAULT 0,
     titulo VARCHAR(50) NOT NULL,
     descripcion VARCHAR(2000),
@@ -66,7 +66,7 @@ CREATE TABLE final_comentario(
 	idAnuncio INT(10) UNSIGNED NOT NULL,
 	comentario VARCHAR(400) NOT NULL,
     idPadre INT(10) UNSIGNED,
-    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,/*DATETIME DEFAULT CURRENT_TIMESTAMP,*/
 	CONSTRAINT PK_comentario PRIMARY KEY (idComentario),
 	CONSTRAINT FK_comentario_usuario FOREIGN KEY (idUser) references final_usuario(idUser) ON DELETE CASCADE,
 	CONSTRAINT FK_comentario_anuncio FOREIGN KEY (idAnuncio) references final_anuncio(idAnuncio) ON DELETE CASCADE,
@@ -99,4 +99,16 @@ CREATE TABLE final_imagen(
 	small VARCHAR(100) NOT NULL,
 	CONSTRAINT PK_imagen PRIMARY KEY (idAnuncio, idImagen),
 	CONSTRAINT FK_imagen_anuncio FOREIGN KEY (idAnuncio) references final_anuncio (idAnuncio) ON DELETE CASCADE
+);
+
+/* 
+*  TABLA ADMIN: 
+*  Guardar los datos de los admin
+*/
+CREATE TABLE final_admin(
+	idAdmin INT(10) UNSIGNED AUTO_INCREMENT,	
+	user VARCHAR(30) NOT NULL,
+	name VARCHAR(40),
+	password VARCHAR(50) NOT NULL,
+	CONSTRAINT PK_admin PRIMARY KEY (idAdmin)
 );

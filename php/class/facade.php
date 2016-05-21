@@ -301,7 +301,30 @@ class Facade {
         return mysqli_num_rows($this->con->action($query))> 0 ? True : False; 
     }
      
-    
+    /* 
+    * GESTION DE ADMIN
+    */
+
+    /* 
+    * Devuelve un valor booleano, true si existe el usuario en la bbdd y false
+    * en caso contrario.
+   	*/
+    public function existAdmin($user, $pwd){    	
+    	$query = "SELECT idAdmin,user FROM final_admin WHERE user='".$user."' and 
+		password='".$pwd."'";
+		return mysqli_num_rows($this->con->action($query))> 0? True: False; 
+    }
+
+    /*
+    * Devuelve un array con los datos de un usuario admin existente en la bbdd
+    */
+    public function getDataAdmin($user, $pwd){
+    	$query = "SELECT idAdmin,user FROM final_admin WHERE user='".$user."' and 
+		password='".$pwd."'";
+		$row = mysqli_fetch_array($this->con->action($query));
+		$data = array('idAdmin' => $row["idAdmin"], 'user' => $row["user"]);
+		return $data;
+    }
 }
 
 ?>
