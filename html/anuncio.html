@@ -30,11 +30,11 @@
     <!-- BLOQUE DE CONTENIDO NORMAL --> 
     <div class = "contenido">
 
-        <div class = "contenido1">
-        
-            ##corteListaErrores##
-            <div id = "errorMessage">##errorCode##: ##error##</div>
-            ##corteListaErrores##
+        ##corteListaErrores##
+        <div id = "errorMessage">##errorCode##: ##error##</div>
+        ##corteListaErrores##
+            
+        <div class = "contenido1"> 
         
             <div class = "bloqueImagenes" id = "bloqueImagenes">       
                 <!-- MEDIANA --> 
@@ -100,7 +100,34 @@
         <div class = "contenido3">
             <div class = "bloqueComentarios" id = "bloqueComentarios">
                 <h1>Comentarios:</h1>
-          
+                
+                ##bloqueComentario##
+                <div class = "bloqueComentario" id="coment##idComentario##" data-idPadre="##idPadre##">
+                    <span class="nickAutor">##nickAutor##:</span>
+                    <span class="fecha">##fechaComentario##</span>
+                    <span class="comentarioItem">##comentarioItem##</span>
+                    
+                    <span data-id="##idComentario##" data-nick="##nickI##" class="linkRespuesta">Responder</span>
+                    ##borrarComentario0##
+                    <form id="borrarComentario" method="post" action="../php/controller.php?cmd=userCmd&id=10">
+                        <input type = "hidden" name = "idComentario" value = "##idComentario##" />
+                        <input type = "hidden" name = "idAnuncio" value = "##idAnuncio##" />
+                        <button type="submit" class="linkBorrar">Borrar</button>
+                    </form>
+                    ##borrarComentario0##
+                </div>
+                ##bloqueComentario##
+                
+                <form id = "newcomentario" method = "post" action = "../php/controller.php?cmd=userCmd&id=9">
+                    <input type = "hidden" name = "idAnuncio" value = "##idAnuncio##" />
+                    <input type = "hidden" id="idComentarioRespuesta" name = "idComentarioRespuesta" value = "-1" />
+                    <textarea id="nuevoComentario" name = "comentario" form="newcomentario" maxlength="400" 
+                    placeholder = "Escribir un comentario..." rows="4" cols="40" wrap="hard"></textarea>
+                    <span class = "counter">Carácteres restantes: </span><span class="counter" id="counter"></span>
+                    <span id = "cancelResponse">Cancelar Respuesta</span>
+                    
+                    <button type="submit" class="publicarComentario">Publicar Comentario</button>
+                </form>
             </div>
         </div>
         

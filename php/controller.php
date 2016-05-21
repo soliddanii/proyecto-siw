@@ -86,6 +86,10 @@
                 case '7':
                     //Pagina de anuncio
                     $dataAnuncio = chargeAnuncio();
+                    if(empty($dataAnuncio[0][0]) || $dataAnuncio[0][0] == null){
+                        //Si no hay datos, directamente a la pagina de errores
+                        errorView2($dataAnuncio[1]);
+                    }
                     anuncioView($dataAnuncio[0], $dataAnuncio[1]);
                     break;
                     
@@ -173,8 +177,29 @@
                         errorView2($dataAnuncio[1]);
                     }
                     break;
+                 
+                case '9':                 
+                    //Publicar un nuevo comentario
+                    $ret = guardarComentario();
+                    if(empty($ret[1])){
+                        header("Location:controller.php?cmd=userView&id=7&idAnuncio=".$ret[0]);
+                    }else{
+                        $dataAnuncio = chargeAnuncio();
+                        anuncioView($dataAnuncio[0], array_merge($dataAnuncio[1], $ret[1]));
+                    }
                     
+                    break;
                     
+                case '10':
+                    //Borrar un comentario
+                    $ret = borrarComentario();
+                    if(empty($ret[1])){
+                        header("Location:controller.php?cmd=userView&id=7&idAnuncio=".$ret[0]);
+                    }else{
+                        $dataAnuncio = chargeAnuncio();
+                        anuncioView($dataAnuncio[0], array_merge($dataAnuncio[1], $ret[1]));
+                    }
+                
 				default:
 					# code...
 					break;

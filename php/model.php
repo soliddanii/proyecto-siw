@@ -426,8 +426,17 @@
 		$con    = new Connection();			
 		$facade = new Facade($con);
         
-        if (isset($_POST["idAnuncio"]) && is_numeric($_POST["idAnuncio"])){
-            $idAnuncio = intval($_POST["idAnuncio"]);
+        if ((isset($_POST["idAnuncio"]) && is_numeric($_POST["idAnuncio"])) 
+            || (isset($_GET["idAnuncio"]) && is_numeric($_GET["idAnuncio"]))){
+            
+            $idAnuncio = -1;
+            if (isset($_GET["idAnuncio"])){
+                $idAnuncio = intval($_GET["idAnuncio"]);
+            }
+            if (isset($_POST["idAnuncio"])){
+                $idAnuncio = intval($_POST["idAnuncio"]);
+            }
+             
             
             $result = $facade->getAnuncio($idAnuncio);
              if($result && (mysqli_num_rows($result) > 0)){ 
@@ -466,7 +475,7 @@
                         $data_cmt = array(); 
                         while($row = mysqli_fetch_array($result)){ 
                             $data_cmt_tmp = array('id'=>$row['idComentario'], 'idUser'=>$row['idUser'], 'comentario'=>$row['comentario'] 
-                                , 'idPadre'=>$row['idPadre'], 'fecha'=>$row['fecha']); 
+                                , 'idPadre'=>$row['idPadre'], 'fecha'=>$row['fecha'], 'nickAutor'=>$row['nick'], 'nickPadre'=>$row['nickPadre']); 
                             array_push($data_cmt, $data_cmt_tmp); 
                         }   
                         $data[2] = $data_cmt; 
@@ -512,6 +521,110 @@
         return $ret;
         
     }
+    
+    
+    /////////////////////////////////////////////////////////////////////////
+	// 							Gestión de los comentarios 
+	/////////////////////////////////////////////////////////////////////////
+    function guardarComentario(){
+    
+        //Array para guardar los posibles errores que encontremos
+        $errorList = array(); //Array de arrays: error("errorCode" => "code", "message" => "mensaje" )
+        $idAnuncio = -1;
+        
+        //Comprobar que es un usuario logueado
+        if(isset($_SESSION["idUser"])){ 
+            $idUser = $_SESSION["idUser"];
+        
+            //Comprobar que es un comentario valido para un anuncio valido
+            if(isset($_POST["idAnuncio"]) && is_numeric($_POST["idAnuncio"]) 
+                && isset($_POST["comentario"]) && (strlen($_POST['comentario']) > 0) && (strlen($_POST['comentario']) <= 400)){
+                
+                //Establecer la conexion a la BBDD
+                $con    = new Connection();			
+                $facade = new Facade($con);
+                
+                $idAnuncio = intval($_POST["idAnuncio"]);
+                $comentario = filter_var($_POST["comentario"], FILTER_SANITIZE_STRING);
+                
+                //Verificar si es respuesta a otro comentario
+                $idRespuesta = -1;
+                if(isset($_POST["idComentarioRespuesta"]) && is_numeric($_POST["idComentarioRespuesta"])){
+                    $idRespuesta = intval($_POST["idComentarioRespuesta"]);
+                    
+                    //Existe realmente ese comentario padre en ese anuncio?
+                    if($idRespuesta >= 0){
+                        if(!$facade->existeComentario($idRespuesta, $idAnuncio)){
+                            array_push($errorList, array('errorCode' => '2', 'message' => "El comentario al que se hace referencia no existe o no se pudo comprobar."));
+                            $idRespuesta = -1;
+                        }
+                    }
+                }
+                      
+                //Insertar Comentario
+                if(!$facade->insertarComentario($idUser, $idAnuncio, $comentario, $idRespuesta)){
+                    array_push($errorList, array('errorCode' => '3', 'message' => "No se ha podido guardar el comentario."));
+                }
+                
+                $con->close();
+                
+            }else{
+                array_push($errorList, array('errorCode' => '1', 'message' => "El anuncio o el comentario no es válido."));
+            }
+        
+        }else{
+            array_push($errorList, array('errorCode' => '-1', 'message' => "Es necesario estar registrado para dejar un comentario."));
+        }
+        
+        return array($idAnuncio, $errorList);
+    
+    }
+
+    function borrarComentario(){
+    
+        //Array para guardar los posibles errores que encontremos
+        $errorList = array(); //Array de arrays: error("errorCode" => "code", "message" => "mensaje" )
+        $idAnuncio = -1;
+        
+        //Comprobar que es un usuario logueado
+        if(isset($_SESSION["idUser"])){ 
+            $idUser = $_SESSION["idUser"];
+        
+            //Comprobar que es un comentario valido para un anuncio valido
+            if(isset($_POST["idAnuncio"]) && is_numeric($_POST["idAnuncio"]) 
+                && isset($_POST["idComentario"]) && is_numeric($_POST["idComentario"])){
+                
+                //Establecer la conexion a la BBDD
+                $con    = new Connection();			
+                $facade = new Facade($con);
+                
+                $idAnuncio = intval($_POST["idAnuncio"]);
+                $idComentario = intval($_POST["idComentario"]);
+                
+                //Verificar que el anuncio es mio (y por lo tanto tengo permisos de borrar comentarios
+                if($facade->esMiAnuncio($idAnuncio, $idUser)){
+                    //Borrar
+                    if(!$facade->borrarComentario($idAnuncio, $idComentario)){
+                        array_push($errorList, array('errorCode' => '3', 'message' => "No se ha podido borrar el comentario."));
+                    }
+                }else{
+                    array_push($errorList, array('errorCode' => '4', 'message' => "El anuncio no te pertenece. No puedes borrar comentarios."));
+                }
+  
+                $con->close();
+                
+            }else{
+                array_push($errorList, array('errorCode' => '1', 'message' => "El anuncio o el comentario no es válido."));
+            }
+        
+        }else{
+            array_push($errorList, array('errorCode' => '-1', 'message' => "Como vas a borrar el comentario si no estas ni registrado."));
+        }
+        
+        return array($idAnuncio, $errorList);
+    
+    }    
+    
     
 	/////////////////////////////////////////////////////////////////////////
 	// 							Gestión de Categorias 

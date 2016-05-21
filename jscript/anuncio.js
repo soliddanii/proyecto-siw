@@ -61,4 +61,74 @@ $(document).ready(function(){
     });
     
     
+    //**********************************************************
+    //********** Caracteres restantes en comentario ************
+    //**********************************************************
+    
+    var maxchar = 400;
+    var i = document.getElementById("nuevoComentario");
+    var c = document.getElementById("counter");
+    c.innerHTML = maxchar;
+    
+    i.addEventListener("keydown",count);
+    
+    function count(e){
+        var len =  i.value.length;
+        if (len >= maxchar){
+            e.preventDefault();
+        } else{
+            c.innerHTML = maxchar - len - 1;   
+        }
+    }
+
+    
+    //**********************************************************
+    //*************** Click en el boton responder **************
+    //**********************************************************
+    $('.linkRespuesta').click(function() {
+        
+        id = $(this).data('id');
+        $('#idComentarioRespuesta').val(parseInt(id));
+        $('#nuevoComentario').attr("placeholder", "Escribir una respuesta a "+$(this).data('nick')+"...");
+        $('html, body').animate({ scrollTop: $('#nuevoComentario').offset().top }, 'slow');
+        $('#nuevoComentario').focus();
+        $('#cancelResponse').css('display', 'inline-block');
+
+    });
+    
+    $('#cancelResponse').click(function() {
+    
+        $('#cancelResponse').css('display', 'none');
+        $('#idComentarioRespuesta').val(-1);
+        $('#nuevoComentario').attr("placeholder", "Escribir un comentario...");
+
+    });
+    
+    $(document).on("click", "a", function(){
+        if($(this).attr('href').startsWith('#coment')){
+            $($(this).attr('href')).fadeToggle(700);
+            $($(this).attr('href')).fadeToggle(700);
+        }
+    });
+
+    
+    //**********************************************************
+    //*************** Prevenir un comentario vacio *************
+    //**********************************************************
+    $('#newcomentario').submit(function(event){
+    
+        if($('#nuevoComentario').val() == ''){
+            $('.jsError1').remove();
+            $(".contenido").append("<div id = 'errorMessage' class = 'jsError1'>No puede publicar un comentario vacio</div>");
+            $('html, body').animate({ scrollTop: $('.jsError1').offset().top }, 'slow');
+			event.preventDefault();
+        }else{
+            $('.jsError1').remove();
+        }
+            
+    
+    });
+
+    
+    
 });

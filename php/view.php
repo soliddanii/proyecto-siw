@@ -242,13 +242,6 @@
 	*	Lanza un error si no se puede obtner la direccion del html
 	*/
 	function anuncioView($data, $errores) {
-
-        if(empty($data[0]) || $data[0] == null){
-            //Si no hay datos, directamente a la pagina principal con los errores
-            errorView2($errores);
-            return '-1';
-        }
-    
     
 		$pathAnuncio = "../html/anuncio.html";		
 		$text = file_get_contents($pathAnuncio) or exit("Error anuncioView, [$pathAnuncio]");
@@ -315,8 +308,43 @@
         
         
         
-        
         // PROCESAR COMENTARIOS 
+        if(!empty($data[2])){ 
+            $trozos = explode("##bloqueComentario##", $text); 
+            $aux0 = ""; 
+            for ($i=0; $i<count($data[2]); $i++) { 
+                $aux1 = $trozos[1];      
+                $aux1 = str_replace("##idComentario##", $data[2][$i]['id'], $aux1); 
+                $aux1 = str_replace("##nickI##", $data[2][$i]['nickAutor'], $aux1); 
+                $aux1 = str_replace("##comentarioItem##", $data[2][$i]['comentario'], $aux1); 
+                $aux1 = str_replace("##idPadre##", $data[2][$i]['idPadre'], $aux1); 
+                $aux1 = str_replace("##fechaComentario##", $data[2][$i]['fecha'], $aux1); 
+                if($data[2][$i]['nickPadre'] != ''){
+                    $aux1 = str_replace("##nickAutor##", '#'.$data[2][$i]['id'].' <b>'.$data[2][$i]['nickAutor'].'</b> en respuesta a '
+                    .$data[2][$i]['nickPadre'].' <a href="#coment'.$data[2][$i]['idPadre'].'">(#'.$data[2][$i]['idPadre'].')</a>', $aux1); 
+                }else{
+                    $aux1 = str_replace("##nickAutor##", '#'.$data[2][$i]['id'].' <b>'.$data[2][$i]['nickAutor'].'</b>', $aux1);
+                }
+                
+                
+                //Añadir el boton de borrar
+                $subTrozos = explode("##borrarComentario0##", $aux1); 
+                if($data[5]){
+                    $aux1 = $subTrozos[0].$subTrozos[1].$subTrozos[2];
+                }else{
+                    $aux1 = $subTrozos[0].$subTrozos[2];
+                }
+                
+                $aux0 .= $aux1; 
+        
+            } 
+            $text = $trozos[0].$aux0.$trozos[2];
+        
+        
+        }else{
+            $trozos = explode("##bloqueComentario##", $text); 
+            $text = $trozos[0].$trozos[2];
+        }
 		
         
         //Procesar favoritos y compra

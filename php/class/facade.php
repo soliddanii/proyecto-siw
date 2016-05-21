@@ -229,7 +229,17 @@ class Facade {
     *  Obtiene todas los comentarios de un anuncio de la bbdd   
     */ 
     public function getComentarios($idAnuncio){ 
-        $query = "SELECT * FROM final_comentario WHERE idAnuncio = '".$idAnuncio."'"; 
+        /*$query = "SELECT fc.idUser, fc.idComentario, fc.idAnuncio, fc.comentario, fc.idPadre, fc.fecha, fu.nick, fu2.nick nickPadre
+            FROM final_comentario fc INNER JOIN final_usuario fu USING(idUser) LEFT JOIN  final_usuario fu2 ON(fc.idPadre = fu2.idUser) 
+            WHERE idAnuncio = '".$idAnuncio."' ORDER BY fecha ASC"; */
+            
+        $query = "SELECT  fc.idAnuncio, fc.idComentario, fc.idUser, fu.nick, fc.comentario, fc.idPadre, fc.fecha, aux2.nick nickPadre
+            FROM final_comentario fc INNER JOIN      final_usuario fu ON(fc.idUser=fu.idUser) LEFT JOIN
+            (SELECT aux.idComentario, fu.nick
+                FROM (SELECT fc2.idComentario, fc2.idUser FROM final_comentario fc1 INNER JOIN final_comentario fc2 ON (fc1.idPadre=fc2.idComentario)) aux
+            INNER JOIN final_usuario fu ON(aux.idUser=fu.idUser)) aux2 ON (fc.idPadre=aux2.idComentario)
+            WHERE fc.idAnuncio = '".$idAnuncio."' ORDER BY fc.fecha ASC";
+    
         return $this->con->action($query); 
     } 
      
@@ -250,6 +260,46 @@ class Facade {
         $query = "SELECT idUser FROM final_favorito WHERE idUser='".$idUser."' AND idAnuncio='".$idAnuncio."'"; 
         return mysqli_num_rows($this->con->action($query))> 0 ? True : False; 
     } 
+    
+    /* 
+    *  Comprueba si un comentario existe en un anuncio 
+    */ 
+    public function existeComentario($idComentario, $idAnuncio){ 
+        $query = "SELECT idComentario FROM final_comentario WHERE idComentario='".$idComentario."' AND idAnuncio='".$idAnuncio."'"; 
+        return mysqli_num_rows($this->con->action($query))> 0 ? True : False; 
+    }
+    
+    /* 
+    *  Inserta un comentario 
+    */ 
+    public function insertarComentario($idUser, $idAnuncio, $comentario, $idRespuesta){
+        $query = '';
+        if($idRespuesta >= 0){
+            $query = "INSERT INTO final_comentario (idUser, idAnuncio, comentario, idPadre) 
+                VALUES ('".$idUser."', '".$idAnuncio."', '".$comentario."', '".$idRespuesta."')"; 
+        }else{
+            $query = "INSERT INTO final_comentario (idUser, idAnuncio, comentario) 
+                VALUES ('".$idUser."', '".$idAnuncio."', '".$comentario."')"; 
+        }
+        
+        return $this->con->action($query); 
+    }
+    
+    /* 
+    *  Borra un comentario 
+    */ 
+    public function borrarComentario($idAnuncio, $idComentario){
+        $query = "DELETE FROM final_comentario WHERE idAnuncio='".$idAnuncio."' AND idComentario='".$idComentario."'"; 
+        return $this->con->action($query); 
+    }
+    
+    /* 
+    *  Comprueba si un comentario existe en un anuncio 
+    */ 
+    public function esMiAnuncio($idAnuncio, $idUser){ 
+        $query = "SELECT idAnuncio FROM final_anuncio WHERE idAnuncio='".$idAnuncio."' AND idUser='".$idUser."'"; 
+        return mysqli_num_rows($this->con->action($query))> 0 ? True : False; 
+    }
      
     
 }

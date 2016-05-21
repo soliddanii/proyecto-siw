@@ -15,6 +15,14 @@
     flex: 1;
 }
 
+.contenido #errorMessage{
+    width: 80%; 
+    margin: 10px auto;
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box; 
+    box-sizing: border-box;
+}
+
 .contenido .contenido2{
     flex: 2;
     width: 100%; 
@@ -225,7 +233,10 @@
     background-color: #8C9AEA;
 }
 
-/********************************************************/
+/***************************************************************/
+/******************** BLOQUE DE DESCRIPCION ********************/
+/***************************************************************/
+
 .contenido .bloqueDescripcion{
     font: 20px 'Roboto', Arial, Helvetica, sans-serif;
     border: solid 5px rgb(31, 12, 35);
@@ -246,6 +257,10 @@
     color: gray;
 }
 
+/***************************************************************/
+/******************** BLOQUE DE COMENTARIOS ********************/
+/***************************************************************/
+
 .contenido .bloqueComentarios{
     font: 20px 'Roboto', Arial, Helvetica, sans-serif;
     border: solid 5px rgb(200, 104, 204);
@@ -257,6 +272,134 @@
     -webkit-box-sizing: border-box; 
     -moz-box-sizing: border-box; 
     box-sizing: border-box;
+}
+
+.contenido .bloqueComentarios button[type="submit"]{
+    text-align: center;
+    margin: 10px auto;
+    margin-right: 0px;
+    margin-top: -33px;
+    display: block;
+    width: 20%;
+    border: solid 5px #B40486;
+    background-color: #F6CEF5;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 8px;
+    outline: none;
+}
+
+.contenido .bloqueComentarios button[type="submit"]:hover{
+    background-color: #FE2EC8;
+    color: white;
+}
+
+.contenido .bloqueComentarios textarea{
+    resize: vertical;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    margin: auto;
+    margin-top: 20px;
+    border: solid 5px #F7819F;
+    font-size: 18px;
+    padding: 8px;
+    outline: none;
+}
+
+.contenido .bloqueComentarios textarea:focus{
+    border: solid 5px #FE2E64;
+    outline: none;
+}
+
+.contenido .bloqueComentarios .counter{
+    margin: 10px auto;
+    margin-left: 0px;
+    display: inline-block;
+    width: 20%;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 8px 0px;
+}
+
+#cancelResponse{
+    display: none;
+    margin: 10px auto;
+    margin-left: 0px;
+    width: 20%;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 8px 0px;
+    color: #819FF7;
+}
+
+#cancelResponse:hover{
+    color: #013ADF;
+}
+
+.contenido .bloqueComentarios .bloqueComentario{
+    margin: 10px auto;
+    display: inline-block;
+    width: 100%;
+    font-size: 18px;
+    padding: 8px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid 5px #F5A9BC;
+    background-color: #FBEFF5;
+}
+
+.contenido .bloqueComentarios .bloqueComentario .nickAutor{
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
+.contenido .bloqueComentarios .bloqueComentario .fecha{
+    float: right;
+    font-style: italic;
+    font-size: 16px;
+}
+
+.contenido .bloqueComentarios .bloqueComentario .comentarioItem{
+    margin-top: 6px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.contenido .bloqueComentarios .bloqueComentario .linkRespuesta{
+    margin-bottom: 0px;
+    float: right;
+    display: block;
+    color: #DF0174;
+    font-weight: bold;
+}
+
+.contenido .bloqueComentarios .bloqueComentario .linkRespuesta:hover{
+    cursor: pointer;
+    color: #610B4B;
+}
+
+.contenido .bloqueComentarios .bloqueComentario .linkBorrar{
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    margin: auto;
+    margin-bottom: 0px;
+    margin-right: 25px;
+    float: right;
+    display: block;
+    color: #8258FA;
+    width: auto;
+    font-weight: bold;
+}
+
+.contenido .bloqueComentarios .bloqueComentario .linkBorrar:hover{
+    background-color: transparent;
+    cursor: pointer;
+    color: #4B088A;
 }
 
 /***************************************************************/
@@ -331,3 +474,4 @@
     display: block;
     cursor: pointer;
 }
+
