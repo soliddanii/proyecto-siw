@@ -262,6 +262,23 @@ class Facade {
     } 
     
     /* 
+    *  Añade un favorito
+    */ 
+    public function addFavorito($idUser, $idAnuncio){ 
+        $query = "INSERT INTO final_favorito VALUES('".$idUser."', '".$idAnuncio."')"; 
+        return $this->con->action($query);
+    }
+    
+    /* 
+    *  Elimina un favorito
+    */ 
+    public function deleteFavorito($idUser, $idAnuncio){ 
+        $query = "DELETE FROM final_favorito WHERE idUser='".$idUser."' AND idAnuncio='".$idAnuncio."'"; 
+        return $this->con->action($query);
+    }
+    
+    
+    /* 
     *  Comprueba si un comentario existe en un anuncio 
     */ 
     public function existeComentario($idComentario, $idAnuncio){ 

@@ -165,7 +165,13 @@
                   
                 case '7':
                     //Añadir o eliminar de favoritos 
-                    
+                    $ret = addOrDeleteFavorite();
+                    if(empty($ret[1])){
+                        header("Location:controller.php?cmd=userView&id=7&idAnuncio=".$ret[0]);
+                    }else{
+                        $dataAnuncio = chargeAnuncio();
+                        anuncioView($dataAnuncio[0], array_merge($dataAnuncio[1], $ret[1]));
+                    } 
                     break;
                 
                 case '8':

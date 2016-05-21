@@ -523,6 +523,53 @@
         
     }
     
+    /////////////////////////////////////////////////////////////////////////
+	// 							Gestión de los Favoritos
+	/////////////////////////////////////////////////////////////////////////
+    
+    function addOrDeleteFavorite(){
+    
+        //Array para guardar los posibles errores que encontremos
+        $errorList = array(); //Array de arrays: error("errorCode" => "code", "message" => "mensaje" )
+        
+        $idAnuncio = -1;
+        
+        //Comprobar que es un usuario logueado
+        if(isset($_SESSION["idUser"])){ 
+            $idUser = $_SESSION["idUser"];
+            
+            if(isset($_POST["idAnuncio"]) && is_numeric($_POST["idAnuncio"])){
+                
+                //Establecer la conexion a la BBDD
+                $con    = new Connection();			
+                $facade = new Facade($con);
+                
+                $idAnuncio = intval($_POST["idAnuncio"]);
+                if($facade->isFavorito($idUser, $idAnuncio)){
+                    //Eliminar Favorito
+                    if(!$facade->deleteFavorito($idUser, $idAnuncio)){
+                        array_push($errorList, array('errorCode' => '2', 'message' => "No se ha podido eliminar de favoritos."));
+                    }
+                }else{
+                    //Añadir Favorito
+                    if(!$facade->addFavorito($idUser, $idAnuncio)){
+                        array_push($errorList, array('errorCode' => '3', 'message' => "No se ha podido añadir a favoritos."));
+                    }
+                }
+                
+                $con->close();
+                
+            }else{
+                array_push($errorList, array('errorCode' => '1', 'message' => "No se ha especificado ningun anuncio."));
+            }
+        
+        }else{
+            array_push($errorList, array('errorCode' => '-1', 'message' => "Es necesario estar registrado getionar los Favoritos."));
+        }
+        
+        return array($idAnuncio, $errorList);
+    }
+    
     
     /////////////////////////////////////////////////////////////////////////
 	// 							Gestión de los comentarios 
