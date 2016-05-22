@@ -61,7 +61,7 @@
 
 				case '3':
                     //Pagina de recuperacion de contraseña
-					recoverPassView();
+					recoverPassView(null);
 					break;
 
                 case '4':
@@ -134,17 +134,17 @@
 				case '3':
 					logOut();
 					header("Location:controller.php");
- 					exit;
+ 					//exit;
 					break;
 
 				case '4':
-					$pass = recoverPass();
-					if ($pass == 1)
-						recoverPassView("","Los datos no son correctos");
-					elseif ($pass == -1)
-						errorView("userCmd-recoverPass");
-					else
-						recoverPassView($pass);
+                    //Recuperar la contraseña
+					$ret = recoverPass();
+					if (empty($ret)){
+						header("Location:controller.php");
+					}else{
+						recoverPassView($ret);
+                    }
 					break;
                     
                 case '5':
@@ -158,7 +158,7 @@
                         $dataCategorias = chargeCategories();
                         newAnuncioView($dataCategorias[0], array_merge($dataCategorias[1],$ret[1]));                     
                     }
-						break;
+					break;
                     
                 case '6':
                     //Editar el perfil
@@ -211,6 +211,7 @@
                         $dataAnuncio = chargeAnuncio();
                         anuncioView($dataAnuncio[0], array_merge($dataAnuncio[1], $ret[1]));
                     }
+                    break;
                 
 				default:
 					# code...
@@ -264,7 +265,7 @@
 					break;
 			}
 			break;
-	default:
+    default:
 		
 		break;
 	}

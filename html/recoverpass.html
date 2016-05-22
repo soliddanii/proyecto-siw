@@ -1,25 +1,43 @@
 <!DOCTYPE html>
 <html lang = "es-Es">
 <head>
-	<script src="../jscript/jquery-1.12.3.min.js"></script>
+    <meta charset="utf-8">
+    
+	<!-- JAVASCRIPT -->
+    <script src="../jscript/jquery-1.12.3.min.js"></script>
 	<script language="JavaScript" type="text/javascript" src="../jscript/recoverpass.js"></script>
 	<script language="JavaScript" type="text/javascript" src="../jscript/macro.js"></script>
-	<meta http-equiv = "Content-Type" content = "text/html; charset = UTF-8">
-	<link rel="stylesheet" type="text/css" href="../css/front.css">
+    
+    <!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="../css/common.css" />
+    <link rel="stylesheet" type="text/css" href="../css/recoverPass.css" />
+    
 	<title>Recuperar Contraseña</title>
 </head>
 <body>
 	##menu##
 
-	<form action = "../php/controller.php?cmd=userCmd&id=4" method="post" id = "recoverpass">		
-		<input type = "text" name = "nameuser" placeholder = "Nombre de Usuario">
-		<input type = "text" name = "email" placeholder = "Correo Electrónico">
-		<input type = "submit" id = "enter" value = "Entrar">
-		<span id = "pass">##password##</span>	
-		<span id = "error">##error##</span>
-	</form>
+    <div class = "contenido">
+    
+        <p>Esto es una simulación. Jamás haríamos algo así. Usaríamos un sistema de recuperación por email, o por pregunta de seguridad. 
+        Hemos decidido no profundizar en esto y por lo tanto hemos implementado este método sencillo para cambiar tu contraseña. 
+        Básicamente aquí puedes cambiar la contraseña de quien te de la gana.</p>
+        
+        <form action = "../php/controller.php?cmd=userCmd&id=4" method="post" class = "recoverPassForm" id = "recoverpass">
+    
+            <h1>Cambiar Contraseña</h1>
+            <input type = "text" id = "nameuser" name = "nameuser" placeholder = "Nombre de Usuario" required />
+            <input type = "password" id = "newpass" name = "newpass" placeholder = "Nueva Contraseña" required />
+        
+            <input type = "submit" value = "Cambiar Contraseña"/>
+        
+        </form>
 	
-	<div id = "pie">Pie de Pagina</div>
+        ##corteListaErrores##
+        <div id = "errorMessage">##errorCode##: ##error##</div>
+        ##corteListaErrores##
+        
+	</div>
 
 </body>
 </html>

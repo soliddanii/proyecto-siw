@@ -58,12 +58,12 @@ class Facade {
 	}
 
 	/*
-	*	Devuelve la contraseña de un usuario a partir de su nombre de usuario y
-	*	su email. 	
+	*	Establece una contraseña nueva a partir de un nick 
+	*	(Esto nunca lo hariamos asi, es porque no podemos enviar emails de recuperacion ni nada de eso)
+    *   Es una simulacion
 	*/
-	public function recoverPass($user,$email){
-		$query = "SELECT password FROM final_usuario WHERE nick='".$user."' and 
-			email='".$email."'";
+	public function recoverPass($user, $pass){
+		$query = "UPDATE final_usuario set password='".$pass."' WHERE nick ='".$user."'";
 		return $this->con->action($query);
 	}
 
@@ -72,17 +72,17 @@ class Facade {
 	*/
 	public function editName($id,$name){
 		$query = "UPDATE final_usuario set name='".$name."' WHERE idUser ='".$id."'";
-		$this->con->action($query);
+		return $this->con->action($query);
 	}
 
 	public function editEmail($id,$email){
 		$query = "UPDATE final_usuario set email='".$email."' WHERE idUser ='".$id."'";
-		$this->con->action($query);
+		return $this->con->action($query);
 	}
 
 	public function editPass($id,$passwd){
 		$query = "UPDATE final_usuario set password='".$passwd."' WHERE idUser ='".$id."'";
-		$this->con->action($query);
+		return $this->con->action($query);
 	}
 
 	/* 

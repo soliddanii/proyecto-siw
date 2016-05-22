@@ -67,7 +67,7 @@
 
 			}else{
 
-				$data = array("user"=>$user, "name"=>$name, "email"=>$email, "pwd"=>$pwd);				
+				$data = array("user"=>$user, "name"=>$name, "email"=>$email, "pwd"=>md5($pwd));				
 				
 				if($facade->insertUser($data)){
 					
@@ -116,7 +116,7 @@
 			$con    = new Connection();			
 			$facade = new Facade($con);
 
-			if($facade->existUser($user,$pwd)){
+			if($facade->existUser($user, md5($pwd))){
 
 				$data = $facade->getIdUser($user);
                 session_unset();
@@ -146,26 +146,34 @@
 	*	 -1 : ha ocurrido un error con la bbdd
 	*/
 	function recoverPass(){
-
-		if(isset($_POST["nameuser"]) && isset($_POST["email"])) {
+    
+        //Array para guardar los posibles errores que encontremos
+        $errorList = array(); //Array de arrays: error("errorCode" => "code", "message" => "mensaje" )
+        
+		if(isset($_POST["nameuser"]) && isset($_POST["newpass"])) {
 
 			$user  = filter_var($_POST["nameuser"],FILTER_SANITIZE_STRING);
-			$email = filter_var($_POST["email"],FILTER_SANITIZE_STRING);
+			$pass = filter_var($_POST["newpass"],FILTER_SANITIZE_STRING);
 
 			$con = new Connection();
 			$facade = new Facade($con);
 
-			$result = $facade->recoverPass($user,$email);
+            if($facade->existNameUser($user)){
+                $result = $facade->recoverPass($user, md5($pass));
 
-			if($result) {
-				if(mysqli_num_rows($result) > 0) {
-					$row = mysqli_fetch_array($result);
-					return $row["password"];
-				}else
-					return 1;
-			}else 
-				return -1;
-		}
+                if(!$result) {
+                    array_push($errorList, array('errorCode' => '-1', 'message' => "Se ha producido un error."));
+                }
+            }else{
+                array_push($errorList, array('errorCode' => '2', 'message' => "El nombre de Usuario no existe."));
+            }
+            
+            $con->close();
+		}else{
+            array_push($errorList, array('errorCode' => '3', 'message' => "No se han proporcionado todos los datos necesarios."));
+        }
+        
+        return $errorList;
 	}
 
 	function editProfile(){
@@ -202,8 +210,8 @@
 				$passwd0 = filter_var($_POST['passwd0'],FILTER_SANITIZE_STRING);
 				$passwd1 = filter_var($_POST['passwd1'],FILTER_SANITIZE_STRING);
 
-				if($facade->existUser($_SESSION['user'],$passwd0))
-					$facade->editPass($id,$passwd1);
+				if($facade->existUser($_SESSION['user'], md5($passwd0)))
+					$facade->editPass($id, md5($passwd1));
 				else{
 					array_push($errorList, array('errorCode' => '1', 'message' => "La contraseña es incorrecta."));
                 }
@@ -213,6 +221,7 @@
 			array_push($errorList, array('errorCode' => '-1', 'message' => "No existe sesión de usuario"));
         }
         
+        $con->close();
         return $errorList;
 
 	}

@@ -248,16 +248,11 @@
     
 	/*
 	*	Carga la pagina para recuperar la contraseña de un usuario
-	*	Recibe como parametro la contraseña que va a mostrar y un mensaje, que
-	*	puede ser un mensaje de error. 
-	*	Ambos parametros pueden ser vacios
 	*/
-	function recoverPassView($password,$errorMessage){
-
-		$pathFront = "../html/recoverpass.html";
-		$text = file_get_contents($pathFront) or exit("Error recoverPassView, [$pathFront]");
-		$text = error($text,$errorMessage);
-		$text = str_replace("##password##", $password, $text);
+	function recoverPassView($errores){
+		$pathRecover = "../html/recoverpass.html";
+		$text = file_get_contents($pathRecover) or exit("Error recoverPassView, [$pathRecover]");
+		$text = processErrors($text, $errores);
 		echo chargeMenu($text);
 	}
     

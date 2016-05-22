@@ -129,6 +129,8 @@ html, body {
     float: none;
     font: 20px 'Roboto', Arial, Helvetica, sans-serif;
     text-decoration: none;
+    text-decoration: underline;
+    text-align: center;
 }
 
 .navbar li:hover > div.login-box {
@@ -139,7 +141,13 @@ html, body {
     background-color:#E0F2F7;
     border: solid 5px #81F7D8;
     padding: 10px;
+    cursor: pointer;
     outline: none;
+}
+
+.navbar input[type="submit"]:hover{
+    background-color:#ADE3F2;
+    border: solid 5px #54DBB7;
 }
 
 .navbar input[type="text"], input[type="password"]{
@@ -149,7 +157,7 @@ html, body {
     outline: none;
 }
 
-.navbar input [type="text"]:focus, input[type="password"]:focus {
+.navbar input[type="text"]:focus, input[type="password"]:focus {
     border: solid 5px #7401DF;
 }
 
