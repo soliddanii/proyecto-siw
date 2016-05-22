@@ -6,6 +6,12 @@
     margin: auto;
 }
 
+#errorMessage{
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box; 
+    box-sizing: border-box; 
+}
+
 /***************************************************************/
 /*********************** CAJA DE FILTROS ***********************/
 /***************************************************************/
@@ -33,11 +39,12 @@
 .filterBox label{
     color: #13A83E;
     font-weight: bold;
-    text-align: left;
+    margin-top: 25px;
+    text-align: center;
     font-size: 16px;
 }
 
-.filterBox select{    
+.filterBox select, .orderBox select{    
      /* styling */
     border: solid 5px #13A83E;
     display: block;
@@ -67,7 +74,7 @@
     background-repeat: no-repeat;
 }
 
-.filterBox select:focus {
+.filterBox select:focus .orderBox select:focus{
     background-image:
         linear-gradient(45deg, white 50%, transparent 50%),
         linear-gradient(135deg, transparent 50%, white 50%),
@@ -101,6 +108,7 @@
 .filterBox input[type="number"]{
     border: solid 5px #13A83E;
     font-size: 18px;
+    width: 80%;
     padding: 8px;
     outline: none;
 }
@@ -110,18 +118,22 @@
     outline: none;
 }
 
-.filterBox input[type="submit"]{
+#submitBuscar{
     font: 20px 'Roboto', Arial, Helvetica, sans-serif;
     background-color: #DAB39D;
     border: solid 5px #AB7250;
+    text-align: center;
     padding: 8px;
     margin: auto;
+    margin-top: 30px;
     width: 50%;
     font-size: 24px;
 }
 
-.filterBox input[type="submit"]:hover{
+#submitBuscar:hover{
     border: solid 5px #865A40;
+    background-color: #8F6E5B;
+    color: white;
     cursor: pointer;
 }
 
@@ -150,6 +162,34 @@
     padding: 0;
 }
 
+.rightBlock .orderBox select{
+    /* styling */
+    border: solid 5px #5F04B4;
+    display: block;
+    padding: 0.5em 3.5em 0.5em 1em;
+    font-size: 16px;
+    width: 100%;
+    margin: auto;
+
+    background-image:
+        linear-gradient(45deg, transparent 50%, white 50%),
+        linear-gradient(135deg, white 50%, transparent 50%),
+        linear-gradient(to right, #642EFE, #642EFE);
+}
+
+.rightBlock .orderBox select:focus{
+    background-image:
+        linear-gradient(45deg, white 50%, transparent 50%),
+        linear-gradient(135deg, transparent 50%, white 50%),
+        linear-gradient(to right, #29088A, #29088A);
+    background-position:
+        calc(100% - 15px) 1em,
+        calc(100% - 20px) 1em,
+        100% 0;
+    border-color: #5F04B4;
+    outline: 0;
+}
+
 /***************************************************************/
 /********************* CAJA DE ORDENACION **********************/
 /***************************************************************/
@@ -159,6 +199,7 @@
     padding: 10px;
     border: solid 5px #FAA8C6;
     width: 100%;
+    overflow: auto;
     -webkit-box-sizing: border-box;  
     -moz-box-sizing: border-box; 
     box-sizing: border-box;
@@ -167,6 +208,45 @@
 .orderBox *{
     display: inline;
     margin: 0px 8px;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;  
+}
+
+.pager {
+    width: 45%;
+    float: left;
+}
+
+#orden{
+    width: 50%;
+    float: right;
+}
+
+#paginaAnterior, #paginaSiguiente{
+    padding: 2px 5px;
+    border: 3px solid #D0A9F5;
+    color: #8258FA;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+#paginaAnterior:hover, #paginaSiguiente:hover{
+    border: 3px solid #7401DF;
+    
+}
+
+#paginaAnterior{
+    float: left;
+}
+
+#paginaSiguiente{
+    float: right;
 }
 
 /***************************************************************/
@@ -190,11 +270,25 @@
     transition: 0.7s; 
 }
 
+.esMiAnuncio{
+    border: solid 5px #65AC77;
+    background-color: #C4F6D1; 
+}
+
+.esMiAnuncio:hover{ 
+    background-color: #9FF781; 
+    transition: 0.7s; 
+}
+
 .bloqueAnuncio img{ 
     border: solid 3px #1C9CD1; 
     width: 220px; 
     height: 160px; 
     display:block; 
+} 
+
+.esMiAnuncio img{ 
+    border: solid 3px #65AC77; 
 } 
  
 .bloqueAnuncio .Aleft { 
@@ -239,19 +333,19 @@
     width: 100%; 
     margin: auto; 
     position: absolute; 
-    bottom: 50px; 
+    bottom: 40px; 
     height: auto; 
 } 
  
 .bloqueAnuncio .Aright .Abottom .localizacionAnuncio{ 
     position: absolute; 
-    font-size: 30px; 
+    font-size: 20px; 
 } 
  
 .bloqueAnuncio .Aright .Abottom .fechaAnuncio{ 
     position: absolute; 
     right: 40px; 
     font-size: 20px; 
-    bottom: -30px; 
+    bottom: -24px; 
     font-style: italic; 
 }

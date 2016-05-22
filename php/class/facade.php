@@ -186,8 +186,8 @@ class Facade {
     *  $columnNameOrder = [precio;fecha;titulo]
     *  $order = [DESC;ASC]
     */
-    public function getAnuncios($condiciones, $columnNameOrder, $order){
-        $query = "SELECT fa.idAnuncio, fa.idCategoria, fa.precio, fa.fecha, fa.titulo, fa.localizacion, fi.small
+    public function getAnuncios($condiciones, $columnNameOrder, $order, $fromLimit, $toLimit, $misAnuncios, $misFavoritos){
+        $query = "SELECT fa.idAnuncio, fa.idCategoria, fa.precio, fa.fecha, fa.titulo, fa.localizacion, fa.idUser, fi.small
                     FROM final_anuncio fa LEFT JOIN final_imagen fi ON (fi.idAnuncio = fa.idAnuncio AND
                         fi.idImagen = (SELECT MIN(idImagen) FROM final_imagen WHERE idAnuncio = fa.idAnuncio))";
                   
@@ -218,10 +218,25 @@ class Facade {
             $aux = "AND";
         }
         
+        //Obtiene solo de los anuncios del usuario
+        if ($misAnuncios == 1 && $condiciones["idUser"] != ""){
+            $query = $query." ".$aux." fa.idUser=".$condiciones["idUser"];
+            $aux = "AND";
+        }
+        
+        //Obtiene solo de los favoritos del usuario
+        if ($misFavoritos == 1 && $condiciones["idUser"] != ""){
+            $query = $query." ".$aux." fa.idAnuncio IN (SELECT idAnuncio FROM final_favorito WHERE idUser=".$condiciones["idUser"].")";
+            $aux = "AND";
+        }
+        
         if ($columnNameOrder != "" && $order != ""){
             $query = $query." ORDER BY fa.".$columnNameOrder." ".$order;
         }
         
+        $query = $query." LIMIT ".$fromLimit.",".$toLimit;
+        
+        //ChromePhp::log($query);
         return $this->con->action($query);
     }
     
@@ -241,16 +256,7 @@ class Facade {
             WHERE fc.idAnuncio = '".$idAnuncio."' ORDER BY fc.fecha ASC";
     
         return $this->con->action($query); 
-    } 
-     
-     
-    /* 
-    *  Obtiene todas los anuncios favoritos de un usuario   
-    */ 
-    public function getFavoritosDeUsuario($idUser){ 
-        $query = "SELECT idAnuncio FROM final_favorito WHERE idUser = '".$idUser."'"; 
-        return $this->con->action($query); 
-    } 
+    }
      
      
     /* 

@@ -87,11 +87,11 @@
 	*	Muestra una pagina distinta cuando ocurre un error inesperado
 	*/
 	function errorView2($errores){
-		$errorView = "../html/errorView.html";		
+		$errorView = "../html/errorView.html";		 
         $text = file_get_contents($errorView) or exit("Error errorView, [$errorView]");
         $text = processErrors($text, $errores);
         echo chargeMenu($text);
-	}
+	} 
             
 
 	/////////////////////////////////////////////////////////////////////////
@@ -159,7 +159,7 @@
     *   Carga la pagina para ver la lista de articulos / anuncios
     *   Lanza error si no se puede obtener la direccion del html
     */
-    function browserView($categories, $anuncios, $errores) {
+    function browserView($categories, $anuncios, $errores, $misAnuncios, $misFavoritos, $page) {
         
         $pathFront = "../html/browser.html";
         $text = file_get_contents($pathFront) or exit("Error browserView, [$pathFront]");
@@ -191,11 +191,35 @@
             }else{ 
                 $aux1 = str_replace("##precioAnuncio##", 'GRATIS', $aux1); 
             }
+            if($anuncios[$i]['esMio'] == true){
+                $aux1 = str_replace("##esMiAnuncio##", " esMiAnuncio", $aux1);
+            }else{
+                $aux1 = str_replace("##esMiAnuncio##", "", $aux1);
+            }
             $aux0 .= $aux1;
         }
         $text = $trozos[0].$aux0.$trozos[2];
         
+        //Establecer si es la pagina de favoritos o la de mis anuncios a AJAX
+        $text = str_replace("##misAnuncios##", $misAnuncios, $text);
+        $text = str_replace("##misFavoritos##", $misFavoritos, $text);
+        
+        //Establecer la #pagina
+        $text = str_replace("##numPagina##", $page, $text);
+        
         echo chargeMenu($text);
+        
+    }
+    
+    /*
+    *   Codifica los datos de los anuncios en JSON
+    *   y despues los envia
+    */
+    function browserViewJSON($anuncios, $errores, $page) {
+        
+        $data = array('data' => $anuncios, 'errors' => $errores, 'page' => $page);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($data, JSON_FORCE_OBJECT);
         
     }
 

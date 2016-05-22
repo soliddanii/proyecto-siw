@@ -25,8 +25,8 @@
         <form action = "" id = "filtro">
         
             <!-- CAMPOS DE TEXTO -->
-            <input type = "text" name = "titulo" class = "buscar" placeholder = "Palabra Clave"/>
-            <input type = "text" name = "localizacion" class = "buscar" placeholder = "Localización"/>
+            <input type = "text" id = "titulo" name = "titulo" class = "buscar" placeholder = "Palabra Clave"/>
+            <input type = "text" id = "localizacion" name = "localizacion" class = "buscar" placeholder = "Localización"/>
             
             <!-- SELECTOR DE CATEGORIA -->
             <select name="categoria">
@@ -39,12 +39,17 @@
             <!-- RANGO DE PRECIOS -->
             <!-- NOTA: Podriamos sustituir 10000 con ##precioMAX## que es el precio del articulo mas caro -->
             <label for="priceMin">Precio Mínimo</label>
-            <input type="number" value="0" min="0" max="10000" step="1" name="priceMin" id="priceMin" />
+            <input type="number" value="0" min="0" step="1" name="priceMin" id="priceMin" />
             <label for="priceMax">Precio Máximo</label>
-            <input type="number" value="10000" min="0" max="10000" step="1" name="priceMax" id="priceMax" />
+            <input type="number" value="10000" min="0" step="1" name="priceMax" id="priceMax" />
+            
+            <!-- hidden inputs -->
+            <input type="hidden" id="misAnuncios" value="##misAnuncios##" />
+            <input type="hidden" id="misFavoritos" value="##misFavoritos##" />
+            <input type="hidden" id="paginaActual" value="##numPagina##" />
             
             <!-- BUSCAR -->
-            <input type = "submit" value = "Buscar">
+            <span id = "submitBuscar">Buscar</span>
             
         </form>
     </div>
@@ -54,20 +59,20 @@
         <!-- PARAMETROS DE ORDENACION DE LOS ANUNCIOS -->
         <div class = "orderBox" id = "ordenAnuncios">
             <!-- ORDENAR POR -->
-            <select name="Orden">
-                <option value="byPrice-minMax">Ordenar por precio: Más bajo primero</option>
-                <option value="byPrice-maxMin">Ordenar por precio: Más alto primero</option>
-                <option value="byDate-mostRecent">Ordenar por fecha: Más reciente primero</option>
-                <option value="byDate-leastRecent">Ordenar por fecha: Más antiguo primero</option>
+            <select id = "orden">
+                <option value="0">Ordenar por fecha: Más reciente primero</option>
+                <option value="1">Ordenar por fecha: Más antiguo primero</option>
+                <option value="2">Ordenar por precio: Más bajo primero</option>
+                <option value="3">Ordenar por precio: Más alto primero</option>
             </select>
     
             <!-- PAGINACION -->
             <ul class="pager">
-                <li><a href="#">Anterior</a></li>
-                ##cortePaginacion##
-                <li><a href="#">##numPagina##</a></li>
-                ##cortePaginacion##
-                <li><a href="#">Siguiente</a></li>
+                <li><span id="paginaAnterior">Anterior</span></li>
+                <!--##cortePaginacion##
+                <li><span id="pagina">##numPagina##</span></li>
+                ##cortePaginacion##-->
+                <li><span id="paginaSiguiente">Siguiente</span></li>
             </ul>
         </div>
         
@@ -76,12 +81,12 @@
         ##corteListaErrores##
 	
         <div class = "listaAnuncios" id = "listaAnuncios">
-            <ul> 
+            <ul id = "listaAnunciosUL"> 
                 ##corteListaArticulos##
                 <li>
                     <form id="anuncioForm##idAnuncio##" action="../php/controller.php?cmd=userView&id=7" method="POST"> 
                         <input type="hidden" name="idAnuncio" value="##idAnuncio##"/> 
-                        <div class = "bloqueAnuncio" onClick="document.getElementById('anuncioForm##idAnuncio##').submit();"> 
+                        <div class = "bloqueAnuncio##esMiAnuncio##" onClick="document.getElementById('anuncioForm##idAnuncio##').submit();"> 
                             <div class = "Aleft">
                                 <img class = "miniaturaAnuncio" src="##miniaturaAnuncio##" height="160px" alt="miniatura"/> 
                             </div> 

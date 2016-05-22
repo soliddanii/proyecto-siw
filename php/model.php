@@ -355,6 +355,15 @@
         $priceMin = "";
         $priceMax = "";
         $titulo = "";
+        $idUser = "";
+        $orden = 0;
+        $misAnuncios = 0;
+        $misFavoritos = 0;
+        $columnNameOrder = "fecha";
+        $order = "DESC";
+        $page = 1;
+        $maxPerPage = 8;
+        
         
         if (isset($_POST["categoria"]) && is_numeric($_POST["categoria"])){
             $idCategoria = intval($_POST["categoria"]);
@@ -377,15 +386,60 @@
 
         if (isset($_POST["localizacion"])){
             $localizacion = filter_var($_POST["localizacion"], FILTER_SANITIZE_STRING);
-        }        
+        }
+
+        if (isset($_POST["orden"])){
+            $orden = intval($_POST["orden"]);
+        }
         
-        $condiciones = array("precioMin" => $priceMin, "precioMax" => $priceMax, 
+        if(isset($_SESSION["idUser"])){
+            $idUser = $_SESSION["idUser"];
+        }else{
+            array_push($errorList, array('errorCode' => '4', 'message' => "Necesita estar registrado para visualizar sus favoritos o sus Anuncios."));
+        }
+        
+        if (isset($_POST["user"]) || isset($_GET["user"])){
+            $misAnuncios = 1;
+        }
+        
+        if (isset($_POST["favoritos"]) || isset($_GET["favoritos"])){
+            $misFavoritos = 1;
+        }
+        
+        if (isset($_GET["pagina"]) && is_numeric($_GET["pagina"])){
+            $page = intval($_GET["pagina"]);
+            if($page < 1){ $page = 1; }
+        }
+
+        $condiciones = array("precioMin" => $priceMin, "precioMax" => $priceMax, "idUser" => $idUser,
         "titulo" => $titulo, "localizacion" => $localizacion, "categoria" => $idCategoria);
         
-        $columnNameOrder = "";
-        $order = "";
+        switch ($orden){
+            case 0:
+                $columnNameOrder = "fecha";
+                $order = "DESC";
+                break;
+                
+            case 1:
+                $columnNameOrder = "fecha";
+                $order = "ASC";
+                break;
+                
+            case 2:
+                $columnNameOrder = "precio";
+                $order = "ASC";
+                break;
+                
+            case 3:
+                $columnNameOrder = "precio";
+                $order = "DESC";
+                break;
+        }
         
-		$result = $facade->getAnuncios($condiciones, $columnNameOrder, $order);
+        $fromLimit = ($page-1)*$maxPerPage;
+        $toLimit = $fromLimit+$maxPerPage;
+        
+		$result = $facade->getAnuncios($condiciones, $columnNameOrder, $order, $fromLimit, $toLimit, $misAnuncios, $misFavoritos);
         
         //Inicializacion de los datos
         $data = array();
@@ -394,7 +448,14 @@
 			if(mysqli_num_rows($result) > 0) {
 				
 				while($row = mysqli_fetch_array($result)) {
-					$temp_data = array('id'=>$row['idAnuncio'], 'titulo'=>$row['titulo'], 
+                    
+                    $esMio = false;
+                    if($row['idUser'] == $idUser){ $esMio = true; }
+                    
+                    $esFav = false;
+                    //if($row['idUser'] == $idUser){ $esMio = true; }
+                
+					$temp_data = array('id'=>$row['idAnuncio'], 'titulo'=>$row['titulo'], 'idUser'=>$row['idUser'], 'esMio'=>$esMio, 'esFav'=>$esFav,
                     'localizacion'=>$row['localizacion'], 'precio'=>$row['precio'], 'fecha'=>$row['fecha'], 'miniatura'=>$row['small']);
                     
                     if($row['small'] == null){
@@ -412,7 +473,7 @@
         $con->close(); 
         //Devolvemos los datos y los reportes de errores (si hay)
         //ChromePhp::log($data);
-        return array($data, $errorList);
+        return array($data, $errorList, $misAnuncios, $misFavoritos, $page);
 
 	}
     

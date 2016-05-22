@@ -69,7 +69,8 @@
                     //[0] = data; [1] = errores
                     $dataCategorias = chargeCategories();
                     $dataAnuncios = chargeAnuncios(); 
-                    browserView($dataCategorias[0], $dataAnuncios[0], array_merge($dataAnuncios[1],$dataCategorias[1]));
+                    browserView($dataCategorias[0], $dataAnuncios[0],
+                        array_merge($dataAnuncios[1],$dataCategorias[1]), $dataAnuncios[2], $dataAnuncios[3], $dataAnuncios[4]);
                     break;
                     
                 case '5':
@@ -91,6 +92,12 @@
                         errorView2($dataAnuncio[1]);
                     }
                     anuncioView($dataAnuncio[0], $dataAnuncio[1]);
+                    break;
+                    
+                case '8':
+                    //Navegador (PETICIONES AJAX)
+                    $dataAnuncios = chargeAnuncios();
+                    browserViewJSON($dataAnuncios[0], $dataAnuncios[1], $dataAnuncios[4]);
                     break;
                     
 				default: 
