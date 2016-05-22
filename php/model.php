@@ -391,19 +391,21 @@
         if (isset($_POST["orden"])){
             $orden = intval($_POST["orden"]);
         }
-        
-        if(isset($_SESSION["idUser"])){
-            $idUser = $_SESSION["idUser"];
-        }else{
-            array_push($errorList, array('errorCode' => '4', 'message' => "Necesita estar registrado para visualizar sus favoritos o sus Anuncios."));
-        }
-        
+
         if (isset($_POST["user"]) || isset($_GET["user"])){
             $misAnuncios = 1;
         }
         
         if (isset($_POST["favoritos"]) || isset($_GET["favoritos"])){
             $misFavoritos = 1;
+        }
+        
+        if(isset($_SESSION["idUser"])){
+            $idUser = $_SESSION["idUser"];
+        }else{
+            if($misFavoritos == 1 || $misAnuncios == 1){
+                array_push($errorList, array('errorCode' => '4', 'message' => "Necesita estar registrado para visualizar sus favoritos o sus Anuncios."));
+            }
         }
         
         if (isset($_GET["pagina"]) && is_numeric($_GET["pagina"])){
