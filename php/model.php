@@ -266,7 +266,7 @@
         $facade = new Facade($con);
             
         //Obtener los datos del anuncio
-		if(isset($_POST["titulo"]) && isset($_POST["localizacion"])){
+		if(isset($_POST["titulo"]) && (strlen($_POST['titulo']) > 0) && isset($_POST["localizacion"]) && (strlen($_POST['localizacion']) > 0)){
 			
 			$titulo = filter_var($_POST["titulo"], FILTER_SANITIZE_STRING);
 			$localizacion  = filter_var($_POST["localizacion"], FILTER_SANITIZE_STRING);
@@ -371,7 +371,7 @@
         $columnNameOrder = "fecha";
         $order = "DESC";
         $page = 1;
-        $maxPerPage = 8;
+        $maxPerPage = 8; //MAXIMO DE ANUNCIOS POR PAGINA
         
         
         if (isset($_POST["categoria"]) && is_numeric($_POST["categoria"])){
@@ -382,11 +382,12 @@
         }
 
         if (isset($_POST["priceMin"]) && is_numeric($_POST["priceMin"])){
-            $priceMin = intval($_POST["priceMin"]);
+            $priceMin = floatval($_POST["priceMin"]);
         }
 
+        
         if (isset($_POST["priceMax"]) && is_numeric($_POST["priceMax"])){
-            $priceMax = intval($_POST["priceMax"]);
+            $priceMax = floatval($_POST["priceMax"]);
         }        
 
         if (isset($_POST["titulo"])){

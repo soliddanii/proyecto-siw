@@ -21,11 +21,17 @@
                 e.preventDefault();
                 e.stopPropagation();
                 
-                if (wrapperThis.getQueuedFiles().length > 0) {                        
-                    wrapperThis.processQueue();  
-                } else {                       
-                    $('#full-form').submit(); //send the normal form
-                }                                    
+                if($("#titulo").val() == "" || $("#localizacion").val() == ""){
+                    $('.jsError1').remove();
+                    $(".contenido").append("<div id = 'errorMessage' class = 'jsError1'>El título y la localización son obligatorios.</div>");
+                }else{
+                    $('.jsError1').remove();
+                    if (wrapperThis.getQueuedFiles().length > 0) {                        
+                        wrapperThis.processQueue();  
+                    } else {                       
+                        $('#full-form').submit(); //send the normal form
+                    } 
+                }                                     
             });
 
             this.on('sendingmultiple', function (data, xhr, formData) {

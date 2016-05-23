@@ -193,23 +193,25 @@ class Facade {
                   
         $aux = "WHERE";
         
-        if ($condiciones["precioMin"] != ""){
+        if ($condiciones["precioMin"] !== ""){
             $query = $query." ".$aux." fa.precio>=".$condiciones["precioMin"];
             $aux = "AND";
         }
-        
-        if ($condiciones["precioMax"] != ""){
+
+        if ($condiciones["precioMax"] !== ""){
             $query = $query." ".$aux." fa.precio<=".$condiciones["precioMax"];
             $aux = "AND";
         }
         
         if ($condiciones["titulo"] != ""){
-            $query = $query." ".$aux." LOWER(fa.titulo) LIKE LOWER('%".$condiciones["titulo"]."%')";
+            $query = $query." ".$aux." LOWER(fa.titulo) LIKE LOWER('%".$condiciones["titulo"]."%') 
+                OR strcmp(soundex(fa.titulo), soundex('".$condiciones["titulo"]."')) = 0";
             $aux = "AND";
         }
         
         if ($condiciones["localizacion"] != ""){
-            $query = $query." ".$aux." LOWER(fa.localizacion) LIKE LOWER('%".$condiciones["localizacion"]."%')";
+            $query = $query." ".$aux." LOWER(fa.localizacion) LIKE LOWER('%".$condiciones["localizacion"]."%')
+                OR strcmp(soundex(fa.localizacion), soundex('".$condiciones["localizacion"]."')) = 0";
             $aux = "AND";
         }
         
