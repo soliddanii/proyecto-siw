@@ -3,14 +3,12 @@
     //temp for debug
     require_once '../chromephp/ChromePhp.php';
     
-	// Clases que vamos a utilizar
-	//require_once 'class/config.php'; // configuracion para la BBDD
-	 'class/users.php'; // manejo de los usuarios
+	// Clases que vamos a utilizar	
 	require_once 'class/connection.php';
 	require_once 'class/facade.php';
 	require_once 'class/sessions.php';
-    require_once 'class/upload.php'; //subida de imagenes
-    require_once 'class/pdf/makepdf.php'; //generar PDF
+  require_once 'class/upload.php'; //subida de imagenes
+  require_once 'class/pdf/makepdf.php'; //generar PDF
 
 	/////////////////////////////////////////////////////////////////////////
 	// 							Gestión de Sesion
@@ -866,9 +864,9 @@
     $con = new Connection();
     $facade = new Facade($con);
 
-    if (isset($_POST["name"])){    
+    if (isset($_POST["name"]))
       $facade->editName($idUser,$_POST["name"]);
-    }
+    
 
     if (isset($_POST["email"]))
       $facade->editEmail($idUser,$_POST["email"]);
