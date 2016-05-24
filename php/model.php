@@ -805,9 +805,82 @@
           return 1;
       }
 
-    }else{
-      echo "retorno -1";
+    }else{      
       return -1;
     }
+  }
+  
+
+  function getNumUsers(){
+
+    $con = new Connection();
+    $facade = new Facade($con);
+
+    $amount = mysqli_fetch_array($facade->numUsers());
+    
+    return $amount[0]; 
+  }
+
+  function consultUsers($order, $start, $end){
+
+    $con = new Connection();
+    $facade = new Facade($con);
+
+    $result = $facade->getDataUsers($order, $start, $end);
+
+    if (mysqli_num_rows($result) > 0){
+
+      $data = array();
+
+      while ($row = mysqli_fetch_array($result)){
+        array_push($data, array("idUser" => $row["idUser"] , "nick" => $row["nick"], 
+          "name" => $row["name"], "email" => $row["email"]));
+      }      
+      return $data;
+
+    }else // No hay datos en la bbdd
+      return null;
+
+  }
+
+  function getUser($idUser){
+
+    $con = new Connection();
+    $facade = new Facade($con);
+
+    $result = $facade->getDataUser($idUser);
+
+    // Retornamos todos los datos que queremos mostrar...
+
+    /*if (mysqli_num_rows($result) > 0){
+      
+      $row  = mysqli_fetch_array($result);
+      $data = array("idUser" => $row["idUser"], "nick" => $row["nick"],
+        "name" => $row["name"], "email" =>);
+
+    }*/
+  }
+
+  function modifyUser($idUser){
+
+    $con = new Connection();
+    $facade = new Facade($con);
+
+    if (isset($_POST["name"])){    
+      $facade->editName($idUser,$_POST["name"]);
+    }
+
+    if (isset($_POST["email"]))
+      $facade->editEmail($idUser,$_POST["email"]);
+
+  }
+
+  function deleteUser($idUser){
+
+    $con = new Connection();
+    $facade = new Facade($con);
+
+    $facade->deleteUser($idUser);
+
   }
 ?>

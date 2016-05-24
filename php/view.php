@@ -432,10 +432,115 @@
     $pathFront = "../html/frontadmin.html";             
     $text = file_get_contents($pathFront) or exit("Error frontViewAdmin, [$pathFront]");
     $text = str_replace("##user##", $_SESSION["user"], $text);
-    $text = str_replace("##resultado##", "", $text);
+    $text = str_replace("##result##", "", $text);
     
     echo $text;
 
+  }
+
+  function consultUsersView($data,$numUsers,$sizeElements,$order){
+
+    $pathManageUsers = "../html/gestionusuarios.html";
+    $textManageUsers = file_get_contents($pathManageUsers) or exit("Error gestionusuarios, [$pathManageUsers]");
+
+    $trozos0 = explode("##manageusers##", $textManageUsers);
+    $trozos1 = explode("##list##", $trozos0[1]);
+    $trozos2 = explode("##paginacion##", $trozos1[0]);
+
+    if ($order){          
+
+      $user = explode("##datauser##", $trozos1[1]);
+
+      $result = $user[0];
+      $aux = "";
+
+      foreach ($data as $key => $value) {
+        $aux = $user[1];
+        $aux = str_replace("##idUser##", $value["idUser"], $aux);
+        $aux = str_replace("##nick##", $value["nick"], $aux);
+        $aux = str_replace("##name##", $value["name"], $aux);
+        $aux = str_replace("##email##", $value["email"], $aux);
+        $result .= $aux;
+      }
+
+      echo $result.$user[2];
+
+    }else{
+
+      $pathFront = "../html/frontadmin.html";
+      $text = file_get_contents($pathFront) or exit("Error frontViewAdmin, [$pathFront]");      
+
+      $text = str_replace("##user##", $_SESSION["user"], $text);
+
+      if(empty($data) && empty($order)){
+        
+        $text = str_replace("##result##", $trozos2[0].$trozos2[2], $text);        
+
+      }else{
+
+        $trozos3 = explode("##page##", $trozos2[1]);
+        $trozos3[2] = str_replace("##currentPage##", 1, $trozos3[2]);
+        
+        $pagination = getPagination($trozos3[1], $numUsers, $sizeElements);
+        $trozos3[2] = str_replace("##maxPage##", $pagination["nPag"], $trozos3[2]);
+        
+        $user = explode("##datauser##", $trozos1[1]);
+
+        $result = $trozos2[0].$trozos3[0].$pagination["text"].$trozos3[2].$user[0];
+        $aux = "";
+
+        foreach ($data as $key => $value) {
+          $aux = $user[1];
+          $aux = str_replace("##idUser##", $value["idUser"], $aux);
+          $aux = str_replace("##nick##", $value["nick"], $aux);
+          $aux = str_replace("##name##", $value["name"], $aux);
+          $aux = str_replace("##email##", $value["email"], $aux);
+          $result .= $aux;
+        }
+
+        $text = str_replace("##result##", $result.$user[2], $text);      
+      }
+
+      echo $text;  
+
+    }  
+
+  }
+
+  function getPagination($text, $amount, $limitElements){
+    
+    if (($amount % $limitElements) == 0)
+      $nPag = $amount/$limitElements;
+    else
+      $nPag = ceil($amount/$limitElements);
+    
+    $ret = "";    
+
+    for ($i=0; $i < $nPag; $i++) { 
+      $aux = $text;
+      $aux = str_replace("##num##", $i+1, $aux);
+      $ret .= $aux;          
+    }
+
+    return array('text' => $ret, 'nPag' => $nPag);
+
+  }
+
+  function modifyUserViewAdmin($idUser){
+
+    $pathFront = "../html/frontadmin.html";
+    $text = file_get_contents($pathFront) or exit("Error frontViewAdmin, [$pathFront]");
+
+    $text = str_replace("##user##", $_SESSION["user"], $text);
+
+    $pathModify = "../html/gestionusuarios.html";
+    $textModify = file_get_contents($pathModify) or exit("Error modifyUserViewAdmin, [$pathModify]");
+
+    $trozos = explode("##modify##", $textModify);
+    $text = str_replace("##result##", $trozos[1], $text);
+    $text = str_replace("##idUser##", $idUser, $text);   
+
+    echo $text;
   }
     
 ?>

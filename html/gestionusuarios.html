@@ -1,0 +1,127 @@
+<!-- TROZOS DE CODIGO PARA GESTION DE USUARIOS-->
+
+<!-- Gestion de usuarios -->
+##manageusers##
+<div class="manageusers">
+	<a href = "../php/controller.php?cmd=adminCmd&id=2&order=false">Listar todos</a>
+	<select name="order">
+		<option name="order" value="0" selected>Ordenar Por</option>
+		<option name="order" value="nick">Nick</option>
+		<option name="order" value="name">Nombre</option>
+	</select>
+	<input type="hidden" id="orderby" value="">
+	<div id="dialog" title="Eliminar usuario">
+	  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>¿Seguro que quiere eliminar el usuario?</p>
+	</div>
+	##paginacion##
+	<ul class="pagination">
+    <li><a class = "page" id = "Back" href="#">Anterior</a></li>
+    ##page##
+    <li><a class = "page" id = "##num##" href="#">##num##</a></li>
+    ##page##
+    <li><a class = "page" id = "Next" href="#">Siguiente</a></li>
+    
+    <input type="hidden" id="currentPage" value="##currentPage##">
+    <input type="hidden" id="maxPage" value="##maxPage##">    
+       
+  </ul>
+  ##paginacion##
+</div>
+
+##list##
+<div class="list">
+	<table >
+		<tr>
+			<th>Nick</th><th>Nombre</th><th>Email</th><th colspan = "3"></th>
+		</tr>
+		##datauser##
+		<tr>
+			<td>##nick##</td><td>##name##</td><td>##email##</td>
+			<td><a href="../php/controller.php?cmd=adminView&id=2&u=##idUser##" class="info">info</a></td>
+			<td><a href="../php/controller.php?cmd=adminView&id=3&u=##idUser##" class="modify">modificar</a></td>
+			<td><a href="#" id = "##idUser##" class="delete">eliminar</a></td>	
+		</tr>
+		##datauser##
+	</table>
+</div>
+##list##	
+##manageusers##
+
+
+##modify##
+<div id = "modifyDiv">
+	<form id = "modifyForm"  method="post" action="../php/controller.php?cmd=adminCmd&id=3&u=##idUser##&ob=##orderby##&cp=##currentPage##">
+	
+		<h2>Nuevos Datos</h2>
+	
+		<input type = "text" name = "name"  placeholder = "Nombre">	
+		<input type = "text" name = "email" placeholder = "Email">
+		
+		<input type = "submit" id = "continue" value = "Continuar">
+		<input type = "button" id = "cancel"   value = "Cancelar" >
+		
+		<input type = "hidden" id = "orderby"     value="##orderby##">
+		<input type = "hidden" id = "currentPage" value="##currentPage##">
+    <input type = "hidden" id = "maxPage"     value="##maxPage##">
+	</form>
+</div>
+##modify##
+
+
+<!-- Eliminar usuario -->
+##eliminar##
+<div class="eliminar">
+	<input type="text" name="buscar" placeholder="Nombre de Usuario">
+	<input type="button" id="eliminar" value="Buscar">
+	<input type="hidden" id="lugar" value="eliminar">
+	<label></label>
+	<a href="" class="abc">a</a>
+	<a href="" class="abc">b</a>
+	<a href="" class="abc">c</a>
+	<a href="" class="abc">d</a>
+	<a href="" class="abc">e</a>
+	<a href="" class="abc">f</a>
+	<a href="" class="abc">g</a>
+	<a href="" class="abc">h</a>
+	<a href="" class="abc">i</a>
+	<a href="" class="abc">j</a>
+	<a href="" class="abc">k</a>
+	<a href="" class="abc">l</a>
+	<a href="" class="abc">m</a>
+	<a href="" class="abc">n</a>
+	<a href="" class="abc">ñ</a>
+	<a href="" class="abc">o</a>
+	<a href="" class="abc">p</a> 
+	<a href="" class="abc">q</a>
+	<a href="" class="abc">r</a>
+	<a href="" class="abc">s</a>
+	<a href="" class="abc">t</a>
+	<a href="" class="abc">u</a>
+	<a href="" class="abc">v</a>
+	<a href="" class="abc">w</a>
+	<a href="" class="abc">x</a>
+	<a href="" class="abc">y</a>
+	<a href="" class="abc">z</a>
+	<div id="error"></div>
+	<div class="lista">
+		##lista##
+		<table>
+			<tr><th>Usuario</th><th>Nombre</th><th>Primer Apellido</th>
+			<th>Segundo Apellido</th><th>Email</th><th></th>
+			</tr>
+			##usuarios##
+			<tr>
+				<td>##usuario##</td><td>##nombre##</td><td>##apellido1##</td>
+				<td>##apellido2##</td><td>##email##</td>
+				<td><a href="##urleli##" class="link" name="link">eliminar</a></td>
+			</tr>
+			##usuarios##
+		</table>
+		##lista##
+	</div>
+
+	<div id="dialog" title="Eliminar usuario">
+	  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>¿Seguro que quiere eliminar el usuario?</p>
+	</div>
+</div>
+##eliminar##

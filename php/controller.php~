@@ -322,7 +322,9 @@
 
 				// Modificar usuario					
 				case '3':
-						modifyUser($_GET["u"]);						
+						modifyUser($_GET["u"]);
+						$ob = $_GET["ob"];
+						$cp = $_GET["cp"];
 						header("Location:controller.php?cmd=adminCmd&id=2&order=false");						
 						break;
 

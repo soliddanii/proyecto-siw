@@ -350,6 +350,41 @@ class Facade {
 		$data = array('idAdmin' => $row["idAdmin"], 'user' => $row["user"]);
 		return $data;
     }
+
+    /*
+        * Devuelve algunos datos personales de todos los usuarios.
+    */
+    public function getDataUsers($order, $start, $end){     
+        if (empty($order))
+            $query = "SELECT idUser,nick,name,email FROM final_usuario LIMIT ".$start.",".$end;
+        else
+            $query = "SELECT idUser,nick,name,email FROM final_usuario ORDER BY ".$order." LIMIT ".$start.",".$end;
+
+        return $this->con->action($query);
+    }
+
+    /*
+        * Devuelve el numero de usuarios que existe en la bbdd
+    */
+    public function numUsers(){
+        $query = "SELECT count(*) FROM final_usuario";
+        return $this->con->action($query);
+    }
+
+    /*
+        * Muestra todos los datos de un usuario, anuncios, publicaciones, ....
+    */
+    public function getDataUser($idUser){
+
+    }
+
+    /*
+        *   Elimina un usuario de la bbdd   
+        */
+        public function deleteUser($idUser){
+            $query = "DELETE FROM final_usuario WHERE idUser=".$idUser;
+            return $this->con->action($query);
+        }
 }
 
 ?>
