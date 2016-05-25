@@ -110,13 +110,20 @@ $(document).ready(function(){
                         precio = 'GRATIS';
                     }
                     aa = '';
+                    bb = '';
                     if(itemData.esMio == true){
                         aa = ' esMiAnuncio'
+                    }
+                    
+                    if(parseInt(itemData.estado) == 2){
+                        bb = ' terminado'
+                    }else if(parseInt(itemData.estado) == 0){
+                        bb = ' cancelado';
                     }
                 
                     htmlN = htmlN + '<li><form id="anuncioForm'+itemData.id
                     +'" action="../php/controller.php?cmd=userView&id=7" method="POST"><input type="hidden" name="idAnuncio" value="'+itemData.id
-                    +'"/><div class = "bloqueAnuncio'+aa+'" onClick="document.getElementById(\'anuncioForm'+itemData.id
+                    +'"/><div class = "bloqueAnuncio'+aa+bb+'" onClick="document.getElementById(\'anuncioForm'+itemData.id
                     +'\').submit();"><div class = "Aleft"><img class = "miniaturaAnuncio" src="'+itemData.miniatura
                     +'" height="160px" alt="miniatura"/></div><div class = "Aright"><div class = "Atop"><span class = "tituloAnuncio">'+itemData.titulo
                     +'</span><span class = "precioAnuncio">'+precio

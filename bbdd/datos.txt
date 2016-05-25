@@ -1,8 +1,0 @@
-ftp: sftp://webalumnos.tlm.unavarra.es 
-cuenta: siw21
-pass: pahshuubei
-
-
-mysql
-cuenta: siw21
-pass: laefixiepi

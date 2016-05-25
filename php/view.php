@@ -196,6 +196,13 @@
             }else{
                 $aux1 = str_replace("##esMiAnuncio##", "", $aux1);
             }
+            if($anuncios[$i]['estado'] == 0){
+                $aux1 = str_replace("##estadoAnuncio##", " cancelado", $aux1);
+            }elseif($anuncios[$i]['estado'] == 2){
+                $aux1 = str_replace("##estadoAnuncio##", " terminado", $aux1);
+            }elseif($anuncios[$i]['estado'] == 1){
+                $aux1 = str_replace("##estadoAnuncio##", "", $aux1);
+            }
             $aux0 .= $aux1;
         }
         $text = $trozos[0].$aux0.$trozos[2];

@@ -280,6 +280,26 @@
     transition: 0.7s; 
 }
 
+.cancelado{
+    border: solid 5px #A4A4A4;
+    background-color: #F2F2F2; 
+}
+
+.cancelado:hover{ 
+    background-color: #BDBDBD; 
+    transition: 0.7s; 
+}
+
+.terminado{
+    border: solid 5px #F781BE;
+    background-color: #F8E0E6; 
+}
+
+.terminado:hover{ 
+    background-color: #F6CEEC; 
+    transition: 0.7s; 
+}
+
 .bloqueAnuncio img{ 
     border: solid 3px #1C9CD1; 
     width: 220px; 
@@ -289,6 +309,14 @@
 
 .esMiAnuncio img{ 
     border: solid 3px #65AC77; 
+} 
+
+.cancelado img{ 
+    border: solid 3px #A4A4A4; 
+} 
+
+.terminado img{ 
+    border: solid 3px #F781BE; 
 } 
  
 .bloqueAnuncio .Aleft { 

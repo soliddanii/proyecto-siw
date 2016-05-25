@@ -180,7 +180,7 @@ class Facade {
     *  $order = [DESC;ASC]
     */
     public function getAnuncios($condiciones, $columnNameOrder, $order, $fromLimit, $toLimit, $misAnuncios, $misFavoritos){
-        $query = "SELECT fa.idAnuncio, fa.idCategoria, fa.precio, fa.fecha, fa.titulo, fa.localizacion, fa.idUser, fi.small
+        $query = "SELECT fa.idAnuncio, fa.idCategoria, fa.precio, fa.fecha, fa.titulo, fa.localizacion, fa.estado, fa.idUser, fi.small
                     FROM final_anuncio fa LEFT JOIN final_imagen fi ON (fi.idAnuncio = fa.idAnuncio AND
                         fi.idImagen = (SELECT MIN(idImagen) FROM final_imagen WHERE idAnuncio = fa.idAnuncio))";
                   
@@ -222,6 +222,12 @@ class Facade {
         //Obtiene solo de los favoritos del usuario
         if ($misFavoritos == 1 && $condiciones["idUser"] != ""){
             $query = $query." ".$aux." fa.idAnuncio IN (SELECT idAnuncio FROM final_favorito WHERE idUser=".$condiciones["idUser"].")";
+            $aux = "AND";
+        }
+        
+        //Si no se estan pidiendo los favoritos o mis anuncios, no mostramos los cancelados o terminados
+        if ($misFavoritos != 1 && $misAnuncios != 1){
+            $query = $query." ".$aux." fa.estado=1";
             $aux = "AND";
         }
         

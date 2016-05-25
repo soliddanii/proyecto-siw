@@ -466,7 +466,7 @@
                     //if($row['idUser'] == $idUser){ $esMio = true; }
                 
 					$temp_data = array('id'=>$row['idAnuncio'], 'titulo'=>$row['titulo'], 'idUser'=>$row['idUser'], 'esMio'=>$esMio, 'esFav'=>$esFav,
-                    'localizacion'=>$row['localizacion'], 'precio'=>$row['precio'], 'fecha'=>$row['fecha'], 'miniatura'=>$row['small']);
+                    'localizacion'=>$row['localizacion'], 'precio'=>$row['precio'], 'fecha'=>$row['fecha'], 'miniatura'=>$row['small'], 'estado'=>$row['estado']);
                     
                     if($row['small'] == null){
                         $temp_data['miniatura'] = '../images/default-product.png';
