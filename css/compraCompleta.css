@@ -1,0 +1,19 @@
+/***************************************************************/
+/******************** BLOQUE DE CONTENIDO **********************/
+/***************************************************************/
+.contenido{
+    width: 40%;
+    margin: auto;
+    margin-top: 20px;
+    border: solid 5px #A9E2F3;
+    text-align:center;
+}
+
+.contenido p{
+    font: 20px 'Roboto', Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    width: 75%;
+    margin: auto;
+    margin-top: 20px;
+    font-weight: bold;
+}

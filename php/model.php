@@ -594,6 +594,63 @@
         
     }
     
+    function actualizarAnuncio(){
+        
+        //Array para guardar los posibles errores que encontremos
+        $errorList = array(); //Array de arrays: error("errorCode" => "code", "message" => "mensaje" )
+        $idAnuncio = -1;
+        $accion = -1;
+        
+        //Comprobar que es un usuario logueado
+        if(isset($_SESSION["idUser"])){ 
+            $idUser = $_SESSION["idUser"];
+            
+            if(isset($_POST["idAnuncio"]) && is_numeric($_POST["idAnuncio"])){
+                $idAnuncio = intval($_POST["idAnuncio"]);
+                
+                //Establecer la conexion a la BBDD
+                $con    = new Connection();			
+                $facade = new Facade($con);
+                 
+                //Comprobar si el anuncio esta activo antes de seguir
+                $aux = mysqli_fetch_array($facade->anuncioGetEstado($idAnuncio));
+                $aux2 = intval($aux['estado']);
+                ChromePhp::log($aux2);
+                if($aux2 == 1){
+                    //Comprobar si el anuncio es mio:
+                    if($facade->esMiAnuncio($idAnuncio, $idUser)){
+                        //Si es mio, la accion es cancelarlo
+                        $accion = 0;
+                        if(!$facade->actualizarCanceladoAnuncio($idAnuncio)){
+                            array_push($errorList, array('errorCode' => '3', 'message' => "Se ha producido un error inesperado en el proceso de Cancelación."));
+                        } 
+                    }else{
+                        //Si el anuncio no es mio, la accion es comprarlo
+                        $accion = 1;
+                        if(!$facade->actualizarVendidoAnuncio($idAnuncio, $idUser)){
+                            array_push($errorList, array('errorCode' => '2', 'message' => "Se ha producido un error inesperado en el proceso de Compra."));
+                        }
+                    }
+
+                }else{
+                    array_push($errorList, array('errorCode' => '2', 'message' => "No se puede acceder a un anuncio cancelado o vendido."));
+                }
+                
+
+                $con->close();
+                
+            }else{
+                array_push($errorList, array('errorCode' => '-1', 'message' => "Error en la compra. No se a especificado el anuncio."));
+            }
+        
+        }else{
+            array_push($errorList, array('errorCode' => '1', 'message' => "Es necesario estar registrado para adquirir artículos."));
+        }
+        
+        return array($idAnuncio, $accion, $errorList);
+        
+    }
+    
     /////////////////////////////////////////////////////////////////////////
 	// 							Gestión de los Favoritos
 	/////////////////////////////////////////////////////////////////////////

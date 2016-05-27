@@ -291,12 +291,12 @@
 }
 
 .terminado{
-    border: solid 5px #F781BE;
-    background-color: #F8E0E6; 
+    border: solid 5px #AF7B4A;
+    background-color: #EED6BF; 
 }
 
 .terminado:hover{ 
-    background-color: #F6CEEC; 
+    background-color: #BF9369; 
     transition: 0.7s; 
 }
 
@@ -316,7 +316,7 @@
 } 
 
 .terminado img{ 
-    border: solid 3px #F781BE; 
+    border: solid 3px #AF7B4A; 
 } 
  
 .bloqueAnuncio .Aleft { 

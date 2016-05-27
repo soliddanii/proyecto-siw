@@ -112,13 +112,15 @@ $(document).ready(function(){
                     aa = '';
                     bb = '';
                     if(itemData.esMio == true){
-                        aa = ' esMiAnuncio'
+                        aa = ' esMiAnuncio';
                     }
                     
                     if(parseInt(itemData.estado) == 2){
-                        bb = ' terminado'
+                        bb = ' terminado';
+                        precio = 'VENDIDO';
                     }else if(parseInt(itemData.estado) == 0){
                         bb = ' cancelado';
+                        precio = 'CANCELADO';
                     }
                 
                     htmlN = htmlN + '<li><form id="anuncioForm'+itemData.id

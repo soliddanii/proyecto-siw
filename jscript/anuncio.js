@@ -128,7 +128,26 @@ $(document).ready(function(){
             
     
     });
-
+    
+    
+    //**********************************************************
+    //*************** Click en el boton comprar ****************
+    //**********************************************************
+    $('#buyCancelProduct').submit(function(event){
+    
+        estado = parseInt($('#buyCancelProductHidden').data('estado'));
+        if(estado == 0){
+            $('.jsError1').remove();
+            $(".contenido").prepend("<div id = 'errorMessage' class = 'jsError1'>No puede acceder a un anuncio cancelado</div>");
+            event.preventDefault();
+        }
+        else if(estado == 2){
+            $('.jsError1').remove();
+            $(".contenido").prepend("<div id = 'errorMessage' class = 'jsError1'>No puede acceder a un anuncio vendido</div>");
+            event.preventDefault();
+        }
+    
+    });
     
     
 });

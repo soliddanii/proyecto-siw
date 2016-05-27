@@ -70,8 +70,8 @@
                         <button type = "submit" class = "##isFavorite##">##mensajeBotonFav##</button>
                     </form>
                   
-                    <form id = "buyCancelProduct" action = "" method = "POST"> 
-                        <input type = "hidden" name = "idAnuncio" value = "##idAnuncio##" />
+                    <form id = "buyCancelProduct" action = "../php/controller.php?cmd=userCmd&id=11" method = "POST"> 
+                        <input type = "hidden" id = "buyCancelProductHidden" name = "idAnuncio" data-estado = "##estado##" value = "##idAnuncio##" />
                         <button type = "submit" class = "##canBuy##">##mensajeBotonComprar##</button>
                     </form>
                     ##login2##

@@ -148,10 +148,22 @@
 
 	}
     
+    /*
+    *   Carga la pagina para editar el perfil
+    */
 	function editProfileView($errores){
 		$pathEdit = "../html/editprofile.html";
 		$text = file_get_contents($pathEdit) or exit("Error editView, [$pathEdit]");
 		$text = processErrors($text, $errores);
+		echo chargeMenu($text);
+	}
+    
+    /*
+    *   Carga la pagina de simulacion de compra
+    */
+	function compraView(){
+		$pathCompra = "../html/compraCompleta.html";
+		$text = file_get_contents($pathCompra) or exit("Error editView, [$pathCompra]");
 		echo chargeMenu($text);
 	}
     
@@ -182,25 +194,27 @@
         for($i = 0; $i<count($anuncios); $i++){
             $aux1 = $trozos[1];
             $aux1 = str_replace("##idAnuncio##", $anuncios[$i]['id'], $aux1);
-            $aux1 = str_replace("##miniaturaAnuncio##", $anuncios[$i]['miniatura'], $aux1);
             $aux1 = str_replace("##tituloAnuncio##", $anuncios[$i]['titulo'], $aux1);
+            $aux1 = str_replace("##miniaturaAnuncio##", $anuncios[$i]['miniatura'], $aux1);
             $aux1 = str_replace("##localizacionAnuncio##", $anuncios[$i]['localizacion'], $aux1);
-            $aux1 = str_replace("##fechaAnuncio##", $anuncios[$i]['fecha'], $aux1);
-            if($anuncios[$i]['precio'] != '0.00'){ 
-                $aux1 = str_replace("##precioAnuncio##", $anuncios[$i]['precio'].' €', $aux1); 
-            }else{ 
-                $aux1 = str_replace("##precioAnuncio##", 'GRATIS', $aux1); 
-            }
+            $aux1 = str_replace("##fechaAnuncio##", $anuncios[$i]['fecha'], $aux1);  
             if($anuncios[$i]['esMio'] == true){
                 $aux1 = str_replace("##esMiAnuncio##", " esMiAnuncio", $aux1);
             }else{
                 $aux1 = str_replace("##esMiAnuncio##", "", $aux1);
             }
             if($anuncios[$i]['estado'] == 0){
+                $aux1 = str_replace("##precioAnuncio##", 'CANCELADO', $aux1); 
                 $aux1 = str_replace("##estadoAnuncio##", " cancelado", $aux1);
             }elseif($anuncios[$i]['estado'] == 2){
+                $aux1 = str_replace("##precioAnuncio##", 'VENDIDO', $aux1); 
                 $aux1 = str_replace("##estadoAnuncio##", " terminado", $aux1);
             }elseif($anuncios[$i]['estado'] == 1){
+                if($anuncios[$i]['precio'] != '0.00'){ 
+                    $aux1 = str_replace("##precioAnuncio##", $anuncios[$i]['precio'].' €', $aux1); 
+                }else{ 
+                    $aux1 = str_replace("##precioAnuncio##", 'GRATIS', $aux1); 
+                }
                 $aux1 = str_replace("##estadoAnuncio##", "", $aux1);
             }
             $aux0 .= $aux1;
@@ -397,13 +411,27 @@
             if($data[5]){
                 //El anuncio es mio
                 $trozos[1] = str_replace("##canBuy##", 'cancelAnuncio', $trozos[1]); 
-                $trozos[1] = str_replace("##mensajeBotonComprar##", 'Cancelar<br/>Anuncio', $trozos[1]); 
+                if($data[0]['estado'] == 0){
+                    $trozos[1] = str_replace("##mensajeBotonComprar##", 'Mi Anuncio<br/>Cancelado', $trozos[1]); 
+                }elseif($data[0]['estado'] == 2){
+                    $trozos[1] = str_replace("##mensajeBotonComprar##", 'Mi Anuncio<br/>Vendido', $trozos[1]); 
+                }elseif($data[0]['estado'] == 1){
+                    $trozos[1] = str_replace("##mensajeBotonComprar##", 'Cancelar<br/>Anuncio', $trozos[1]); 
+                }
+
             }else{
                 //El anuncio no es mio
-                $trozos[1] = str_replace("##canBuy##", 'buyAnuncio', $trozos[1]); 
-                $trozos[1] = str_replace("##mensajeBotonComprar##", 'Adquirir<br/>Artículo', $trozos[1]); 
+                $trozos[1] = str_replace("##canBuy##", 'buyAnuncio', $trozos[1]);
+                if($data[0]['estado'] == 0){
+                    $trozos[1] = str_replace("##mensajeBotonComprar##", 'Anuncio<br/>Cancelado', $trozos[1]); 
+                }elseif($data[0]['estado'] == 2){
+                    $trozos[1] = str_replace("##mensajeBotonComprar##", 'Anuncio<br/>Vendido', $trozos[1]); 
+                }elseif($data[0]['estado'] == 1){
+                    $trozos[1] = str_replace("##mensajeBotonComprar##", 'Adquirir<br/>Artículo', $trozos[1]); 
+                }                   
             }
             
+            $trozos[1] = str_replace("##estado##", $data[0]['estado'], $trozos[1]);
             $text = $trozos[0].$trozos[1].$trozos[2];
             
         }else{

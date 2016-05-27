@@ -164,6 +164,30 @@ class Facade {
     }
     
     /*
+    *   Actualiza el anuncio al estado cancelado
+    */
+    public function actualizarCanceladoAnuncio($idAnuncio){
+        $query = "UPDATE final_anuncio SET estado=0 WHERE idAnuncio='".$idAnuncio."'";
+        return $this->con->action($query);
+    }
+    
+    /*
+    *   Actualiza el anuncio al estado vendido
+    */
+    public function actualizarVendidoAnuncio($idAnuncio, $idUser){
+        $query = "UPDATE final_anuncio SET estado=2, idComprador='".$idUser."' WHERE idAnuncio='".$idAnuncio."'";
+        return $this->con->action($query);
+    }
+    
+    /*
+    *   Obtener el estado de un anuncio
+    */
+    public function anuncioGetEstado($idAnuncio){
+        $query = "SELECT estado FROM final_anuncio WHERE idAnuncio='".$idAnuncio."'";
+        return $this->con->action($query);
+    }
+    
+    /*
     *   Devuelve un anuncio en concreto por su ID
     */
     public function getAnuncio($id){
@@ -318,7 +342,7 @@ class Facade {
     }
     
     /* 
-    *  Comprueba si un comentario existe en un anuncio 
+    *  Comprueba si un un anuncio me pertenece 
     */ 
     public function esMiAnuncio($idAnuncio, $idUser){ 
         $query = "SELECT idAnuncio FROM final_anuncio WHERE idAnuncio='".$idAnuncio."' AND idUser='".$idUser."'"; 

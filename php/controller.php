@@ -214,7 +214,18 @@
                     
                 case '11':
                     //Comprar un articulo
-                    
+                    $ret = actualizarAnuncio();
+                    if(empty($ret[2])){
+                        if($ret[1] == 1){
+                            //Anuncio adquirido
+                            compraView();
+                        }elseif($ret[1] == 0){
+                            //Anuncio Cancelado
+                            header("Location:controller.php?cmd=userView&id=7&idAnuncio=".$ret[0]);
+                        }
+                    }else{
+                        errorView2($ret[2]);
+                    }
                     break;
                     
 				default:
