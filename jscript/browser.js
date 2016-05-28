@@ -31,10 +31,12 @@ $(document).ready(function(){
     //*********** ENVIAR PETICIONES AJAX AL SERVIDOR ***********
     //**********************************************************
     $('#submitBuscar').click(function(event){
+        $('#paginaActual').val(1);
         sendAjaxRequest();
     });
     
     $('#orden').change(function(event){
+        $('#paginaActual').val(1);
         sendAjaxRequest();
     });
     
