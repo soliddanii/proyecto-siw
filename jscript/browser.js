@@ -108,6 +108,8 @@ $(document).ready(function(){
                     precio = itemData.precio;
                     if(precio == '0.00'){
                         precio = 'GRATIS';
+                    }else{
+                        precio = precio + ' €';
                     }
                     aa = '';
                     bb = '';
