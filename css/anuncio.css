@@ -68,9 +68,9 @@
     overflow-y: hidden; 
 }  
  
-.contenido .bloqueImagenes .wrapper .scrolls:hover{ 
+/*.contenido .bloqueImagenes .wrapper .scrolls:hover{ 
     overflow-x: scroll; 
-} 
+}*/ 
  
 .contenido .bloqueImagenes .wrapper .scrolls img{  
     width: 120px; 

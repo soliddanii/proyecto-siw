@@ -44,15 +44,20 @@
             
             //Si hay imagenes
             if(!empty($data[1])){
-                //$ds = DIRECTORY_SEPARATOR; '..'.$ds.'..'.$ds.
-                $space_left = $pdf->GetPageHeight();-($pdf->GetY());
-                if ($space_left < (380+25)) {
-                    $pdf->AddPage(); // page break
-                }else{
-                    $pdf->SetY($pdf->GetY()+20);
-                }
                 $image = $data[1][0]['medium'];
-                $pdf->Cell(380, 380, $pdf->Image($image, $pdf->GetX(), $pdf->GetY(), 380), 0, 0, 'L', false );
+                
+                //Asegurarnos de que el archivo existe
+                if (file_exists($image)) {
+                    //$ds = DIRECTORY_SEPARATOR; '..'.$ds.'..'.$ds.
+                    $space_left = $pdf->GetPageHeight();-($pdf->GetY());
+                    if ($space_left < (380+25)) {
+                        $pdf->AddPage(); // page break
+                    }else{
+                        $pdf->SetY($pdf->GetY()+20);
+                    }
+                    
+                    $pdf->Cell(380, 380, $pdf->Image($image, $pdf->GetX(), $pdf->GetY(), 380), 0, 0, 'L', false );
+                }   
                 
             }            
             

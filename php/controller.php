@@ -147,6 +147,7 @@
 					break;
                     
                 case '5':
+                    //Publicar un nuevo anuncio
                     $ret = newAnuncio();
                     if ($ret[0] != '-1'){
                         //Si todo se ha realizado correctamente:
