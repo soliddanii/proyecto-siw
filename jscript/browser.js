@@ -140,6 +140,7 @@ $(document).ready(function(){
                 
                 //Actualizar el numero de pagina
                 $('#paginaActual').val(data.page);
+                $('#pagina').text('PÁGINA: '+data.page);
                 
                 $('#listaAnunciosUL').fadeToggle(500, function() {
                     $('#listaAnunciosUL').html(htmlN);

@@ -7,8 +7,8 @@
 	require_once 'class/connection.php';
 	require_once 'class/facade.php';
 	require_once 'class/sessions.php';
-  require_once 'class/upload.php'; //subida de imagenes
-  require_once 'class/pdf/makepdf.php'; //generar PDF
+    require_once 'class/upload.php'; //subida de imagenes
+    require_once 'class/pdf/makepdf.php'; //generar PDF
 
 	/////////////////////////////////////////////////////////////////////////
 	// 							Gestión de Sesion
@@ -447,9 +447,8 @@
         }
         
         $fromLimit = ($page-1)*$maxPerPage;
-        $toLimit = $fromLimit+$maxPerPage;
         
-		$result = $facade->getAnuncios($condiciones, $columnNameOrder, $order, $fromLimit, $toLimit, $misAnuncios, $misFavoritos);
+		$result = $facade->getAnuncios($condiciones, $columnNameOrder, $order, $fromLimit, $maxPerPage, $misAnuncios, $misFavoritos);
         
         //Inicializacion de los datos
         $data = array();
@@ -615,7 +614,7 @@
                 //Comprobar si el anuncio esta activo antes de seguir
                 $aux = mysqli_fetch_array($facade->anuncioGetEstado($idAnuncio));
                 $aux2 = intval($aux['estado']);
-                ChromePhp::log($aux2);
+                //ChromePhp::log($aux2);
                 if($aux2 == 1){
                     //Comprobar si el anuncio es mio:
                     if($facade->esMiAnuncio($idAnuncio, $idUser)){

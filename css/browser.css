@@ -219,6 +219,8 @@
 .pager {
     width: 45%;
     float: left;
+    display: inline-flex;
+    justify-content: space-between;
 }
 
 #orden{
@@ -239,6 +241,16 @@
 #paginaAnterior:hover, #paginaSiguiente:hover{
     border: 3px solid #7401DF;
     
+}
+
+#pagina{
+    border: 3px solid #9F81F7;
+    padding: 2px 5px;
+    color: #8258FA;
+    font-weight: bold;
+    vertical-align: middle;
+    margin: 5px auto;
+    display: inline-flex;
 }
 
 #paginaAnterior{

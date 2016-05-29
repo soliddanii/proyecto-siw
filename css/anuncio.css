@@ -148,6 +148,7 @@
     font-weight: bold;
     height: 80px;
     width: 160px;
+    margin: 10px auto;
 }
 
 .contenido .bloqueInformacion .isNotFavorite:hover{
@@ -172,6 +173,7 @@
     font-weight: bold;
     height: 80px;
     width: 160px;
+    margin: 10px auto;
 }
 
 .contenido .bloqueInformacion .cancelAnuncio:hover{
@@ -190,6 +192,7 @@
     font-weight: bold;
     height: 60px;
     width: 160px;
+    margin: 10px auto;
 }
 
 .contenido .bloqueInformacion .loginToBuy:hover{
@@ -207,6 +210,7 @@
     font-weight: bold;
     height: 80px;
     width: 160px;
+    margin: 10px auto;
 }
 
 .contenido .bloqueInformacion .buyAnuncio:hover{

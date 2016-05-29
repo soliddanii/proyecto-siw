@@ -1,7 +1,7 @@
 <?php
 
-  //temp for debug
-  require_once '../chromephp/ChromePhp.php';
+    //temp for debug
+    require_once '../chromephp/ChromePhp.php';
     
 	// Incluimos los ficheros que vamos a utilizar
 	require_once 'view.php';
