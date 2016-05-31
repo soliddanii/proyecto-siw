@@ -3,7 +3,7 @@
 <!-- Gestion de usuarios -->
 ##manageusers##
 <div class="manageusers">
-	<a href = "../php/controller.php?cmd=adminCmd&id=2&order=false">Listar todos</a>
+	<a class = "all" href = "../php/controller.php?cmd=adminCmd&id=2&order=false">Listar todos</a>
 	<select name="order">
 		<option name="order" value="0" selected>Ordenar Por</option>
 		<option name="order" value="nick">Nick</option>
@@ -30,7 +30,7 @@
 
 ##list##
 <div class="list">
-	<table >
+	<table class = "tablelist">
 		<tr>
 			<th>Nick</th><th>Nombre</th><th>Email</th><th colspan = "3"></th>
 		</tr>
@@ -57,71 +57,74 @@
 		<input type = "text" name = "name"  placeholder = "Nombre">	
 		<input type = "text" name = "email" placeholder = "Email">
 		
-		<input type = "submit" id = "continue" value = "Continuar">
-		<input type = "button" id = "cancel"   value = "Cancelar" >
-		
-		<input type = "hidden" id = "orderby"     value="##orderby##">
-		<input type = "hidden" id = "currentPage" value="##currentPage##">
-    <input type = "hidden" id = "maxPage"     value="##maxPage##">
+		<input type = "submit" class = "modifybutton" id = "continue" value = "Continuar">
+		<input type = "button" class = "modifybutton" id = "cancel"   value = "Cancelar" >
+			
 	</form>
 </div>
 ##modify##
 
 
-<!-- Eliminar usuario -->
-##eliminar##
-<div class="eliminar">
-	<input type="text" name="buscar" placeholder="Nombre de Usuario">
-	<input type="button" id="eliminar" value="Buscar">
-	<input type="hidden" id="lugar" value="eliminar">
-	<label></label>
-	<a href="" class="abc">a</a>
-	<a href="" class="abc">b</a>
-	<a href="" class="abc">c</a>
-	<a href="" class="abc">d</a>
-	<a href="" class="abc">e</a>
-	<a href="" class="abc">f</a>
-	<a href="" class="abc">g</a>
-	<a href="" class="abc">h</a>
-	<a href="" class="abc">i</a>
-	<a href="" class="abc">j</a>
-	<a href="" class="abc">k</a>
-	<a href="" class="abc">l</a>
-	<a href="" class="abc">m</a>
-	<a href="" class="abc">n</a>
-	<a href="" class="abc">ñ</a>
-	<a href="" class="abc">o</a>
-	<a href="" class="abc">p</a> 
-	<a href="" class="abc">q</a>
-	<a href="" class="abc">r</a>
-	<a href="" class="abc">s</a>
-	<a href="" class="abc">t</a>
-	<a href="" class="abc">u</a>
-	<a href="" class="abc">v</a>
-	<a href="" class="abc">w</a>
-	<a href="" class="abc">x</a>
-	<a href="" class="abc">y</a>
-	<a href="" class="abc">z</a>
-	<div id="error"></div>
-	<div class="lista">
-		##lista##
-		<table>
-			<tr><th>Usuario</th><th>Nombre</th><th>Primer Apellido</th>
-			<th>Segundo Apellido</th><th>Email</th><th></th>
-			</tr>
-			##usuarios##
-			<tr>
-				<td>##usuario##</td><td>##nombre##</td><td>##apellido1##</td>
-				<td>##apellido2##</td><td>##email##</td>
-				<td><a href="##urleli##" class="link" name="link">eliminar</a></td>
-			</tr>
-			##usuarios##
-		</table>
-		##lista##
-	</div>
+<!-- Mostrar info usuario -->
+##info##
+<div id = "info">
+	
+	<!-- Datos del usuario -->
+	<table class ="datauser">
+		<tr>
+			<th>Nick</th><th>Nombre</th><th>Email</th>
+		</tr>
+		<tr>
+			<td>##nick##</td><td>##name##</td><td>##email##</td>
+		</tr>
+	</table>		
+	
+	##result##
 
-	<div id="dialog" title="Eliminar usuario">
-	  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>¿Seguro que quiere eliminar el usuario?</p>
-	</div>
 </div>
-##eliminar##
+##info##
+
+<!-- Publicaciones Activas, Borrado y Vendido-->
+##blocks##
+	<label class = "publicacion">Publicaciones ##state##</label>
+	##block##
+	<div class = "block" onclick="location.href='../php/controller.php?cmd=adminView&id=4&idAnuncio=##idAnuncio##'">
+		<span>##title##</span><span>##date##</span><span>##price##</span>
+		<label class ="desc">Descripción:</label>
+		<div class = "descripcion">
+			##txt##
+		</div>
+	</div>
+	##block##
+##blocks##
+
+<!-- Detalles de una publicación en concreto -->
+##detailinfo##
+<div class = "uniqueblock">
+	<span>##title##</span><span>##date##</span><span>##price##</span>
+	<span>##local##</span><span>##phone##</span>##categoria##</span>
+	<label class = "desc">Descripción:</label>
+	<div class = "descripcion">
+		##txt##
+	</div>
+	##cancelar##
+</div>
+##detailinfo##
+
+<!-- Gestion anuncios -->
+##anuncio##
+<div class = "orderby">
+	<form name="myform" action="../php/controller.php?cmd=adminView&id=5&state=##state##" method="post">
+	<select name="ordenar" onchange="this.form.submit()">
+		<option name="ordenar" value="0" ##0##>Ordenar Por</option>
+		<option name="ordenar" value="new" ##1##>Reciente</option>
+		<option name="ordenar" value="old" ##2##>Antiguo</option>
+		<option name="ordenar" value="cheap" ##3##>Menor precio</option>
+		<option name="ordenar" value="expensive" ##4##>Mayor precio</option>
+	</select>
+	</form>
+	<h2>Anuncios ##state##:</h2>
+	<div class = "anuncios">##anuncios##</div>
+	<input type="hidden" id="state" value="##state##"> 
+</div>
+##anuncio##

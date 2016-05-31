@@ -578,4 +578,173 @@
     echo $text;
   }
     
+  function infoUserViewAdmin($data){
+
+    $pathFront = "../html/frontadmin.html";
+    $text0 = file_get_contents($pathFront) or exit("Error frontViewAdmin, [$pathFront]");
+
+    $text0 = str_replace("##user##", $_SESSION["user"], $text0);
+
+    $pathInfo = "../html/gestionusuarios.html";
+    $text = file_get_contents($pathInfo) or exit("Error infoUserViewAdmin, [$pathInfo]");
+
+    $trozos0 = explode("##info##", $text);
+    $trozos1 = explode("##blocks##", $text);
+    $trozos2 = explode("##block##", $trozos1[1]);
+
+    $info0 = $trozos0[1];
+    $info1 = "";
+    $info2 = "";
+    $info3 = "";
+
+    foreach ($data as $k => $r) {      
+
+      if ($k == "info0"){
+        $row = mysqli_fetch_array($r);        
+        $info0 = str_replace("##nick##", $row["nick"], $info0);
+        $info0 = str_replace("##name##", $row["name"], $info0);
+        $info0 = str_replace("##email##", $row["email"], $info0);
+      }else{        
+        $aux0 = "";
+        $aux1 = "";
+        $aux2 = "";
+                
+        while ($row = mysqli_fetch_array($r)){                    
+
+          $aux1 = $trozos2[1];
+          $aux1 = str_replace("##idAnuncio##", $row["idAnuncio"], $aux1);
+          $aux1 = str_replace("##title##", $row["titulo"], $aux1);
+          $aux1 = str_replace("##date##", $row["fecha"], $aux1);
+          $aux1 = str_replace("##price##", $row["precio"], $aux1);
+          $aux1 = str_replace("##txt##", $row['descripcion'], $aux1);                    
+
+          if ($k == "info1")
+            $info1 .= $aux1;
+          elseif ($k == "info2")
+            $info2 .= $aux1;
+          elseif ($k == "info3")
+            $info3 .= $aux1; 
+        }      
+      }        
+    }
+
+    $aux0 = $trozos2[0];
+    $aux2 = $trozos2[2];
+      
+    $aux0 = str_replace("##state##", "Activas", $aux0);
+    if (empty($info1))
+      $info1 = "<div class = 'block' id=0>No hay anuncios activos.</div>";
+    
+    $activas = $aux0.$info1.$aux2;
+
+    $aux0 = $trozos2[0];
+    $aux0 = str_replace("##state##", "Vendidas", $aux0);
+    
+    if (empty($info2))
+      $info2 = "<div class = 'block' id=0>No hay anuncios vendidos.</div>";
+    
+    $vendidas = $aux0.$info2.$aux2;
+
+    $aux0 = $trozos2[0];
+    $aux0 = str_replace("##state##", "Canceladas", $aux0);
+    
+    if (empty($info3))
+      $info3 = "<div class = 'block' id=0>No hay anuncios cancelados.</div>";
+
+    $canceladas = $aux0.$info3.$aux2;
+
+
+    $div0 = "<div class = 'plentyblock'>";
+    $div1 = "<input type = 'button' class = 'back'   value = 'Atras' ></div>";
+
+    $info0 = str_replace("##result##", $div0.$activas.$vendidas.$canceladas.$div1, $info0);
+
+    $text0 = str_replace("##result##", $info0, $text0);
+
+    echo $text0;
+  }
+
+  function detailInfoViewAdmin($data){
+
+    $pathFront = "../html/frontadmin.html";
+    $text0 = file_get_contents($pathFront) or exit("Error detailInfoViewAdmin, [$pathFront]");
+
+    $text0 = str_replace("##user##", $_SESSION["user"], $text0);
+
+    $pathInfo = "../html/gestionusuarios.html";
+    $text = file_get_contents($pathInfo) or exit("Error detailInfoViewAdmin, [$pathInfo]");
+
+    $trozos = explode("##detailinfo##", $text);
+
+    $trozos[1] = str_replace("##title##", $data["titulo"], $trozos[1]);
+    $trozos[1] = str_replace("##date##", $data["fecha"], $trozos[1]);
+    $trozos[1] = str_replace("##price##", $data["precio"], $trozos[1]);
+    $trozos[1] = str_replace("##local##", $data["localizacion"], $trozos[1]);
+    $trozos[1] = str_replace("##phone##", $data["telefono"], $trozos[1]);
+    $trozos[1] = str_replace("##categoria##", $data["categoria"], $trozos[1]);
+    $trozos[1] = str_replace("##txt##", $data["descripcion"], $trozos[1]);
+    $trozos[1] = str_replace("##cancelar##", '', $trozos[1]);
+    $trozos[1] .= "<input type = 'button' class = 'back'   value = 'Atras' >";
+    $text0 = str_replace("##result##", $trozos[1], $text0);
+
+    echo $text0;
+  }
+
+  function listAnuncioViewAdmin($data,$state,$order){
+
+    $pathInfo = "../html/gestionusuarios.html";
+    $text = file_get_contents($pathInfo) or exit("Error listAnuncioViewAdmin, [$pathInfo]");
+
+    $trozos = explode("##detailinfo##", $text);
+
+    $aux = "";
+    $anuncios = "";
+
+    while ($row = mysqli_fetch_array($data)) {
+      $aux = $trozos[1];
+      $aux = str_replace("##title##", $row['titulo'], $aux);
+      $aux = str_replace("##date##", $row['fecha'], $aux);
+      $aux = str_replace("##price##", $row['precio'], $aux);
+      $aux = str_replace("##local##", $row['localizacion'], $aux);
+      $aux = str_replace("##phone##", $row['telefono'], $aux);
+      $aux = str_replace("##categoria##", $row['categoria'], $aux);
+      $aux = str_replace("##txt##", $row['descripcion'], $aux);
+      if ($state == 1){
+        $aux = str_replace("##cancelar##", 
+          "<input type = button class = buttoncommon value = Cancelar onclick=location.href='../php/controller.php?cmd=adminCmd&id=5&idAnuncio=##idAnuncio##&command=cancel'>", $aux);
+        $aux = str_replace("##idAnuncio##", $row['idAnuncio'], $aux);
+      }
+      elseif ($state == 0){
+        $aux = str_replace("##cancelar##", 
+          "<input type = button class = buttoncommon value = Activar onclick=location.href='../php/controller.php?cmd=adminCmd&id=5&idAnuncio=##idAnuncio##&command=active'>", $aux);
+        $aux = str_replace("##idAnuncio##", $row['idAnuncio'], $aux);
+      }
+        $aux = str_replace("##cancelar##", '', $aux);
+      $anuncios .= $aux;      
+    }
+
+    
+    $pathFront = "../html/frontadmin.html";
+    $text0 = file_get_contents($pathFront) or exit("Error listAnuncioViewAdmin, [$pathFront]");
+
+    $trozos1 = explode("##anuncio##", $text);
+
+    $trozos1[1] = str_replace("##".$order."##", 'selected', $trozos1[1]);  
+
+
+    if ($state == 1)
+      $trozos1[1] = str_replace("##state##", 'Activos', $trozos1[1]);
+    elseif ($state == 2)
+      $trozos1[1] = str_replace("##state##", 'Vendidos', $trozos1[1]);
+    elseif ($state == 0)
+      $trozos1[1] = str_replace("##state##", 'Cancelados', $trozos1[1]);
+
+    $trozos1[1] = str_replace("##anuncios##", $anuncios, $trozos1[1]);
+
+    $text0 = str_replace("##user##", $_SESSION["user"], $text0);
+    $text0 = str_replace("##result##", $trozos1[1], $text0);
+
+    echo $text0;    
+
+  }
 ?>

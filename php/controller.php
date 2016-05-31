@@ -257,7 +257,7 @@
 				// Pagina de informacion de un usuario
 				case '2':
 					if (isset($_GET["u"])){
-						$data = getUser($_GET["u"]);
+						$data = getInfoUser($_GET["u"]);
 						infoUserViewAdmin($data);
 					}else
 						echo "No existe identificacion de usuario";
@@ -270,6 +270,54 @@
 						modifyUserViewAdmin($_GET["u"]);
 					else
 						echo "No existe identificacion de usuario";		
+					break;			
+
+				// Detalles de un anuncio
+				case '4':
+					$data = detailInfo();
+					detailInfoViewAdmin($data);
+					break;
+
+				// Lista de anuncios 
+				case '5':
+
+					if (isset($_GET['state'])){
+						if ($_GET['state'] == 'Activos')
+							$state = 1;
+						elseif ($_GET['state'] == 'Cancelados')
+							$state = 0;
+						elseif ($_GET['state'] == 'Vendidos')
+							$state = 2;
+						else
+							$state = $_GET['state'];
+					}
+										
+					if (isset($_POST['ordenar']) || isset($_GET['ordenar'])){
+						if ($_POST['ordenar'] == 'new' || $_GET['ordenar'] == 'new' )
+							$ordenar = 1;
+						elseif ($_POST['ordenar'] == 'old' || $_GET['ordenar'] == 'old')
+							$ordenar = 2;						
+						elseif ($_POST['ordenar'] == 'cheap' || $_GET['ordenar'] == 'cheap')
+							$ordenar = 3;
+						elseif ($_POST['ordenar'] == 'expensive' || $_GET['ordenar'] == 'expensive')
+							$ordenar = 4;
+						elseif (isset($_POST['ordenar']))
+							$ordenar = $_POST['ordenar'];
+						elseif (isset($_GET['ordenar']))
+							$ordenar = $_GET['ordenar'];						
+
+						$_SESSION['ordenar'] = $ordenar;											
+						
+						$data = getAnuncios($state,$ordenar);
+						listAnuncioViewAdmin($data,$state,$ordenar);
+						
+					}
+					else{
+						$_SESSION['ordenar'] = 0;
+						$data = getAnuncios($state,false);
+						listAnuncioViewAdmin($data,$state,0);
+					}
+
 					break;			
 
 				default:
@@ -304,7 +352,7 @@
 				// Gestion de usuarios
 				case '2':
 					
-					$sizeElements = 3;
+					$sizeElements = 10;
 
 					if (!isset($_GET["order"])){
 						// Cargar la pagina incial
@@ -327,7 +375,7 @@
 					}elseif (isset($_GET["order"])){ 
 						// Listar todos los usuarios
 						$startPage = 0;
-						$endPage = 3;
+						$endPage = 10;
 						$data   = consultUsers(null,$startPage,$endPage);
 						$numUsers  = getNumUsers();
 						consultUsersView($data,$numUsers,$sizeElements,false);
@@ -347,6 +395,22 @@
 						deleteUser($_GET["u"]);
 						header("Location:controller.php?cmd=adminCmd&id=2$order=false");
 						break;
+				
+				// Eliminar anuncio
+				case '5':
+					if (isset($_GET['command'])){
+						if ($_GET['command'] == 'cancel'){
+							controlAnuncio($_GET['idAnuncio'],0);
+							//header('Location: ' . $_SERVER['HTTP_REFERER']);
+							header("Location: controller.php?cmd=adminView&id=5&state=1&ordenar=".$_SESSION['ordenar']);
+						}elseif ($_GET['command'] == 'active'){										
+							controlAnuncio($_GET['idAnuncio'],1);
+							header("Location: controller.php?cmd=adminView&id=5&state=0&ordenar=".$_SESSION['ordenar']);
+							//header('Location: ' . $_SERVER['HTTP_REFERER']);
+						}
+					}else
+						echo "error en eliminar anuncio";
+					break;
 
 				default:
 					break;

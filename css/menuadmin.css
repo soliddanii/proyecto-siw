@@ -1,7 +1,7 @@
 body {
-	margin: 0;
-	padding: 0;
-	font: normal 13px arial, helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  font: normal 13px arial, helvetica, sans-serif;
 }
 
 #admin{
@@ -26,11 +26,279 @@ body {
   min-width: 120px; 
 }
 
+.menu{
+  font: 17px 'Roboto', Arial, Helvetica, sans-serif;
+  padding: 14px;
+  margin: 20px auto; 
+  width: 12%;
+  float: left;
+}
+
 .result{
-  width: 1100px;
-  height: 700px;
-  display: block;
+  width: 80%;  
+  margin: 10px auto;
   float: right;
-  border: 1px solid;
-  padding: 0 0 0 240px;
+  
+  border-left:  2px solid #00568C;
+  /*border: 1px solid #00568C;*/
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+  /******Lista de usuarios*******/
+.manageusers{ 
+  margin: 30px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.result a {
+  text-decoration: none;
+  margin: auto;
+}
+
+.all{
+  font-size: 17px;
+  padding: 10px;
+  color: black;
+}
+
+.all:hover{
+  font-size: 18px;
+  background-color: #F4F3F3;
+}
+
+select[name=order]{
+  padding: 10px;
+  font-size: 17px;
+  background-color: #EDFCFF;
+    
+}
+
+select[name=order]:hover{
+  background-color: #D9F7FF;
+}
+
+.pagination{
+  font-size: 14px;
+  display: inline-block;
+}
+
+.pagination li{
+  display: inline-block;
+  padding: 7px;  
+}
+
+.pagination li a{  
+  color: #3CBCE3;
+}
+.pagination li a:hover{
+  color: #4196B0;
+}
+
+.list{
+  margin-top: 30px;
+}
+
+.tablelist tr th{
+  padding: 10px;
+  font-size: 25px;
+  color: #053544;
+}
+
+.tablelist tr td{
+  padding: 10px;
+  font-size: 18px;
+}
+
+.info{
+  color: #0067C6;
+}
+
+.info:hover{
+  color: #0188DC;
+}
+
+
+.modify:hover {
+  color: #C90000;
+}
+
+.modify{
+  color: #8E0000;
+}
+
+.delete:hover{
+  color: #C90000;
+}
+.delete{
+  color: #8E0000;
+}
+
+/*****Info User********/
+
+.datauser{
+  margin: 20px 10px 0px 150px;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;  
+}
+
+.datauser th{
+  border-bottom: 1px solid black;
+  padding: 10px;
+  font-size: 25px;
+  color: #053544;
+}
+
+.datauser td{
+  padding: 10px;
+  font-size: 18px;
+}
+
+.plentyblock {  
+  margin-top: 30px;
+}
+
+.publicacion {
+  border-bottom: 1px solid black;
+  margin-left: 15px;
+  font-size: 23px;
+  color: #11376C;
+}
+
+.block{
+  cursor: pointer;
+  font-size: 19px;
+  background-color: #D8FFE5;
+  margin: 20px 200px 20px 50px;
+}
+
+.block span{
+  display: inline-block;
+  font-size: 19px;
+  padding: 20px 15px 20px 50px;
+}
+
+.desc{
+  display: block;
+  font-size: 19px;
+  margin-left: 50px;
+  margin-bottom: 15px;  
+}
+
+.descripcion{
+  display: block;  
+  margin: 0px 200px 10px 50px;
+  font-size: 19px;
+}
+
+.block:hover{
+  background-color: #48FF82;  
+}
+
+.back{
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 15px;
+  margin: auto; 
+}
+
+.back:hover{
+  background-color: #2A8F4A;
+  cursor: pointer;
+}
+
+.uniqueblock{
+  font-size: 19px;
+  background-color: #D8FFE5;
+  margin: 20px 200px 20px 50px;  
+}
+
+.uniqueblock span{
+  display: inline-block;
+  font-size: 19px;
+  padding: 20px 15px 20px 50px;
+}
+
+select[name=ordenar]{
+  padding: 10px;
+  font-size: 17px;
+  display: block;
+  margin: 30px 0px 10px 100px;  
+  background-color: #EDFCFF;
+}
+
+select[name=ordenar]:hover{
+  background-color: #D9F7FF;
+}
+
+.orderby h2{
+  display: block;
+  border-bottom: 1px solid black;
+  font-size: 23px;
+  color: #11376C;
+  margin: 40px 0px 10px 40px;
+}
+
+.buttoncommon{
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 10px;
+  margin: auto;
+}
+
+.buttoncommon:hover{
+  background-color: #C14B4B;
+  cursor: pointer;
+}
+
+/*Modificar*/
+#modifyDiv{
+  margin: 20px 30px 10px 10px;
+}
+
+#modifyDiv h2{
+  display: block;
+  border-bottom: 1px solid black;
+  font-size: 23px;
+  color: #11376C;
+  margin: 40px 0px 10px 40px;  
+}
+
+#modifyDiv input[type=text]{  
+  display: block;
+  margin: 30px 0px 20px 20px;
+  background-color: #E2F1F0;
+  padding: 10px 32px;
+  font-size: 20px;
+  border: none;
+}
+
+.modifybutton{
+  display: inline-block;
+  padding: 10px 32px;
+  margin: 15px 0px 10px 30px;
+  border: none;
+  background-color: #4CAF50; /* Green */
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.modifybutton:hover{
+  background-color: #2A8F4A;
+  cursor: pointer;
 }

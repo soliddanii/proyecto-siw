@@ -82,7 +82,7 @@ $(document).ready(function(){
   });
 
   /*
-  *
+  *	Gestión de modificar un usuario
   */
 
   $('#modifyForm').submit(function(event){
@@ -104,5 +104,50 @@ $(document).ready(function(){
   	}
 
   });
+
+  $('#cancel').click(function(){  	
+  	window.history.back();
+  });
+
+  $('.back').click(function(){
+  	window.history.back();  	
+  });
+
+  /*$('select[name=ordenar]').change(function(){
+
+  	var order = $('select[name=ordenar]').val();  
+  	var state = $('#state').val();
+  	
+  	if (order == 'new')
+  		var orderby = 1;
+  	else if (order == 'old')
+  		var orderby = 2;
+  	else if (order == 'cheap')
+  		var orderby = 3;
+  	else if (order == 'expensive')
+  		var orderby = 4;
+
+  	if (state == 'Activos'){
+  		$.get('../php/controller.php',{
+				cmd: 'adminView',
+				id: 5,
+				state: 1,
+				order: orderby
+			},function(response){				
+				$('.anuncios').empty().append(response);
+			});
+  	}else if(state = 'Cancelados'){
+  		$.get('../php/controller.php',{
+				cmd: 'adminView',
+				id: 5,
+				state: 0,
+				order: orderby
+			},function(response){
+				$('.anuncios').empty().append(response);
+			});
+  	}
+
+  });*/
+
 
 });

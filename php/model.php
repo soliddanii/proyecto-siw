@@ -897,24 +897,62 @@
 
   }
 
-  function getUser($idUser){
+  /*
+  * Retorna un array en el que almacena los datos de un usuario. 
+  * Datos personales y sobre sus anuncios publicados
+  */
+
+  function getInfoUser($idUser){
+
+    $con = new Connection();
+    $facade = new Facade($con);
+    
+    return $facade->getInfoUser($idUser);    
+  }
+
+  function detailInfo(){
+    
+    if (isset($_GET['idAnuncio'])){
+
+      $con = new Connection();
+      $facade = new Facade($con);
+
+      $result = $facade->getInfoAnuncio($_GET['idAnuncio']);
+
+      return mysqli_fetch_array($result);
+
+    }else
+      return "Ocurrió un error.";
+
+  }
+
+  /*
+  * Devuelve la lista de anuncios, segun el estado
+  */
+
+  function getAnuncios($state,$order){
 
     $con = new Connection();
     $facade = new Facade($con);
 
-    $result = $facade->getDataUser($idUser);
+    $result = $facade->getListAnuncios($state,$order);    
 
-    // Retornamos todos los datos que queremos mostrar...
+    return $result;
 
-    /*if (mysqli_num_rows($result) > 0){
-      
-      $row  = mysqli_fetch_array($result);
-      $data = array("idUser" => $row["idUser"], "nick" => $row["nick"],
-        "name" => $row["name"], "email" =>);
-
-    }*/
   }
 
+  function controlAnuncio($idAnuncio,$state){
+  
+    $con = new Connection();
+    $facade = new Facade($con);
+
+    return $facade->newStateAnuncio($idAnuncio,$state);
+
+  }
+
+  /*
+  *
+  */
   function modifyUser($idUser){
 
     $con = new Connection();
