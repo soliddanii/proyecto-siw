@@ -14,6 +14,8 @@
 	<script language="JavaScript" type="text/javascript" src="../jscript/macro.js"></script>
 	<script language="JavaScript" type="text/javascript" src="../jscript/loginadmin.js"></script>
 
+	<link rel="stylesheet" type="text/css" href="../css/loginadmin.css"/>
+
 	<title>Login Admin</title>
 	  
 	  <script>
@@ -27,8 +29,8 @@
 	<center>		
 		<form id="loginadmin" method="post" action="../php/controller.php?cmd=adminCmd&id=0">
 			<h2>Login</h2><br>
-			<input type="text" id="usuario" name="user" title="Se permite números, letras minúscula y mayúscula. Guión y punto. Entre 4 y 20 caracteres." placeholder="Usuario"><br>
-			<input type="password" id="password" name="password" title="La contraseña debe contener numeros y letras. Entre 5 y 20 caracteres." placeholder="Contraseña"><br>
+			<input type="text" id="usuario" name="user" placeholder="Usuario"><br>
+			<input type="password" id="password" name="password"  placeholder="Contraseña"><br>
 			<input type="submit" id="logear" value="Continuar"><br>
 			<span id="error">##error##</span>
 		</form>

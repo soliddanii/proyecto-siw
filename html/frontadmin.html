@@ -39,28 +39,30 @@
 	</div>
 
 	<!-- Funciones que va a realizar -->
-	<div style="position: absolute; top: 100px; left: 0px; z-index: 100">
+	<div class ="menu" style="position: absolute; top: 100px; left: 0px; z-index: 100">
 		<ul id="menu">
-		<li><a href = "../php/controller.php?cmd=adminCmd&id=2">Gestionar Usuarios</a>			
+		
+		<li>
+			<a href = "../php/controller.php?cmd=adminCmd&id=2">
+				Gestionar Usuarios
+			</a>			
 		</li>
-		<li><a>Gestionar Anuncios</a>
+		
+		<li>
+			<a href = "#">
+				Gestionar Anuncios
+			</a>
 			<ul>
-			<li><a href="">1.1</a></li>
-			</ul>
-		</li>
-		<li><a>2</a>
-			<ul>
-			<li><a href="">2.1</a></li>
-			<li><a href="">2.2</a></li>
-			</ul>
-		</li>
-		<li><a>3</a>
-			<ul>
-			<li><a href="">3.1</a></li>
-			<li><a href="">3.2</a></li>
-			<li><a href="">3.3</a></li>
-			</ul>
-		</li>
+				<li>
+					<a href="../php/controller.php?cmd=adminView&id=5&state=1">Activos</a>
+				</li>
+				<li>
+					<a href="../php/controller.php?cmd=adminView&id=5&state=2">Vendidos</a>
+				</li>
+				<li>
+					<a href="../php/controller.php?cmd=adminView&id=5&state=0">Cancelados</a>
+				</li>
+			</ul>		
 		</ul>
 	</div>
 

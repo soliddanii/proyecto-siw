@@ -1,0 +1,58 @@
+body {
+	margin: 0;
+	padding: 0;
+	font: normal 13px arial, helvetica, sans-serif;
+}
+
+#loginadmin{
+	float: center;
+	margin: 150px;
+}
+
+#loginadmin h2{
+	display: block;
+	font-size: 30px;
+	color: #11376C;
+	margin: 20px 0px 10px 0px;
+}
+
+#loginadmin input[type=text]{
+	display: block;
+  margin: 10px 0px 0px 20px;
+  background-color: #93E1DD;
+  padding: 10px 32px;
+  font-size: 20px;
+  border: none;
+}
+
+#loginadmin input[type=password]{
+	display: block;
+	display: block;
+  margin: 10px 0px 0px 20px;
+  background-color: #93E1DD;
+  padding: 10px 32px;
+  font-size: 20px;
+  border: none;
+}
+
+#loginadmin input[type=submit]{
+	display: inline-block;
+  padding: 10px 32px;
+  margin: 15px 0px 10px 30px;
+  border: none;
+  background-color: #4CAF50; /* Green */
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+#loginadmin input[type=submit]:hover{
+	background-color: #2A8F4A;
+  cursor: pointer;
+}
+
+#error{
+	display: block;
+	font-size: 20px;
+}

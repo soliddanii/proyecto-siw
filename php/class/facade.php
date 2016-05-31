@@ -395,11 +395,73 @@ class Facade {
     }
 
     /*
-        * Muestra todos los datos de un usuario, anuncios, publicaciones, ....
+        * Muestra todos los datos de un usuario, anuncios, ....
     */
-    public function getDataUser($idUser){
+    public function getInfoUser($idUser){
+      $query0 = "SELECT nick,name,email FROM final_usuario WHERE idUser=".$idUser;
+      
+      $query1 = "SELECT idAnuncio,titulo,fecha,precio,descripcion FROM final_anuncio
+      WHERE idUser=".$idUser." and estado=1";
+      
+      $query2 = "SELECT idAnuncio,titulo,fecha,precio,descripcion FROM final_anuncio
+      WHERE idUser=".$idUser." and estado=2";
+
+      $query3 = "SELECT idAnuncio,titulo,fecha,precio,descripcion FROM final_anuncio
+      WHERE idUser=".$idUser." and estado=0";
+
+      $r0 = $this->con->action($query0);
+      $r1 = $this->con->action($query1);
+      $r2 = $this->con->action($query2);
+      $r3 = $this->con->action($query3);
+
+      return array('info0' => $r0, 'info1' => $r1, 'info2' => $r2, 'info3' => $r3);
+    }
+
+    public function getInfoAnuncio($idAnuncio){
+      $query = "SELECT fa.idAnuncio,fc.categoria,fa.titulo,fa.fecha,fa.precio,fa.descripcion,fa.localizacion,fa.telefono 
+      FROM final_anuncio fa INNER JOIN final_categoria fc ON(fa.idCategoria=fc.idCategoria)
+      WHERE idAnuncio=".$idAnuncio;
+
+      return $this->con->action($query);
+    }
+
+    public function getListAnuncios($state,$order){
+
+      if ($order == 1){
+        $query = "SELECT fa.idAnuncio,fc.categoria,fa.titulo,fa.fecha,fa.precio,fa.descripcion,fa.localizacion,fa.telefono 
+        FROM final_anuncio fa INNER JOIN final_categoria fc ON(fa.idCategoria=fc.idCategoria)
+        WHERE estado=".$state." ORDER BY fecha ASC";
+
+      }elseif ($order == 2) {
+        $query = "SELECT fa.idAnuncio,fc.categoria,fa.titulo,fa.fecha,fa.precio,fa.descripcion,fa.localizacion,fa.telefono 
+        FROM final_anuncio fa INNER JOIN final_categoria fc ON(fa.idCategoria=fc.idCategoria)
+        WHERE estado=".$state." ORDER BY fecha DESC";        
+
+      }elseif ($order == 3) {
+        $query = "SELECT fa.idAnuncio,fc.categoria,fa.titulo,fa.fecha,fa.precio,fa.descripcion,fa.localizacion,fa.telefono 
+        FROM final_anuncio fa INNER JOIN final_categoria fc ON(fa.idCategoria=fc.idCategoria)
+        WHERE estado=".$state." ORDER BY precio ASC";        
+
+      }elseif ($order == 4) {
+        $query = "SELECT fa.idAnuncio,fc.categoria,fa.titulo,fa.fecha,fa.precio,fa.descripcion,fa.localizacion,fa.telefono 
+        FROM final_anuncio fa INNER JOIN final_categoria fc ON(fa.idCategoria=fc.idCategoria)
+        WHERE estado=".$state." ORDER BY precio DESC";        
+        
+      }else{
+        $query = "SELECT fa.idAnuncio,fc.categoria,fa.titulo,fa.fecha,fa.precio,fa.descripcion,fa.localizacion,fa.telefono 
+        FROM final_anuncio fa INNER JOIN final_categoria fc ON(fa.idCategoria=fc.idCategoria)
+        WHERE estado=".$state;        
+      }
+
+      return $this->con->action($query);
 
     }
+
+    public function newStateAnuncio($idAnuncio,$state){
+      $query = "UPDATE final_anuncio SET estado=".$state." WHERE idAnuncio=".$idAnuncio;
+      return $this->con->action($query);
+    }
+    
 
     /*
     *   Elimina un usuario de la bbdd   
