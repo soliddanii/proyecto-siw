@@ -1,4 +1,7 @@
 <?php
+
+    //temp for debug
+    require_once '../chromephp/ChromePhp.php';
     
 	// Incluimos los ficheros que vamos a utilizar
 	require_once 'view.php';
@@ -288,41 +291,28 @@
 						else
 							$state = $_GET['state'];
 					}
-															
-					if (isset($_POST['ordenar'])){
-						if ($_POST['ordenar'] == 'new')
+										
+					if (isset($_POST['ordenar']) || isset($_GET['ordenar'])){
+						if ($_POST['ordenar'] == 'new' || $_GET['ordenar'] == 'new' )
 							$ordenar = 1;
-						elseif ($_POST['ordenar'] == 'old')
+						elseif ($_POST['ordenar'] == 'old' || $_GET['ordenar'] == 'old')
 							$ordenar = 2;						
-						elseif ($_POST['ordenar'] == 'cheap')
+						elseif ($_POST['ordenar'] == 'cheap' || $_GET['ordenar'] == 'cheap')
 							$ordenar = 3;
-						elseif ($_POST['ordenar'] == 'expensive')
+						elseif ($_POST['ordenar'] == 'expensive' || $_GET['ordenar'] == 'expensive')
 							$ordenar = 4;
-						else
-							$ordenar = $_POST['ordenar'];												
-
-						$_SESSION['ordenar'] = $ordenar;											
-						
-						$data = getAnuncios($state,$ordenar);
-						listAnuncioViewAdmin($data,$state,$ordenar);
-						
-					}elseif (isset($_GET['ordenar'])){
-						if ($_GET['ordenar'] == 'new')
-							$ordenar = 1;
-						elseif ($_GET['ordenar'] == 'old')
-							$ordenar = 2;						
-						elseif ($_GET['ordenar'] == 'cheap')
-							$ordenar = 3;
-						elseif ($_GET['ordenar'] == 'expensive')
-							$ordenar = 4;
-						else
+						elseif (isset($_POST['ordenar']))
+							$ordenar = $_POST['ordenar'];
+						elseif (isset($_GET['ordenar']))
 							$ordenar = $_GET['ordenar'];						
 
 						$_SESSION['ordenar'] = $ordenar;											
 						
 						$data = getAnuncios($state,$ordenar);
 						listAnuncioViewAdmin($data,$state,$ordenar);
-					}else{
+						
+					}
+					else{
 						$_SESSION['ordenar'] = 0;
 						$data = getAnuncios($state,false);
 						listAnuncioViewAdmin($data,$state,0);
@@ -366,7 +356,7 @@
 
 					if (!isset($_GET["order"])){
 						// Cargar la pagina incial
-						consultUsersView(null,null,null,null);
+						consultUsersView(null,null,null);
 
 					}elseif (isset($_GET["order"]) && isset($_GET["orderby"])){  
 						// Listar segun un criterio

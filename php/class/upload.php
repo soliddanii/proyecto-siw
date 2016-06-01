@@ -1,5 +1,7 @@
 <?php
    
+   //temp for debug
+   require_once '../chromephp/ChromePhp.php';
     
 class Upload {
 

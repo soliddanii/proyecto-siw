@@ -430,12 +430,12 @@ class Facade {
       if ($order == 1){
         $query = "SELECT fa.idAnuncio,fc.categoria,fa.titulo,fa.fecha,fa.precio,fa.descripcion,fa.localizacion,fa.telefono 
         FROM final_anuncio fa INNER JOIN final_categoria fc ON(fa.idCategoria=fc.idCategoria)
-        WHERE estado=".$state." ORDER BY fecha DESC";
+        WHERE estado=".$state." ORDER BY fecha ASC";
 
       }elseif ($order == 2) {
         $query = "SELECT fa.idAnuncio,fc.categoria,fa.titulo,fa.fecha,fa.precio,fa.descripcion,fa.localizacion,fa.telefono 
         FROM final_anuncio fa INNER JOIN final_categoria fc ON(fa.idCategoria=fc.idCategoria)
-        WHERE estado=".$state." ORDER BY fecha ASC";        
+        WHERE estado=".$state." ORDER BY fecha DESC";        
 
       }elseif ($order == 3) {
         $query = "SELECT fa.idAnuncio,fc.categoria,fa.titulo,fa.fecha,fa.precio,fa.descripcion,fa.localizacion,fa.telefono 
