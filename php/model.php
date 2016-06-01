@@ -1,7 +1,4 @@
 <?php
-	
-    //temp for debug
-    require_once '../chromephp/ChromePhp.php';
     
 	// Clases que vamos a utilizar	
 	require_once 'class/connection.php';

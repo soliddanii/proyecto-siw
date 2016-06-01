@@ -1,7 +1,4 @@
 <?php
-	
-    //temp for debug
-    require_once '../chromephp/ChromePhp.php';
     
 	/////////////////////////////////////////////////////////////////////////
 	// 				Funciones comunes para varias paginas
