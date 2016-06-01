@@ -959,11 +959,12 @@
     $facade = new Facade($con);
 
     if (isset($_POST["name"]))
-      $facade->editName($idUser,$_POST["name"]);
-    
+        if (strlen($_POST["name"])>0) 
+            $facade->editName($idUser,$_POST["name"]);  
 
     if (isset($_POST["email"]))
-      $facade->editEmail($idUser,$_POST["email"]);
+        if(strlen($_POST["email"]) > 0)
+            $facade->editEmail($idUser,$_POST["email"]);
 
   }
 
