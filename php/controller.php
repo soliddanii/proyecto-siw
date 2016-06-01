@@ -292,25 +292,39 @@
 							$state = $_GET['state'];
 					}
 										
-					if (isset($_POST['ordenar']) || isset($_GET['ordenar'])){
-						if ($_POST['ordenar'] == 'new' || $_GET['ordenar'] == 'new' )
+					if (isset($_POST['ordenar'])){
+						if ($_POST['ordenar'] == 'new')
 							$ordenar = 1;
-						elseif ($_POST['ordenar'] == 'old' || $_GET['ordenar'] == 'old')
+						elseif ($_POST['ordenar'] == 'old')
 							$ordenar = 2;						
-						elseif ($_POST['ordenar'] == 'cheap' || $_GET['ordenar'] == 'cheap')
+						elseif ($_POST['ordenar'] == 'cheap')
 							$ordenar = 3;
-						elseif ($_POST['ordenar'] == 'expensive' || $_GET['ordenar'] == 'expensive')
+						elseif ($_POST['ordenar'] == 'expensive')
 							$ordenar = 4;
-						elseif (isset($_POST['ordenar']))
-							$ordenar = $_POST['ordenar'];
-						elseif (isset($_GET['ordenar']))
-							$ordenar = $_GET['ordenar'];						
+						else
+							$ordenar = $_POST['ordenar'];						
 
 						$_SESSION['ordenar'] = $ordenar;											
 						
 						$data = getAnuncios($state,$ordenar);
 						listAnuncioViewAdmin($data,$state,$ordenar);
 						
+					}elseif (isset($_GET['ordenar'])){
+						if ($_GET['ordenar'] == 'new' )
+							$ordenar = 1;
+						elseif ($_GET['ordenar'] == 'old')
+							$ordenar = 2;						
+						elseif ($_GET['ordenar'] == 'cheap')
+							$ordenar = 3;
+						elseif ($_GET['ordenar'] == 'expensive')
+							$ordenar = 4;						
+						else
+							$ordenar = $_GET['ordenar'];						
+
+						$_SESSION['ordenar'] = $ordenar;											
+						
+						$data = getAnuncios($state,$ordenar);
+						listAnuncioViewAdmin($data,$state,$ordenar);						
 					}
 					else{
 						$_SESSION['ordenar'] = 0;
