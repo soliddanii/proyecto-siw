@@ -407,7 +407,7 @@
 				// Eliminar usuarios
 				case '4':
 						deleteUser($_GET["u"]);
-						header("Location:controller.php?cmd=adminCmd&id=2$order=false");
+						header("Location:controller.php?cmd=adminCmd&id=2&order=false");
 						break;
 				
 				// Eliminar anuncio
