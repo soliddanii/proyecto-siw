@@ -370,7 +370,7 @@
 
 					if (!isset($_GET["order"])){
 						// Cargar la pagina incial
-						consultUsersView(null,null,null);
+						consultUsersView(null,null,null,null);
 
 					}elseif (isset($_GET["order"]) && isset($_GET["orderby"])){  
 						// Listar segun un criterio
